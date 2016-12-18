@@ -18,6 +18,9 @@
 <script>
     module.exports = {
         data:{
+            //存放54张牌的信息，其中id为牌的唯一标识，number为牌值(其中小王用14表示，大王用15表示)，url为对应的图片路径
+            //后来又想了一下，card表可以不用存了，实在太大了，用另一种办法代替，即图片命名时直接是从1-2-k-小王-大王排好，命名从0-53
+            //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
             bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
             currPlayer:1,
             leftPlayer:[{
