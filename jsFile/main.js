@@ -254,8 +254,11 @@
 	                "value": "player"
 	              },
 	              "attr": {
-	                "playerid": function () {return this.player.platerId},
+	                "playerid": function () {return this.player.playerId},
 	                "drinknum": "player.drinkNum"
+	              },
+	              "events": {
+	                "click": "showBag"
 	              }
 	            }
 	          ]
@@ -269,11 +272,11 @@
 	            {
 	              "type": "bag",
 	              "repeat": {
-	                "expression": function () {return this.leftPlayer},
+	                "expression": function () {return this.rightPlayer},
 	                "value": "player"
 	              },
 	              "attr": {
-	                "playerid": function () {return this.player.platerId},
+	                "playerid": function () {return this.player.playerId},
 	                "drinknum": "player.drinkNum"
 	              }
 	            }
@@ -285,7 +288,7 @@
 	            "currPlayerTip"
 	          ],
 	          "attr": {
-	            "value": function () {return '玩家' + (this.currPlayer) + '摸牌'}
+	            "value": function () {return '玩家' + (this.currPlayerId) + '摸牌'}
 	          }
 	        },
 	        {
@@ -319,6 +322,113 @@
 	              "attr": {
 	                "value": "结束游戏"
 	              }
+	            }
+	          ]
+	        }
+	      ]
+	    },
+	    {
+	      "type": "div",
+	      "classList": [
+	        "paiduiDiv"
+	      ],
+	      "children": [
+	        {
+	          "type": "image",
+	          "attr": {
+	            "resize": "cover",
+	            "src": function () {return this.paiduiImg}
+	          },
+	          "classList": [
+	            "paidui"
+	          ],
+	          "events": {
+	            "click": "selectCard"
+	          }
+	        }
+	      ]
+	    },
+	    {
+	      "type": "div",
+	      "id": "cardDialog",
+	      "classList": [
+	        "dialog"
+	      ],
+	      "shown": function () {return this.cardDialogShow},
+	      "children": [
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-backdrop"
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-content"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-body"
+	              ],
+	              "children": [
+	                {
+	                  "type": "image",
+	                  "attr": {
+	                    "src": function () {return this.currCardImgUrl}
+	                  },
+	                  "classList": [
+	                    "cardClass"
+	                  ]
+	                },
+	                {
+	                  "type": "div",
+	                  "classList": [
+	                    "cardBtnClass"
+	                  ],
+	                  "children": [
+	                    {
+	                      "type": "div",
+	                      "classList": [
+	                        "cardUseDiv"
+	                      ],
+	                      "children": [
+	                        {
+	                          "type": "text",
+	                          "classList": [
+	                            "cardUseText"
+	                          ],
+	                          "events": {
+	                            "click": "closeCardDialog"
+	                          },
+	                          "attr": {
+	                            "value": "立即使用"
+	                          }
+	                        }
+	                      ]
+	                    },
+	                    {
+	                      "type": "div",
+	                      "classList": [
+	                        "cardStoreDiv"
+	                      ],
+	                      "children": [
+	                        {
+	                          "type": "text",
+	                          "classList": [
+	                            "cardStoreText"
+	                          ],
+	                          "attr": {
+	                            "value": "存入包裹"
+	                          }
+	                        }
+	                      ]
+	                    }
+	                  ]
+	                }
+	              ]
 	            }
 	          ]
 	        }
@@ -392,6 +502,77 @@
 	    "fontSize": 50,
 	    "textAlign": "center",
 	    "fontWeight": "bold"
+	  },
+	  "paiduiDiv": {
+	    "position": "absolute",
+	    "top": 0,
+	    "left": 200,
+	    "height": 1175,
+	    "justifyContent": "center"
+	  },
+	  "paidui": {
+	    "width": 350,
+	    "height": 500
+	  },
+	  "dialog-backdrop": {
+	    "opacity": 0.5,
+	    "position": "absolute",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "backgroundColor": "#000000"
+	  },
+	  "dialog": {
+	    "position": "fixed",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "justifyContent": "center",
+	    "alignItems": "center"
+	  },
+	  "dialog-content": {
+	    "width": 550,
+	    "height": 720,
+	    "backgroundColor": "#ffffff",
+	    "position": "relative"
+	  },
+	  "dialog-body": {
+	    "padding": 20,
+	    "justifyContent": "center"
+	  },
+	  "cardClass": {
+	    "width": 500,
+	    "height": 600
+	  },
+	  "cardBtnClass": {
+	    "flexDirection": "row",
+	    "justifyContent": "space-between"
+	  },
+	  "cardUseDiv": {
+	    "width": 200,
+	    "height": 80,
+	    "backgroundColor": "#6495ED",
+	    "justifyContent": "center"
+	  },
+	  "cardUseText": {
+	    "color": "#FFFFFF",
+	    "fontSize": 40,
+	    "textAlign": "center",
+	    "fontWeight": "bold"
+	  },
+	  "cardStoreDiv": {
+	    "width": 200,
+	    "height": 80,
+	    "backgroundColor": "#6495ED",
+	    "justifyContent": "center"
+	  },
+	  "cardStoreText": {
+	    "color": "#FFFFFF",
+	    "fontSize": 40,
+	    "textAlign": "center",
+	    "fontWeight": "bold"
 	  }
 	}
 
@@ -403,31 +584,69 @@
 
 	module.exports = {
 	    data: function () {return {
+
 	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
-	        currPlayer: 1,
-	        leftPlayer: [{
-	            playerId: 1,
-	            drinkNum: 0
-	        }, {
-	            playerId: 2,
-	            drinkNum: 0
-	        }, {
-	            playerId: 3,
-	            drinkNum: 0
-	        }, {
-	            playerId: 4,
-	            drinkNum: 0
-	        }, {
-	            playerId: 5,
-	            drinkNum: 0
-	        }, {
-	            playerId: 6,
-	            drinkNum: 0
-	        }, {
-	            playerId: 7,
-	            drinkNum: 0
-	        }]
-	    }}
+	        paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
+
+	        currPlayerId: 1,
+	        playerNum: 10,
+	        leftPlayerNum: 0,
+	        rightPlayerNum: 0,
+	        leftPlayer: [],
+	        rightPlayer: [],
+	        currCardOrder: [],
+	        cardDialogShow: false,
+	        currCardImgUrl: null,
+	        currCardNum: null }},
+
+	    ready: function ready() {
+	        while (this.currCardOrder.length < 54) {
+	            var t = Math.floor(Math.random() * 54);
+	            if (this.currCardOrder.indexOf(t) == -1) {
+	                this.currCardOrder.push(t);
+	            }
+	        }
+
+	        var num = parseInt(this.playerNum / 2);
+	        if (this.playerNum % 2 == 0) {
+	            this.leftPlayerNum = num;
+	            this.rightPlayerNum = num;
+	            for (var i = 1; i <= num; i++) {
+	                var obj = { playerId: i, bag: [], drinkNum: 0, flag_9: false };
+	                this.leftPlayer.push(obj);
+	            }
+	            for (var j = num + 1; j <= this.playerNum; j++) {
+	                var obj = { playerId: j, bag: [], drinkNum: 0, flag_9: false };
+	                this.rightPlayer.push(obj);
+	            }
+	        } else {
+	            this.leftPlayerNum = num + 1;
+	            this.rightPlayerNum = num;
+	            for (var i = 1; i <= num + 1; i++) {
+	                var obj = { playerId: i, bag: [], drinkNum: 0, flag_9: false };
+	                this.leftPlayer.push(obj);
+	            }
+	            for (var j = num + 2; j <= this.playerNum; j++) {
+	                var obj = { playerId: j, bag: [], drinkNum: 0, flag_9: false };
+	                this.rightPlayer.push(obj);
+	            }
+	        }
+	    },
+	    methods: {
+	        selectCard: function selectCard() {
+	            var cardId = this.currCardOrder[0];
+	            this.currCardNum = parseInt(cardId / 4) + 1;
+	            this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card" + cardId + ".png";
+	            this.cardDialogShow = true;
+	            this.currCardOrder.shift();
+	        },
+
+	        showBag: function showBag() {},
+	        closeCardDialog: function closeCardDialog() {
+	            this.cardDialogShow = false;
+	            this.currPlayerId++;
+	        }
+	    }
 	};}
 	/* generated by weex-loader */
 

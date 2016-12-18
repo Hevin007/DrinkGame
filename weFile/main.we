@@ -3,15 +3,40 @@
         <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
         <div class="mainCont">
             <div class="leftPlayer">
-                <bag repeat="{{ player in leftPlayer}}" playerId="{{player.platerId}}" drinkNum="player.drinkNum"></bag>
+                <bag repeat="{{ player in leftPlayer}}" playerId="{{player.playerId}}" drinkNum="player.drinkNum" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
-                <bag repeat="{{ player in leftPlayer}}" playerId="{{player.platerId}}" drinkNum="player.drinkNum"></bag>
+                <bag repeat="{{ player in rightPlayer}}" playerId="{{player.playerId}}" drinkNum="player.drinkNum"></bag>
             </div>
-            <text class="currPlayerTip">玩家{{currPlayer}}摸牌</text>
+            <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
             <div class="helpBtn"><text class="helpText">？</text></div>
             <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>
         </div>
+        <div class="paiduiDiv">
+            <image resize="cover" class="paidui" src="{{paiduiImg}}" onclick="selectCard"></image>
+        </div>
+        <!--注意这块，在modal组件中参数名为cardImgSrc，但是这块不能用cardImgSrc，得用card-img-src，怪怪的，那我上面的playerId咋能传过去呢？？？？-->
+        <!--<modal if="{{cardDialogShow}}" card-img-src="{{currCardImgUrl}}">
+            <text>jjjj</text>
+                <div class="cardBtnClass" if="{{cardBtnShow}}">
+                <div class="cardUseDiv"><text class="cardUseText" onclick="">立即使用</text></div>
+                <div class="cardStoreDiv"><text class="cardStoreText" onclick="">存入包裹</text></div>
+            </div>&ndash;&gt;
+        </modal>-->
+        <div id="cardDialog" class="dialog" if="{{cardDialogShow}}">
+            <div class="dialog-backdrop"></div>
+            <div class="dialog-content">
+                <div class="dialog-body">
+                    <image src="{{currCardImgUrl}}" class="cardClass"></image>
+                    <div class="cardBtnClass">
+                        <div class="cardUseDiv"><text class="cardUseText" onclick="closeCardDialog">立即使用</text></div>
+                        <div class="cardStoreDiv"><text class="cardStoreText" onclick="">存入包裹</text></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </container>
 </template>
 
@@ -21,30 +46,76 @@
             //存放54张牌的信息，其中id为牌的唯一标识，number为牌值(其中小王用14表示，大王用15表示)，url为对应的图片路径
             //后来又想了一下，card表可以不用存了，实在太大了，用另一种办法代替，即图片命名时直接是从1-2-k-小王-大王排好，命名从0-53
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
-            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
-            currPlayer:1,
-            leftPlayer:[{
-                playerId:1,
-                drinkNum:0
-            },{
-                playerId:2,
-                drinkNum:0
-            },{
-                playerId:3,
-                drinkNum:0
-            },{
-                playerId:4,
-                drinkNum:0
-            },{
-                playerId:5,
-                drinkNum:0
-            },{
-                playerId:6,
-                drinkNum:0
-            },{
-                playerId:7,
-                drinkNum:0
-            }]
+
+            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",//背景图片的url
+            paiduiImg:"https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
+            //player:null,//存储玩家的信息，包括id、bag、drinkNum、flag_9(是否拿有9牌)，该值在ready函数中进行初始化
+            currPlayerId:1,//当前摸牌玩家的id，初始值为1
+            playerNum:10,//该值应当从选择人数界面传过来，暂时还不知道怎么传？？？？
+            leftPlayerNum:0,//左边玩家个数
+            rightPlayerNum:0,//右边玩家个数
+            leftPlayer:[],//左边玩家信息，包括id、bag、drinkNum、flag_9(是否拿有9牌)，该值在ready函数中进行初始化
+            rightPlayer:[],//右边玩家信息
+            currCardOrder:[],//存储当前的牌序，在ready函数中初始化
+            cardDialogShow:false,
+            currCardImgUrl:null,//当前玩家抽到的牌的图片
+            currCardNum:null,//当前玩家抽到的牌值
+        },
+        //界面一载入执行的函数
+        ready:function(){
+            //生成一组随机牌
+            while(this.currCardOrder.length<54){
+                var t=Math.floor(Math.random()*54);//生成随机数
+                if(this.currCardOrder.indexOf(t)==-1){
+                    //如果t在集合arr中存在，indexOf会返回t在集合arr中的位置。如果不存在，indexOf会返回-1
+                    this.currCardOrder.push(t);    //把生成的数字放进这个数组里
+                }
+            }
+            //根据玩家人数初始化玩家信息
+            var num = parseInt(this.playerNum/2);
+            if(this.playerNum%2 == 0){
+                this.leftPlayerNum = num;
+                this.rightPlayerNum = num;
+                for(var i=1;i<=num;i++){
+                    var obj = {playerId:i,bag:[],drinkNum:0,flag_9:false}
+                    this.leftPlayer.push(obj);
+                }
+                for(var j=num+1;j<=this.playerNum;j++){
+                    var obj = {playerId:j,bag:[],drinkNum:0,flag_9:false}
+                    this.rightPlayer.push(obj);
+                }
+            }else{
+                this.leftPlayerNum = num+1;
+                this.rightPlayerNum = num;
+                for(var i=1;i<=(num+1);i++){
+                    var obj = {playerId:i,bag:[],drinkNum:0,flag_9:false}
+                    this.leftPlayer.push(obj);
+                }
+                for(var j=num+2;j<=this.playerNum;j++){
+                    var obj = {playerId:j,bag:[],drinkNum:0,flag_9:false}
+                    this.rightPlayer.push(obj);
+                }
+            }
+        },
+        methods:{
+            //摸牌时的方法
+            selectCard:function(){
+                var cardId = this.currCardOrder[0];//获取当前牌的id
+                this.currCardNum = parseInt(cardId/4)+1;//牌值
+                this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card"+cardId+".png";//牌的图片url
+                //this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card0.png";//牌的图片url
+                this.cardDialogShow = true;
+                this.currCardOrder.shift();
+
+            },
+            //点击包裹时的方法
+            showBag:function(){
+
+            },
+            closeCardDialog:function(){
+                this.cardDialogShow = false;
+                this.currPlayerId++;
+            }
         }
     }
 </script>
@@ -108,6 +179,78 @@
     .endGameText{
         color: white;
         font-size: 50;
+        text-align: center;
+        font-weight: bold;
+    }
+    .paiduiDiv{
+        position: absolute;
+        top:0px;
+        left:200px;
+        height:1175px;
+        justify-content:center;
+    }
+    .paidui{
+        width:350px;
+        height:500px;
+    }
+
+    .dialog-backdrop {
+        opacity: .5;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000000;
+    }
+    .dialog {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+    }
+    .dialog-content {
+        width: 550px;
+        height:720px;
+        background-color: #ffffff;
+        position: relative;
+    }
+    .dialog-body {
+        padding: 20;
+        justify-content: center;
+    }
+    .cardClass{
+        width:500px;
+        height:600px;
+    }
+    .cardBtnClass{
+        flex-direction:row;
+        justify-content:space-between;
+    }
+    .cardUseDiv{
+        width:200px;
+        height:80px;
+        background-color: cornflowerblue;
+        justify-content:center;
+    }
+    .cardUseText{
+        color: white;
+        font-size: 40;
+        text-align: center;
+        font-weight: bold;
+    }
+    .cardStoreDiv{
+        width:200px;
+        height:80px;
+        background-color: cornflowerblue;
+        justify-content:center;
+    }
+    .cardStoreText{
+        color: white;
+        font-size: 40;
         text-align: center;
         font-weight: bold;
     }
