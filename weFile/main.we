@@ -1,0 +1,111 @@
+<template>
+    <container>
+        <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
+        <div class="mainCont">
+            <div class="leftPlayer">
+                <bag repeat="{{ player in leftPlayer}}" playerId="{{player.platerId}}" drinkNum="player.drinkNum"></bag>
+            </div>
+            <div class="rightPlayer">
+                <bag repeat="{{ player in leftPlayer}}" playerId="{{player.platerId}}" drinkNum="player.drinkNum"></bag>
+            </div>
+            <text class="currPlayerTip">玩家{{currPlayer}}摸牌</text>
+            <div class="helpBtn"><text class="helpText">？</text></div>
+            <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>
+        </div>
+    </container>
+</template>
+
+<script>
+    module.exports = {
+        data:{
+            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
+            currPlayer:1,
+            leftPlayer:[{
+                playerId:1,
+                drinkNum:0
+            },{
+                playerId:2,
+                drinkNum:0
+            },{
+                playerId:3,
+                drinkNum:0
+            },{
+                playerId:4,
+                drinkNum:0
+            },{
+                playerId:5,
+                drinkNum:0
+            },{
+                playerId:6,
+                drinkNum:0
+            },{
+                playerId:7,
+                drinkNum:0
+            }]
+        }
+    }
+</script>
+
+<style>
+    .bgImg{
+        width: 750px;
+        height:1175px;
+    }
+    .mainCont{
+        position:absolute;
+        top:0px;
+        width: 750px;
+        height:1175px;
+    }
+    .leftPlayer{
+        width:150px;
+        height:1175px;
+        justify-content:center;
+    }
+    .rightPlayer{
+        width:150px;
+        height:1175px;
+        justify-content:center;
+        position:absolute;
+        top: 0px;
+        right:0px;
+    }
+    .currPlayerTip{
+        width:750px;
+        height:100px;
+        position:absolute;
+        top: 0;
+        color: yellow;
+        font-size: 80;
+        font-weight: bold;
+        text-align: center;
+    }
+    .helpBtn{
+        width:80px;
+        height:80px;
+        background-color: blue;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+    .helpText{
+        color: white;
+        font-size: 50;
+        text-align: center;
+        font-weight: bold;
+    }
+    .endGameBtn{
+        width:230px;
+        height:80px;
+        background-color: blue;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .endGameText{
+        color: white;
+        font-size: 50;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
