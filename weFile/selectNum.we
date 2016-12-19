@@ -3,7 +3,7 @@
         <image class="bgImg" src="{{bgImgSrc}}"></image>
         <text class="selectNumText">请选择游戏人数</text>
         <div class="startPlay">
-            <a class="startPlayA" href="https://13111211.github.io/weexCompetition/jsFile/main.js">
+            <a class="startPlayA" onclick="toMain">
                 <text class="startPlayText">立即开始</text>
             </a>
         </div>
@@ -19,6 +19,11 @@
     module.exports = {
         data:{
             bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg5.jpg"
+        },
+        methods: {
+            toMain: function() {
+                this._parent.$emit("toMain");
+            }
         }
     }
 </script>
