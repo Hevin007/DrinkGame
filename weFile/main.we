@@ -16,21 +16,24 @@
             <image resize="cover" class="paidui" src="{{paiduiImg}}" onclick="selectCard"></image>
         </div>
         <!--注意这块，在modal组件中参数名为cardImgSrc，但是这块不能用cardImgSrc，得用card-img-src，怪怪的，那我上面的playerId咋能传过去呢？？？？-->
-        <!--<modal if="{{cardDialogShow}}" card-img-src="{{currCardImgUrl}}">
+        <!--<modal if="{{isShow.cardModal}}" card-img-src="{{currCardImgUrl}}">
             <text>jjjj</text>
                 <div class="cardBtnClass" if="{{cardBtnShow}}">
                 <div class="cardUseDiv"><text class="cardUseText" onclick="">立即使用</text></div>
                 <div class="cardStoreDiv"><text class="cardStoreText" onclick="">存入包裹</text></div>
             </div>&ndash;&gt;
         </modal>-->
-        <div id="cardDialog" class="dialog" if="{{cardDialogShow}}">
+
+        <bagModal if="{{isShow.bagModal}}"></bagModal>
+
+        <div id="cardDialog" class="dialog" if="{{isShow.cardModal}}">
             <div class="dialog-backdrop"></div>
             <div class="dialog-content">
                 <div class="dialog-body">
                     <image src="{{currCardImgUrl}}" class="cardClass"></image>
                     <div class="cardBtnClass">
                         <div class="cardUseDiv"><text class="cardUseText" onclick="closeCardDialog">立即使用</text></div>
-                        <div class="cardStoreDiv"><text class="cardStoreText" onclick="">存入包裹</text></div>
+                        <div class="cardStoreDiv"><text class="cardStoreText" onclick="storeToBag">存入包裹</text></div>
                     </div>
 
                 </div>
@@ -41,6 +44,8 @@
 </template>
 
 <script>
+    var modal = require('@weex-module/modal');
+
     module.exports = {
         data:{
             //存放54张牌的信息，其中id为牌的唯一标识，number为牌值(其中小王用14表示，大王用15表示)，url为对应的图片路径
@@ -57,9 +62,18 @@
             leftPlayer:[],//左边玩家信息，包括id、bag、drinkNum、flag_9(是否拿有9牌)，该值在ready函数中进行初始化
             rightPlayer:[],//右边玩家信息
             currCardOrder:[],//存储当前的牌序，在ready函数中初始化
-            cardDialogShow:false,
+
+            isShow: {
+                bagModal: false,
+                cardModal:false
+            },
             currCardImgUrl:null,//当前玩家抽到的牌的图片
             currCardNum:null,//当前玩家抽到的牌值
+        },
+        created: function() {
+            this.$on("closeBagModal", function(event) {
+                this.isShow.bagModal = false;
+            });
         },
         //界面一载入执行的函数
         ready:function(){
@@ -104,16 +118,40 @@
                 this.currCardNum = parseInt(cardId/4)+1;//牌值
                 this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card"+cardId+".png";//牌的图片url
                 //this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card0.png";//牌的图片url
-                this.cardDialogShow = true;
+                this.isShow.cardModal = true;
                 this.currCardOrder.shift();
+
+                //牌值不同的分支逻辑：显示按钮不同
+
 
             },
             //点击包裹时的方法
             showBag:function(){
-
+                this.isShow.bagModal = true;
             },
             closeCardDialog:function(){
-                this.cardDialogShow = false;
+                this.isShow.cardModal = false;
+                this.currPlayerId++;
+            },
+            // 存入包裹函数
+            storeToBag: function() {
+                //操作对应currPlayerId 的 Bag,存入卡牌
+                
+                modal.toast({
+                  'message': this.currPlayerId,
+                  'duration': 2
+                });
+                //在左边
+                // if(this.currPlayerId < 6) {
+                //     for(var player in leftPlayer) {
+                //         if( player.id == this.currPlayerId ) {
+                //             //player.bag.push(this.currCardNum);
+                //         }
+                //     }
+                // }
+
+                // 收尾操作
+                this.isShow.cardModal = false;
                 this.currPlayerId++;
             }
         }

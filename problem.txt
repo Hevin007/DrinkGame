@@ -6,3 +6,5 @@
 2,图片本地加载
 
 3,bag.we实现，数据通信
+  
+  button可以使用bootstrap的button，但是需要使用npm安装新模块
