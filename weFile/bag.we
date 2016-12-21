@@ -11,7 +11,7 @@
                     <text style="text-align: center">已喝{{drinkNum}}</text>
                 </div>
                 <div class="playerBagDiv">
-
+                <text style="text-align: center">牌数:{{cardNum}}</text>
                 </div>
             </div>
         </div>
@@ -22,7 +22,8 @@
     module.exports ={
         data:{
             playerId:1,
-            drinkNum:0
+            drinkNum:0,
+            cardNum: 0
         }
     }
 </script>

@@ -5,12 +5,12 @@
             <div class="dialog-body">
                 <text class="title">玩家X的包裹</text>>
                 <text class="title">已喝X杯</text>>
-                <div style="flex-direction: row; justify-content: center;">
+                <div class="cardContainer">
                   <div repeat="card in cardRow1" class="smallCard">
                       <text class="cardText">{{card.name}}</text>
                   </div>
                 </div>
-                <div style="flex-direction: row; justify-content: center;">
+                <div class="cardContainer">
                   <div repeat="card in cardRow2" class="smallCard">
                       <text class="cardText">{{card.name}}</text>
                   </div>
@@ -77,6 +77,11 @@
     .title {
       text-align: center;
       font-size: 60;
+    }
+    .cardContainer {
+      height: 180;
+      flex-direction: row; 
+      justify-content: center;
     }
     .smallCard {
       background-color: #5b3f23;
