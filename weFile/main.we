@@ -1,12 +1,12 @@
 <template>
-    <container>
+    <div>
         <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
         <div class="mainCont">
             <div class="leftPlayer">
                 <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkNum}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
-                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkNum}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
+                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkNum}}" card-num="{{player.bag.length}}"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
             <div class="helpBtn"><text class="helpText">？</text></div>
@@ -26,7 +26,7 @@
             </div>&ndash;&gt;
         </modal>-->
 
-        <bagModal if="{{isShow.bagModal}}" ></bagModal>
+        <bagModal if="{{isShow.bagModal}}" playerId="{{showBag.playerId}}" drinkNum="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
 
         <div id="cardDialog" class="dialog" if="{{isShow.cardModal}}">
             <div class="dialog-backdrop"></div>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-    </container>
+    </div>
 </template>
 
 <script>
@@ -69,6 +69,12 @@
                 bagModal: false,
                 cardModal:false
             },
+
+            showBag: {
+              playerId: 1,
+              drinkNum: 0,
+              bag : []
+            },
             currCardImgUrl:null,//当前玩家抽到的牌的图片
             currCardNum:null,//当前玩家抽到的牌值
         },
@@ -76,6 +82,8 @@
             this.$on("closeBagModal", function(event) {
                 this.isShow.bagModal = false;
             });
+
+            
         },
         //界面一载入执行的函数
         ready:function(){
@@ -87,8 +95,10 @@
                     this.currCardOrder.push(t);    //把生成的数字放进这个数组里
                 }
             }
+
             //根据玩家人数初始化玩家信息
             var num = parseInt(this.playerNum/2);
+            //this.playerArray
             if(this.playerNum%2 == 0){
                 this.leftPlayerNum = num;
                 this.rightPlayerNum = num;
@@ -114,6 +124,19 @@
             }
         },
         methods:{
+
+            //玩家分leftPlayer和rightPlayer存储，访问不方便，下为统一访问函数
+            getPlayerById : function(id) {
+              //在左边
+              if(id <= this.leftPlayerNum) {
+                return this.leftPlayer[id-1];
+              }
+              //在右边
+              else if(id <= this.playerNum) {
+                return this.rightPlayer[id-1-this.leftPlayerNum];
+              }
+            },
+
             //摸牌时的方法
             selectCard:function(){
                 var cardId = this.currCardOrder[0];//获取当前牌的id
@@ -127,24 +150,29 @@
 
 
             },
+            
+
+            closeCardDialog:function(){
+                this.isShow.cardModal = false;
+                this.currPlayerId++;
+            },
+
             //点击包裹时的方法
-            showBag:function(e){
+            showBag : function(e) {
               //根据点击事件获取被点击的Bag的playerId
-              var target = e.target;
-              modal.toast({
-                'message': " "+target.playerId,
-                'duration': 10
-              })
+              this.showBag.playerId = e.target._vm.playerId;
+              this.showBag.drinkNum = e.target._vm.drinkNum;
+              this.showBag.bag = this.getPlayerById(this.showBag.playerId);
+              
+
               //根据playerId操作leftPlayer或rightPlayer并获取其中Bag
               //根据Bag.length或cardNum确定数据需要加载一排或两排
               //处理Bag数组中的数据包装成bagModal中的数据并传入
               //收尾操作
               this.isShow.bagModal = true;
+            
             },
-            closeCardDialog:function(){
-                this.isShow.cardModal = false;
-                this.currPlayerId++;
-            },
+
             // 存入包裹函数
             storeToBag: function() {
                 //操作对应currPlayerId 的 Bag,存入卡牌
@@ -153,14 +181,8 @@
                 //   'message': this.currPlayerId+"-"+this.leftPlayer[this.currPlayerId-1].playerId,
                 //   'duration': 2
                 // });
-                //在左边
-                if(this.currPlayerId < 6) {
-                  this.leftPlayer[this.currPlayerId-1].bag.push(this.currCardNum);
-                }
-                //在右边
-                else if(this.currPlayerId < 11) {
-                  this.rightPlayer[this.currPlayerId-6].bag.push(this.currCardNum);
-                }
+                
+                this.getPlayerById(this.currPlayerId).bag.push(this.currCardNum);
 
                 // 收尾操作
                 this.isShow.cardModal = false;

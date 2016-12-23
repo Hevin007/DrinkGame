@@ -1,10 +1,10 @@
 <template>
-    <container>
+    <div onclick="showBag">
         <div class="bagDiv">
             <div class="leftDiv">
                 <text>玩</text>
                 <text>家</text>
-                <text>{{playerId}}</text>
+                <text id="{{playerId}}">{{playerId}}</text>
             </div>
             <div class="rightDiv">
                 <div class="drinkNumDiv">
@@ -15,15 +15,19 @@
                 </div>
             </div>
         </div>
-    </container>
+    </div>
 </template>
 
 <script>
+    
     module.exports ={
         data:{
             playerId:1,
             drinkNum:0,
             cardNum: 0
+        },
+        methods: {
+
         }
     }
 </script>
