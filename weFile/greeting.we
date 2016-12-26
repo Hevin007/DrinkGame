@@ -1,7 +1,7 @@
 <template>
     <container>
         <image class="bgImg" src="{{bgImgSrc}}"></image>
-        <text class="gameName">行酒令</text>
+       <!-- <text class="gameName">行酒令</text>-->
         <div class="startPlay">
             <a class="startPlayA" onclick="toSelectNum">
                 <text class="startPlayText">开始游戏</text>

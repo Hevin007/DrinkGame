@@ -3,7 +3,7 @@
         <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
         <div class="mainCont">
             <div class="leftPlayer">
-                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
+                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{currPlayerBag}}" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
                 <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
@@ -50,7 +50,8 @@
                 juedouModal:false,
                 randomFailModal:false
             },
-
+            //当前玩家的包裹中存的牌信息
+            currPlayerBag:[],
             //包裹模态框的显示信息
             showBag: {
               playerId: 1,
@@ -106,7 +107,8 @@
                 }
                 //如果抽到7,9；点击立即使用，存入包裹
                 else if(this.showCard.currCardNum == 7 || this.showCard.currCardNum == 9){
-                    //this.showBag.bag.push(this.cardTipForBag[this.showCard.currCardNum]);
+                    var cardInfo = this.cardTipForBag[this.showCard.currCardNum];
+                    this.currPlayerBag.push(cardInfo);
                 }
                 //如果抽到11,12,13,14,15，进行惩罚
                 else if(this.showCard.currCardNum == 11){
@@ -129,7 +131,8 @@
 
             //父组件监听卡牌模态框中的存入包裹事件
             this.$on("saveToBag" , function(event){
-                //this.showBag.bag.push(this.cardTipForBag[this.showCard.currCardNum]);
+                var cardInfo = this.cardTipForBag[this.showCard.currCardNum];
+                this.currPlayerBag.push(cardInfo);
                 this.isShow.cardModalSave = false;
                 this.currPlayerId++;
             });

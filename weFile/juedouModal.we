@@ -78,7 +78,7 @@
         position: relative;
     }
     .dialog-title{
-        font-size:20;
+        font-size:40;
         text-align:center;
         color:black;
     }
