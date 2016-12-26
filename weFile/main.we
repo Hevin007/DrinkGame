@@ -35,7 +35,7 @@
             //后来又想了一下，card表可以不用存了，实在太大了，用另一种办法代替，即图片命名时直接是从1-2-k-小王-大王排好，命名从0-53
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
 
-            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",//背景图片的url
+            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.jpg",//背景图片的url
             paiduiImg:"https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",//牌堆图片的url
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
             playerNum:10,//该值应当从选择人数界面传过来

@@ -221,7 +221,7 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg5.jpg"
+	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.jpg"
 	    }},
 	    methods: {
 	        toSelectNum: function toSelectNum() {
@@ -3206,7 +3206,7 @@
 	__webpack_require__(18);
 	module.exports = {
 	    data: function () {return {
-	        dialogBgImg: "https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
+	        dialogBgImg: "https://13111211.github.io/weexCompetition/imgs/background/modalBg2.png",
 	        cardImgUrl: null,
 	        cardTips: null
 	    }},
@@ -4083,7 +4083,7 @@
 	module.exports = {
 	    data: function () {return {
 
-	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
+	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.jpg",
 	        paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
 	        currPlayerId: 1,
 	        playerNum: 10,
