@@ -18,3 +18,9 @@
 
   使用浏览器调试：
     将chrome浏览器调试模式设定为左右模式，调试移动端页面会很方便
+
+  样式改动： picker flex-wrap:wrap
+  事件不可动态绑定
+  weex的if类似display效果，不显示时不会占用位置
+  不可直接drinkNum++ 要使用weex的set方法
+  分两边渲染对逻辑的实现造成了很大影响

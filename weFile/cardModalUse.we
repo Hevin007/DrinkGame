@@ -5,11 +5,12 @@
             <image class="dialogBgClass" src="{{dialogBgImg}}"></image>
             <div class="dialog-body">
                 <div class="cardTipDiv">
-                    <image src="{{cardImgUrl}}" class="cardClass"></image>
+                   <!-- <image src="{{cardImgUrl}}" class="cardClass"></image>-->
                     <text class="cardTipText">{{cardTips}}</text>
                 </div>
+                <wxc-button  type="primary" size="middle" value="立即使用" onclick="useCard"></wxc-button>
 
-                <div class="cardUseDiv"><text class="cardUseText" onclick="useCard">立即使用</text></div>
+              <!--  <div class="cardUseDiv"><text class="cardUseText" onclick="useCard">立即使用</text></div>-->
                 <!--<div class="cardBtnClass">
                     <div class="cardUseDiv"><text class="cardUseText" onclick="useCard">立即使用</text></div>
                    &lt;!&ndash; <div class="cardStoreDiv"><text class="cardStoreText" onclick="saveToBag">存入包裹</text></div>&ndash;&gt;
@@ -26,7 +27,7 @@
     require('weex-components');
     module.exports = {
         data: {
-            dialogBgImg:"https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
+            //dialogBgImg:"https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
             cardImgUrl:null,
             cardTips:null
         },
@@ -62,7 +63,7 @@
         height:600px;
         background-color: #ffffff;
         position: relative;
-        border-radius:20px;
+        border-radius:10px;
     }
     .dialogBgClass{
         width: 550px;
