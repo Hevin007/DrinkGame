@@ -2872,6 +2872,9 @@
 	                "playerId": function () {return this.player.playerId},
 	                "drinkNum": function () {return this.player.drinkArray.length},
 	                "cardNum": function () {return this.player.bag.length}
+	              },
+	              "events": {
+	                "click": "showBag"
 	              }
 	            }
 	          ]
@@ -2947,7 +2950,7 @@
 	      "shown": function () {return this.isShow.bagModal},
 	      "attr": {
 	        "playerId": function () {return this.showBag.playerId},
-	        "drinkNum": function () {return this.showBag.drinkArray.length},
+	        "drinkNum": function () {return this.showBag.drinkNum},
 	        "bag": function () {return this.showBag.bag}
 	      }
 	    },

@@ -6,7 +6,7 @@
                 <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
-                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}"></bag>
+                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
             <div class="helpBtn"><text class="helpText">？</text></div>
@@ -26,7 +26,7 @@
             </div>&ndash;&gt;
         </modal>-->
 
-        <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkArray.length}}" bag="{{showBag.bag}}"></bagModal>
+        <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
 
         <div id="cardDialog" class="dialog" if="{{isShow.cardModal}}">
             <div class="dialog-backdrop"></div>
