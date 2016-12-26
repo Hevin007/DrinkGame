@@ -16,6 +16,8 @@
                   </div>
                 </div>
                 <div style="align-items: center;">
+                    <!--以wxc-开头的组件为weex官方扩展组件，这些组件不属于内建组件的一部分，需要安装weex-components依赖
+                    还需要在<script>中引入依赖-->
                   <wxc-button type="primary" size="large" value="返回" onclick="closeBagModal"></wxc-button>
                 </div>
             </div>

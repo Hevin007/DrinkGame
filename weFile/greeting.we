@@ -22,6 +22,8 @@
         },
         methods: {
             toSelectNum: function() {
+                //子组件通过this._parent 找到父组件，然后再调用 this._parent.$emit(type, detail) 方法，即可实现从子组件到父组件的通信
+                //其中type为事件名称，detail为参数，采用对象的形式
                 this._parent.$emit('toSelectNum');
             }
         }

@@ -47,8 +47,8 @@
 	__webpack_require__(1)
 	__webpack_require__(5)
 	__webpack_require__(9)
-	var __weex_template__ = __webpack_require__(103)
-	var __weex_script__ = __webpack_require__(104)
+	var __weex_template__ = __webpack_require__(119)
+	var __weex_script__ = __webpack_require__(120)
 
 	__weex_define__('@weex-component/47aaca89b07ca2a4f4e2f1a333d0a251', [], function(__weex_require__, __weex_exports__, __weex_module__) {
 
@@ -407,9 +407,13 @@
 
 	__webpack_require__(10)
 	__webpack_require__(14)
-	var __weex_template__ = __webpack_require__(100)
-	var __weex_style__ = __webpack_require__(101)
-	var __weex_script__ = __webpack_require__(102)
+	__webpack_require__(100)
+	__webpack_require__(104)
+	__webpack_require__(108)
+	__webpack_require__(112)
+	var __weex_template__ = __webpack_require__(116)
+	var __weex_style__ = __webpack_require__(117)
+	var __weex_script__ = __webpack_require__(118)
 
 	__weex_define__('@weex-component/main', [], function(__weex_require__, __weex_exports__, __weex_module__) {
 
@@ -2793,6 +2797,970 @@
 
 /***/ },
 /* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __weex_template__ = __webpack_require__(101)
+	var __weex_style__ = __webpack_require__(102)
+	var __weex_script__ = __webpack_require__(103)
+
+	__weex_define__('@weex-component/cardmodaluse', [], function(__weex_require__, __weex_exports__, __weex_module__) {
+
+	    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
+	    if (__weex_exports__.__esModule && __weex_exports__.default) {
+	      __weex_module__.exports = __weex_exports__.default
+	    }
+
+	    __weex_module__.exports.template = __weex_template__
+
+	    __weex_module__.exports.style = __weex_style__
+
+	})
+
+
+/***/ },
+/* 101 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "div",
+	  "id": "cardDialog",
+	  "classList": [
+	    "dialog"
+	  ],
+	  "children": [
+	    {
+	      "type": "div",
+	      "classList": [
+	        "dialog-backdrop"
+	      ]
+	    },
+	    {
+	      "type": "div",
+	      "classList": [
+	        "dialog-content"
+	      ],
+	      "children": [
+	        {
+	          "type": "image",
+	          "classList": [
+	            "dialogBgClass"
+	          ],
+	          "attr": {
+	            "src": function () {return this.dialogBgImg}
+	          }
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-body"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "cardTipDiv"
+	              ],
+	              "children": [
+	                {
+	                  "type": "image",
+	                  "attr": {
+	                    "src": function () {return this.cardImgUrl}
+	                  },
+	                  "classList": [
+	                    "cardClass"
+	                  ]
+	                },
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "cardTipText"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.cardTips}
+	                  }
+	                }
+	              ]
+	            },
+	            {
+	              "type": "div",
+	              "classList": [
+	                "cardUseDiv"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "cardUseText"
+	                  ],
+	                  "events": {
+	                    "click": "useCard"
+	                  },
+	                  "attr": {
+	                    "value": "立即使用"
+	                  }
+	                }
+	              ]
+	            }
+	          ]
+	        }
+	      ]
+	    }
+	  ]
+	}
+
+/***/ },
+/* 102 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "dialog-backdrop": {
+	    "opacity": 0.5,
+	    "position": "absolute",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "backgroundColor": "#000000"
+	  },
+	  "dialog": {
+	    "position": "fixed",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "justifyContent": "center",
+	    "alignItems": "center"
+	  },
+	  "dialog-content": {
+	    "width": 550,
+	    "height": 600,
+	    "backgroundColor": "#ffffff",
+	    "position": "relative",
+	    "borderRadius": 20
+	  },
+	  "dialogBgClass": {
+	    "width": 550,
+	    "height": 600
+	  },
+	  "dialog-body": {
+	    "position": "absolute",
+	    "top": 0,
+	    "height": 600,
+	    "width": 550
+	  },
+	  "cardTipDiv": {
+	    "paddingTop": 130,
+	    "paddingLeft": 40,
+	    "paddingRight": 20,
+	    "flexDirection": "row",
+	    "justifyContent": "space-between"
+	  },
+	  "cardTipText": {
+	    "width": 280,
+	    "backgroundColor": "#FFFFFF",
+	    "borderColor": "#FFFFFF",
+	    "color": "#000000"
+	  },
+	  "cardClass": {
+	    "width": 200,
+	    "height": 250,
+	    "borderWidth": 1,
+	    "borderColor": "#9BADA7"
+	  },
+	  "cardUseDiv": {
+	    "width": 200,
+	    "height": 80,
+	    "justifyContent": "center",
+	    "borderColor": "#E2C3A0",
+	    "borderWidth": 1,
+	    "borderRadius": 10,
+	    "marginTop": 45,
+	    "marginLeft": 175
+	  },
+	  "cardUseText": {
+	    "color": "#C52E38",
+	    "fontSize": 40,
+	    "textAlign": "center",
+	    "fontWeight": "bold"
+	  }
+	}
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, __weex_require__){"use strict";
+
+	__webpack_require__(18);
+	module.exports = {
+	    data: function () {return {
+	        dialogBgImg: "https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
+	        cardImgUrl: null,
+	        cardTips: null
+	    }},
+	    methods: {
+	        useCard: function useCard() {
+	            this._parent.$emit("useCard");
+	        }
+	    }
+	};}
+	/* generated by weex-loader */
+
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __weex_template__ = __webpack_require__(105)
+	var __weex_style__ = __webpack_require__(106)
+	var __weex_script__ = __webpack_require__(107)
+
+	__weex_define__('@weex-component/cardmodalsave', [], function(__weex_require__, __weex_exports__, __weex_module__) {
+
+	    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
+	    if (__weex_exports__.__esModule && __weex_exports__.default) {
+	      __weex_module__.exports = __weex_exports__.default
+	    }
+
+	    __weex_module__.exports.template = __weex_template__
+
+	    __weex_module__.exports.style = __weex_style__
+
+	})
+
+
+/***/ },
+/* 105 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "div",
+	  "id": "cardDialog",
+	  "classList": [
+	    "dialog"
+	  ],
+	  "children": [
+	    {
+	      "type": "div",
+	      "classList": [
+	        "dialog-backdrop"
+	      ]
+	    },
+	    {
+	      "type": "div",
+	      "classList": [
+	        "dialog-content"
+	      ],
+	      "children": [
+	        {
+	          "type": "image",
+	          "classList": [
+	            "dialogBgClass"
+	          ],
+	          "attr": {
+	            "src": function () {return this.dialogBgImg}
+	          }
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-body"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "cardTipDiv"
+	              ],
+	              "children": [
+	                {
+	                  "type": "image",
+	                  "attr": {
+	                    "src": function () {return this.cardImgUrl}
+	                  },
+	                  "classList": [
+	                    "cardClass"
+	                  ]
+	                },
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "cardTipText"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.cardTips}
+	                  }
+	                }
+	              ]
+	            },
+	            {
+	              "type": "div",
+	              "classList": [
+	                "cardStoreDiv"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "cardStoreText"
+	                  ],
+	                  "events": {
+	                    "click": "saveToBag"
+	                  },
+	                  "attr": {
+	                    "value": "存入包裹"
+	                  }
+	                }
+	              ]
+	            }
+	          ]
+	        }
+	      ]
+	    }
+	  ]
+	}
+
+/***/ },
+/* 106 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "dialog-backdrop": {
+	    "opacity": 0.5,
+	    "position": "absolute",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "backgroundColor": "#000000"
+	  },
+	  "dialog": {
+	    "position": "fixed",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "justifyContent": "center",
+	    "alignItems": "center"
+	  },
+	  "dialog-content": {
+	    "width": 550,
+	    "height": 600,
+	    "backgroundColor": "#ffffff",
+	    "position": "relative",
+	    "borderRadius": 20
+	  },
+	  "dialogBgClass": {
+	    "width": 550,
+	    "height": 600
+	  },
+	  "dialog-body": {
+	    "position": "absolute",
+	    "top": 0,
+	    "height": 600,
+	    "width": 550
+	  },
+	  "cardTipDiv": {
+	    "paddingTop": 130,
+	    "paddingLeft": 40,
+	    "paddingRight": 20,
+	    "flexDirection": "row",
+	    "justifyContent": "space-between"
+	  },
+	  "cardTipText": {
+	    "width": 280,
+	    "backgroundColor": "#FFFFFF",
+	    "borderColor": "#FFFFFF",
+	    "color": "#000000"
+	  },
+	  "cardClass": {
+	    "width": 200,
+	    "height": 250,
+	    "borderWidth": 1,
+	    "borderColor": "#9BADA7"
+	  },
+	  "cardStoreDiv": {
+	    "width": 200,
+	    "height": 80,
+	    "justifyContent": "center",
+	    "borderColor": "#E2C3A0",
+	    "borderWidth": 1,
+	    "borderRadius": 10,
+	    "marginTop": 45,
+	    "marginLeft": 175
+	  },
+	  "cardStoreText": {
+	    "color": "#C52E38",
+	    "fontSize": 40,
+	    "textAlign": "center",
+	    "fontWeight": "bold"
+	  }
+	}
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, __weex_require__){"use strict";
+
+	__webpack_require__(18);
+	module.exports = {
+	    data: function () {return {
+	        dialogBgImg: "https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
+	        cardImgUrl: null,
+	        cardTips: null
+	    }},
+	    methods: {
+	        saveToBag: function saveToBag() {
+	            this._parent.$emit("saveToBag");
+	        }
+	    }
+	};}
+	/* generated by weex-loader */
+
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __weex_template__ = __webpack_require__(109)
+	var __weex_style__ = __webpack_require__(110)
+	var __weex_script__ = __webpack_require__(111)
+
+	__weex_define__('@weex-component/juedoumodal', [], function(__weex_require__, __weex_exports__, __weex_module__) {
+
+	    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
+	    if (__weex_exports__.__esModule && __weex_exports__.default) {
+	      __weex_module__.exports = __weex_exports__.default
+	    }
+
+	    __weex_module__.exports.template = __weex_template__
+
+	    __weex_module__.exports.style = __weex_style__
+
+	})
+
+
+/***/ },
+/* 109 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "div",
+	  "children": [
+	    {
+	      "type": "div",
+	      "id": "dialog",
+	      "classList": [
+	        "dialog"
+	      ],
+	      "shown": function () {return this.ifshow},
+	      "children": [
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-backdrop"
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-content"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-header"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "dialog-title"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.dialogTitle}
+	                  }
+	                }
+	              ]
+	            },
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-body"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "random_player"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return '玩家' + (this.randomPlayerId)}
+	                  }
+	                },
+	                {
+	                  "type": "div",
+	                  "style": {
+	                    "alignItems": "center"
+	                  },
+	                  "children": [
+	                    {
+	                      "type": "wxc-button",
+	                      "attr": {
+	                        "type": "primary",
+	                        "size": "large",
+	                        "value": "开始决斗"
+	                      },
+	                      "events": {
+	                        "click": "startJuedou"
+	                      }
+	                    }
+	                  ]
+	                }
+	              ]
+	            }
+	          ]
+	        }
+	      ]
+	    }
+	  ]
+	}
+
+/***/ },
+/* 110 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "dialog-backdrop": {
+	    "opacity": 0.7,
+	    "position": "absolute",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "backgroundColor": "#000000"
+	  },
+	  "dialog": {
+	    "position": "fixed",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "justifyContent": "center",
+	    "alignItems": "center"
+	  },
+	  "dialog-content": {
+	    "width": 550,
+	    "backgroundColor": "#FFFFFF",
+	    "border": "2px solid white",
+	    "borderRadius": 10,
+	    "position": "relative"
+	  },
+	  "dialog-header": {
+	    "padding": 20,
+	    "borderBottom": "1px solid #CCCCCC",
+	    "position": "relative"
+	  },
+	  "dialog-title": {
+	    "fontSize": 20,
+	    "textAlign": "center",
+	    "color": "#000000"
+	  },
+	  "random_player": {
+	    "fontSize": 30,
+	    "textAlign": "center",
+	    "color": "#000000"
+	  },
+	  "dialog-body": {
+	    "padding": 20
+	  }
+	}
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, __weex_require__){'use strict';
+
+	__webpack_require__(18);
+	module.exports = {
+	    data: function () {return {
+	        currentPlayer: null
+	    }},
+	    computed: {
+	        randomPlayerId: function randomPlayerId() {
+	            var x = parseInt(Math.random() * 14);
+	            while (x == this.current_player) {
+	                x = parseInt(Math.random() * 14);
+	            }
+	            return x;
+	        },
+	        dialogTitle: function dialogTitle() {
+	            return '玩家' + this.currentPlayer + '的决斗对象是:';
+	        }
+	    },
+	    methods: {
+	        startJuedou: function startJuedou() {
+	            this._parent.$emit("startJuedou");
+	        }
+	    }
+	};}
+	/* generated by weex-loader */
+
+
+/***/ },
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __weex_template__ = __webpack_require__(113)
+	var __weex_style__ = __webpack_require__(114)
+	var __weex_script__ = __webpack_require__(115)
+
+	__weex_define__('@weex-component/randomfailmodal', [], function(__weex_require__, __weex_exports__, __weex_module__) {
+
+	    __weex_script__(__weex_module__, __weex_exports__, __weex_require__)
+	    if (__weex_exports__.__esModule && __weex_exports__.default) {
+	      __weex_module__.exports = __weex_exports__.default
+	    }
+
+	    __weex_module__.exports.template = __weex_template__
+
+	    __weex_module__.exports.style = __weex_style__
+
+	})
+
+
+/***/ },
+/* 113 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "type": "div",
+	  "children": [
+	    {
+	      "type": "div",
+	      "id": "dialog1",
+	      "classList": [
+	        "dialog"
+	      ],
+	      "children": [
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-backdrop"
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-content"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-header"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "dialog-title"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.dialogTitle}
+	                  }
+	                }
+	              ]
+	            },
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-body"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "select_player"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.select_player}
+	                  }
+	                },
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "select_btn"
+	                  ],
+	                  "events": {
+	                    "click": "selectDepend"
+	                  },
+	                  "attr": {
+	                    "value": function () {return this.btn}
+	                  }
+	                },
+	                {
+	                  "type": "div",
+	                  "style": {
+	                    "alignItems": "center"
+	                  },
+	                  "children": [
+	                    {
+	                      "type": "wxc-button",
+	                      "attr": {
+	                        "type": "primary",
+	                        "size": "large",
+	                        "value": "确定"
+	                      },
+	                      "events": {
+	                        "click": "startPunish"
+	                      }
+	                    }
+	                  ]
+	                }
+	              ]
+	            }
+	          ]
+	        }
+	      ]
+	    },
+	    {
+	      "type": "div",
+	      "id": "dialog2",
+	      "classList": [
+	        "dialog"
+	      ],
+	      "shown": function () {return this.selectifshow},
+	      "children": [
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-backdrop"
+	          ]
+	        },
+	        {
+	          "type": "div",
+	          "classList": [
+	            "dialog-content"
+	          ],
+	          "children": [
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-header"
+	              ],
+	              "children": [
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "dialog-title"
+	                  ],
+	                  "attr": {
+	                    "value": function () {return this.select_dialog}
+	                  }
+	                },
+	                {
+	                  "type": "text",
+	                  "classList": [
+	                    "close"
+	                  ],
+	                  "events": {
+	                    "click": "closeselectdialog"
+	                  },
+	                  "attr": {
+	                    "value": "×"
+	                  }
+	                }
+	              ]
+	            },
+	            {
+	              "type": "div",
+	              "classList": [
+	                "dialog-body"
+	              ],
+	              "children": [
+	                {
+	                  "type": "list",
+	                  "classList": [
+	                    "select_list"
+	                  ],
+	                  "children": [
+	                    {
+	                      "type": "cell",
+	                      "append": "tree",
+	                      "repeat": {
+	                        "expression": function () {return this.arr},
+	                        "value": "item"
+	                      },
+	                      "children": [
+	                        {
+	                          "type": "div",
+	                          "children": [
+	                            {
+	                              "type": "text",
+	                              "classList": [
+	                                "list_item"
+	                              ],
+	                              "events": {
+	                                "click": "doselect"
+	                              },
+	                              "attr": {
+	                                "value": function () {return '玩家' + (this.arr[this.$index].id)}
+	                              }
+	                            }
+	                          ]
+	                        }
+	                      ]
+	                    }
+	                  ]
+	                }
+	              ]
+	            }
+	          ]
+	        }
+	      ]
+	    }
+	  ]
+	}
+
+/***/ },
+/* 114 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  "dialog-backdrop": {
+	    "opacity": 0.7,
+	    "position": "absolute",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "backgroundColor": "#000000"
+	  },
+	  "dialog": {
+	    "position": "fixed",
+	    "top": 0,
+	    "right": 0,
+	    "bottom": 0,
+	    "left": 0,
+	    "justifyContent": "center",
+	    "alignItems": "center"
+	  },
+	  "dialog-content": {
+	    "width": 550,
+	    "backgroundColor": "#FFFFFF",
+	    "border": "2px solid black",
+	    "borderRadius": 10,
+	    "position": "relative"
+	  },
+	  "dialog-header": {
+	    "padding": 20,
+	    "position": "relative"
+	  },
+	  "dialog-title": {
+	    "fontSize": 35,
+	    "color": "#000000"
+	  },
+	  "select_player": {
+	    "flex": 3,
+	    "border": "1px solid pink",
+	    "fontSize": 45,
+	    "textAlign": "left",
+	    "color": "#000000"
+	  },
+	  "select_player1": {
+	    "fontSize": 20,
+	    "color": "#000000"
+	  },
+	  "selectnum": {
+	    "width": 30
+	  },
+	  "select_btn": {
+	    "flex": 1,
+	    "color": "#000000",
+	    "fontSize": 50
+	  },
+	  "dialog-body": {
+	    "border": "1px solid red",
+	    "flexDirection": "row",
+	    "justifyContent": "center",
+	    "padding": 20
+	  },
+	  "close": {
+	    "fontSize": 20,
+	    "color": "#000000",
+	    "position": "absolute",
+	    "right": 10,
+	    "top": 10
+	  },
+	  "select_list": {
+	    "height": 300
+	  },
+	  "list_item": {
+	    "fontSize": 32
+	  }
+	}
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module, exports, __weex_require__){'use strict';
+
+	__webpack_require__(18);
+	var dom = __weex_require__('@weex-module/dom');
+	module.exports = {
+	    data: function () {return {
+	        arr: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 }, { id: 10 }, { id: 11 }, { id: 12 }, { id: 13 }, { id: 14 }],
+	        currentPlayer: null,
+	        select_dialog: '请选择：',
+	        selectifshow: false,
+	        select_player: "",
+	        dialogTitle: '落败的玩家是:',
+	        btn: "选择"
+	    }},
+	    created: function created() {
+
+	        this.arr.splice(this.currentPlayer - 1, 1);
+	    },
+	    methods: {
+	        closedialog: function closedialog() {
+	            this.ifshow = false;
+	        },
+	        opendialog2: function opendialog2() {
+	            this.selectifshow = true;
+	        },
+	        selectDepend: function selectDepend() {
+	            if (this.btn == "选择") {
+	                this.selectifshow = true;
+	                this.ifshow = false;
+	            } else {
+	                this.ifshow = false;
+	            }
+	        },
+	        closeselectdialog: function closeselectdialog() {
+	            this.selectifshow = false;
+	            this.ifshow = true;
+	        },
+	        doselect: function doselect(e) {
+	            this.ifshow = true;
+	            this.selectifshow = false;
+	            this.select_player = e.target.attr.value;
+	            this.btn = "确定";
+	        },
+	        startPunish: function startPunish() {
+	            this._parent.$emit("startPunish");
+	        }
+	    }
+	};}
+	/* generated by weex-loader */
+
+
+/***/ },
+/* 116 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2918,7 +3886,7 @@
 	            "paidui"
 	          ],
 	          "events": {
-	            "click": "selectCard"
+	            "click": "showCard"
 	          }
 	        }
 	      ]
@@ -2933,99 +3901,40 @@
 	      }
 	    },
 	    {
-	      "type": "div",
-	      "id": "cardDialog",
-	      "classList": [
-	        "dialog"
-	      ],
-	      "shown": function () {return this.isShow.cardModal},
-	      "children": [
-	        {
-	          "type": "div",
-	          "classList": [
-	            "dialog-backdrop"
-	          ]
-	        },
-	        {
-	          "type": "div",
-	          "classList": [
-	            "dialog-content"
-	          ],
-	          "children": [
-	            {
-	              "type": "div",
-	              "classList": [
-	                "dialog-body"
-	              ],
-	              "children": [
-	                {
-	                  "type": "image",
-	                  "attr": {
-	                    "src": function () {return this.currCardImgUrl}
-	                  },
-	                  "classList": [
-	                    "cardClass"
-	                  ]
-	                },
-	                {
-	                  "type": "div",
-	                  "classList": [
-	                    "cardBtnClass"
-	                  ],
-	                  "children": [
-	                    {
-	                      "type": "div",
-	                      "classList": [
-	                        "cardUseDiv"
-	                      ],
-	                      "children": [
-	                        {
-	                          "type": "text",
-	                          "classList": [
-	                            "cardUseText"
-	                          ],
-	                          "events": {
-	                            "click": "closeCardDialog"
-	                          },
-	                          "attr": {
-	                            "value": "立即使用"
-	                          }
-	                        }
-	                      ]
-	                    },
-	                    {
-	                      "type": "div",
-	                      "classList": [
-	                        "cardStoreDiv"
-	                      ],
-	                      "children": [
-	                        {
-	                          "type": "text",
-	                          "classList": [
-	                            "cardStoreText"
-	                          ],
-	                          "events": {
-	                            "click": "storeToBag"
-	                          },
-	                          "attr": {
-	                            "value": "存入包裹"
-	                          }
-	                        }
-	                      ]
-	                    }
-	                  ]
-	                }
-	              ]
-	            }
-	          ]
-	        }
-	      ]
+	      "type": "cardmodaluse",
+	      "shown": function () {return this.isShow.cardModalUse},
+	      "attr": {
+	        "cardImgUrl": function () {return this.showCard.currCardImgUrl},
+	        "cardTips": function () {return this.showCard.currCardTips}
+	      }
+	    },
+	    {
+	      "type": "cardmodalsave",
+	      "shown": function () {return this.isShow.cardModalSave},
+	      "attr": {
+	        "cardImgUrl": function () {return this.showCard.currCardImgUrl},
+	        "cardTips": function () {return this.showCard.currCardTips}
+	      }
+	    },
+	    {
+	      "type": "juedoumodal",
+	      "shown": function () {return this.isShow.juedouModal},
+	      "attr": {
+	        "currentPlayer": function () {return this.currPlayerId}
+	      }
+	    },
+	    {
+	      "type": "randomfailmodal",
+	      "shown": function () {return this.isShow.randomFailModal},
+	      "attr": {
+	        "currentPlayer": function () {return this.currPlayerId}
+	      }
 	    }
 	  ]
 	}
 
 /***/ },
-/* 101 */
+/* 117 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -3164,7 +4073,7 @@
 	}
 
 /***/ },
-/* 102 */
+/* 118 */
 /***/ function(module, exports) {
 
 	module.exports = function(module, exports, __weex_require__){"use strict";
@@ -3176,7 +4085,6 @@
 
 	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
 	        paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
-
 	        currPlayerId: 1,
 	        playerNum: 10,
 	        leftPlayerNum: 0,
@@ -3184,10 +4092,12 @@
 	        leftPlayer: [],
 	        rightPlayer: [],
 	        currCardOrder: [],
-
 	        isShow: {
 	            bagModal: false,
-	            cardModal: false
+	            cardModalUse: false,
+	            cardModalSave: false,
+	            juedouModal: false,
+	            randomFailModal: false
 	        },
 
 	        showBag: {
@@ -3195,12 +4105,47 @@
 	            drinkNum: 0,
 	            bag: []
 	        },
-	        currCardImgUrl: null,
-	        currCardNum: null }},
+
+	        showCard: {
+	            currCardImgUrl: null,
+	            currCardTips: null,
+	            currCardNum: null },
+
+	        cardTipsArr: ["", "决斗牌：随机选择一位玩家进行决斗，输的玩家喝酒一杯，立刻发动。", "免酒牌：能免除一次喝酒的惩罚，可保存到自己的包裹内，待到需要时使用。", "照相机牌：随时喊出照相机三个字即可使用，大家必须保持现有动作静止，10s内最先动的玩家罚酒一杯。", "录音机牌：随时喊出录音机三个字即可使用，前一秒说话的玩家需重复自己刚才说过的话，说错罚酒一杯。", "摸鼻子牌：随时摸自己的鼻子即为发动技能，剩余所有玩家必须都跟着摸自己的鼻子，最后一位摸鼻子的玩家罚酒一杯。", "玩游戏牌：在场所有玩家一块玩游戏，输的玩家罚酒一杯，游戏形式自行指定。", "神经病牌：抽到此牌的玩家变身成一个'神经病'，所有玩家均不可与该玩家搭话，否则罚酒一杯。", "如厕牌：可存入到自己的包裹中，待需要上厕所时使用，限使用一次。", "陪酒牌：游戏中其他玩家无论以何种方式受罚喝酒均可邀请该玩家陪酒，直到下一张陪酒牌出现。", "轮空牌：直接轮空，不进行任何操作。", "抽到本张牌的玩家的上家罚酒一杯。", "抽到本张牌的玩家的下家罚酒一杯。", "抽到本张牌的玩家自罚一杯。", "抽到本张牌的玩家自罚两杯。", "抽到本张牌的玩家自罚三杯。"],
+
+	        cardTipForBag: ["", "", "免酒牌", "照相机牌", "录音机牌", "摸鼻子牌", "", "神经病牌", "如厕牌", "陪酒牌"]
+	    }},
+
 	    created: function created() {
 	        this.$on("closeBagModal", function (event) {
 	            this.isShow.bagModal = false;
 	        });
+
+	        this.$on("useCard", function (event) {
+	            var modal = __weex_require__('@weex-module/modal');
+	            this.isShow.cardModalUse = false;
+
+	            if (this.showCard.currCardNum == 1) {
+	                this.isShow.juedouModal = true;
+	            } else if (this.showCard.currCardNum == 6) {
+	                    this.isShow.randomFailModal = true;
+	                } else if (this.showCard.currCardNum == 7 || this.showCard.currCardNum == 9) {} else if (this.showCard.currCardNum == 11) {} else if (this.showCard.currCardNum == 12) {} else if (this.showCard.currCardNum == 13) {} else if (this.showCard.currCardNum == 14) {} else if (this.showCard.currCardNum == 15) {}
+	            this.currPlayerId++;
+	        });
+
+	        this.$on("saveToBag", function (event) {
+	            this.isShow.cardModalSave = false;
+	            this.currPlayerId++;
+	        });
+
+	        this.$on("startJuedou", function (event) {
+	            modal.alert({
+	                'message': '落败的玩家是：玩家X OR 玩家Y',
+	                'okTitle': '确定'
+	            });
+	        });
+
+	        this.$on("startPunish", function (event) {});
 	    },
 
 	    ready: function ready() {
@@ -3246,11 +4191,23 @@
 	                }
 	        },
 
-	        selectCard: function selectCard() {
+	        showCard: function showCard() {
 	            var cardId = this.currCardOrder[0];
-	            this.currCardNum = parseInt(cardId / 4) + 1;
-	            this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card" + cardId + ".png";
-	            this.isShow.cardModal = true;
+	            if (cardId != 53) {
+	                this.showCard.currCardNum = parseInt(cardId / 4) + 1;
+	            } else {
+	                this.showCard.currCardNum = 15;
+	            }
+
+
+	            this.showCard.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/newCardImg/" + cardId + ".png";
+	            this.showCard.currCardTips = this.cardTipsArr[this.showCard.currCardNum];
+
+	            if (this.showCard.currCardNum == 2 || this.showCard.currCardNum == 3 || this.showCard.currCardNum == 4 || this.showCard.currCardNum == 5 || this.showCard.currCardNum == 8) {
+	                this.isShow.cardModalSave = true;
+	            } else {
+	                this.isShow.cardModalUse = true;
+	            }
 	            this.currCardOrder.shift();
 	        },
 
@@ -3280,7 +4237,7 @@
 
 
 /***/ },
-/* 103 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -3302,7 +4259,7 @@
 	}
 
 /***/ },
-/* 104 */
+/* 120 */
 /***/ function(module, exports) {
 
 	module.exports = function(module, exports, __weex_require__){"use strict";

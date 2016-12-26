@@ -16,6 +16,8 @@
       }
     },
     created: function() {
+        //父组件通过this.$on(type,handler)监听特定类型的自定义事件
+        //event.detail即可获取子组件传过来的参数
       this.$on("toSelectNum", function(event) {
         this.isShow.selectNum = true;
         this.isShow.greeting = false;
