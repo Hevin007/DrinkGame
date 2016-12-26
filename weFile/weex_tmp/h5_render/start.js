@@ -221,7 +221,7 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.jpg"
+	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.png"
 	    }},
 	    methods: {
 	        toSelectNum: function toSelectNum() {
@@ -3254,7 +3254,6 @@
 	      "classList": [
 	        "dialog"
 	      ],
-	      "shown": function () {return this.ifshow},
 	      "children": [
 	        {
 	          "type": "div",
@@ -3303,14 +3302,15 @@
 	                {
 	                  "type": "div",
 	                  "style": {
-	                    "alignItems": "center"
+	                    "alignItems": "center",
+	                    "marginTop": 20
 	                  },
 	                  "children": [
 	                    {
 	                      "type": "wxc-button",
 	                      "attr": {
 	                        "type": "primary",
-	                        "size": "large",
+	                        "size": "middle",
 	                        "value": "开始决斗"
 	                      },
 	                      "events": {
@@ -3482,37 +3482,46 @@
 	              ],
 	              "children": [
 	                {
-	                  "type": "text",
-	                  "classList": [
-	                    "select_player"
-	                  ],
-	                  "attr": {
-	                    "value": function () {return this.select_player}
-	                  }
-	                },
-	                {
-	                  "type": "text",
-	                  "classList": [
-	                    "select_btn"
-	                  ],
-	                  "events": {
-	                    "click": "selectDepend"
+	                  "type": "div",
+	                  "style": {
+	                    "flexDirection": "row"
 	                  },
-	                  "attr": {
-	                    "value": function () {return this.btn}
-	                  }
+	                  "children": [
+	                    {
+	                      "type": "text",
+	                      "classList": [
+	                        "select_player"
+	                      ],
+	                      "attr": {
+	                        "value": function () {return this.select_player}
+	                      }
+	                    },
+	                    {
+	                      "type": "text",
+	                      "classList": [
+	                        "select_btn"
+	                      ],
+	                      "events": {
+	                        "click": "selectDepend"
+	                      },
+	                      "attr": {
+	                        "value": function () {return this.btn}
+	                      }
+	                    }
+	                  ]
 	                },
 	                {
 	                  "type": "div",
 	                  "style": {
-	                    "alignItems": "center"
+	                    "alignItems": "center",
+	                    "marginTop": 20
 	                  },
 	                  "children": [
 	                    {
 	                      "type": "wxc-button",
 	                      "attr": {
 	                        "type": "primary",
-	                        "size": "large",
+	                        "size": "middle",
 	                        "value": "确定"
 	                      },
 	                      "events": {
@@ -3685,7 +3694,6 @@
 	  },
 	  "dialog-body": {
 	    "border": "1px solid red",
-	    "flexDirection": "row",
 	    "justifyContent": "center",
 	    "padding": 20
 	  },
@@ -4083,7 +4091,7 @@
 	module.exports = {
 	    data: function () {return {
 
-	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.jpg",
+	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg.png",
 	        paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
 	        currPlayerId: 1,
 	        playerNum: 10,

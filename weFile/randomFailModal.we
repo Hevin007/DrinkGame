@@ -7,10 +7,12 @@
                     <text class="dialog-title">{{dialogTitle}}</text>
                 </div>
                 <div class="dialog-body">
-                    <text class="select_player">{{select_player}}</text>
-                    <text class="select_btn" onclick="selectDepend">{{btn}}</text>
-                    <div style="align-items: center;">
-                        <wxc-button type="primary" size="large" value="确定" onclick="startPunish"></wxc-button>
+                    <div style="flex-direction:row;">
+                        <text class="select_player">{{select_player}}</text>
+                        <text class="select_btn" onclick="selectDepend">{{btn}}</text>
+                    </div>
+                    <div style="align-items: center;margin-top: 20px;">
+                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
                     </div>
                 </div>
             </div>
@@ -179,7 +181,6 @@
     }
     .dialog-body {
         border:1px solid red;
-        flex-direction:row;
         justify-content:center;
         padding: 20;
     }
