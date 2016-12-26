@@ -3,10 +3,10 @@
         <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
         <div class="mainCont">
             <div class="leftPlayer">
-                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkNum}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
+                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
-                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkNum}}" card-num="{{player.bag.length}}"></bag>
+                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
             <div class="helpBtn"><text class="helpText">？</text></div>
@@ -26,7 +26,7 @@
             </div>&ndash;&gt;
         </modal>-->
 
-        <bagModal if="{{isShow.bagModal}}" playerId="{{showBag.playerId}}" drinkNum="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
+        <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkArray.length}}" bag="{{showBag.bag}}"></bagModal>
 
         <div id="cardDialog" class="dialog" if="{{isShow.cardModal}}">
             <div class="dialog-backdrop"></div>
@@ -34,10 +34,9 @@
                 <div class="dialog-body">
                     <image src="{{currCardImgUrl}}" class="cardClass"></image>
                     <div class="cardBtnClass">
-                        <div class="cardUseDiv"><text class="cardUseText" onclick="closeCardDialog">立即使用</text></div>
-                        <div class="cardStoreDiv"><text class="cardStoreText" onclick="storeToBag">存入包裹</text></div>
+                        <div class="cardUseDiv" if="{{isShow.btnUse}}"><text class="cardUseText" onclick="useCard">{{btnText.use}}</text></div>
+                        <div class="cardStoreDiv" if="{{isShow.btnStore}}"><text class="cardStoreText" onclick="storeToBag">{{btnText.store}}</text></div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -62,12 +61,19 @@
             leftPlayerNum:0,//左边玩家个数
             rightPlayerNum:0,//右边玩家个数
             leftPlayer:[],//左边玩家信息，包括id、bag、drinkNum、flag_9(是否拿有9牌)，该值在ready函数中进行初始化
+            // bag:[num:0, name:A]
             rightPlayer:[],//右边玩家信息
             currCardOrder:[],//存储当前的牌序，在ready函数中初始化
 
             isShow: {
                 bagModal: false,
-                cardModal:false
+                cardModal:false,
+                btnUse: true,
+                btnStore: true
+            },
+            btnText: {
+              use: '立即使用',
+              store: '存入包裹'
             },
 
             showBag: {
@@ -103,27 +109,33 @@
                 this.leftPlayerNum = num;
                 this.rightPlayerNum = num;
                 for(var i=1;i<=num;i++){
-                    var obj = {playerId:i,bag:[],drinkNum:0,flag_9:false}
+                    var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
                     this.leftPlayer.push(obj);
                 }
                 for(var j=num+1;j<=this.playerNum;j++){
-                    var obj = {playerId:j,bag:[],drinkNum:0,flag_9:false}
+                    var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
                     this.rightPlayer.push(obj);
                 }
             }else{
                 this.leftPlayerNum = num+1;
                 this.rightPlayerNum = num;
                 for(var i=1;i<=(num+1);i++){
-                    var obj = {playerId:i,bag:[],drinkNum:0,flag_9:false}
+                    var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
                     this.leftPlayer.push(obj);
                 }
                 for(var j=num+2;j<=this.playerNum;j++){
-                    var obj = {playerId:j,bag:[],drinkNum:0,flag_9:false}
+                    var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
                     this.rightPlayer.push(obj);
                 }
             }
         },
         methods:{
+
+            setDrinkNum: function(id) {
+              this.getPlayerById(id).drinkArray.push(1);
+            },
+
+          
 
             //玩家分leftPlayer和rightPlayer存储，访问不方便，下为统一访问函数
             getPlayerById : function(id) {
@@ -143,16 +155,56 @@
                 this.currCardNum = parseInt(cardId/4)+1;//牌值
                 this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card"+cardId+".png";//牌的图片url
                 //this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card0.png";//牌的图片url
+                //牌值不同的分支逻辑：显示按钮不同
+                
+                switch(this.currCardNum) {
+                  case 1:
+                  case 6:
+                    this.btnText.use = "立即使用";
+                    this.isShow.btnUse = true;
+                    this.isShow.btnStore = false;
+                    break;
+                  case 2:
+                  case 3:
+                  case 4:
+                  case 5:
+                  case 8:
+                    this.isShow.store = "存入包裹";
+                    this.isShow.btnUse = false;
+                    this.isShow.btnStore = true;
+                    break;
+                  case 7:
+                  case 9:
+                    this.isShow.store = "立即使用";
+                    this.isShow.btnUse = false;
+                    this.isShow.btnStore = true;
+                    break;
+                  case 10:
+                    this.btnText.use = "跳过";
+                    this.isShow.btnUse = true;
+                    this.isShow.btnStore = false;
+                    break;
+                  case 11:
+                  case 12:
+                  case 13:
+                  case 14:
+                    this.btnText.use = "接收惩罚";
+                    this.isShow.btnUse = true;
+                    this.isShow.btnStore = false;
+                    break;
+                }
                 this.isShow.cardModal = true;
                 this.currCardOrder.shift();
 
-                //牌值不同的分支逻辑：显示按钮不同
-
-
+              
             },
             
 
-            closeCardDialog:function(){
+            useCard:function(){
+                //调用惩罚函数
+                
+                this.drink(this.currPlayerId);
+
                 this.isShow.cardModal = false;
                 this.currPlayerId++;
             },
@@ -162,7 +214,8 @@
               //根据点击事件获取被点击的Bag的playerId
               this.showBag.playerId = e.target._vm.playerId;
               this.showBag.drinkNum = e.target._vm.drinkNum;
-              this.showBag.bag = this.getPlayerById(this.showBag.playerId);
+
+              this.showBag.bag = this.getPlayerById(this.showBag.playerId).bag;
               
 
               //根据playerId操作leftPlayer或rightPlayer并获取其中Bag
@@ -177,16 +230,69 @@
             storeToBag: function() {
                 //操作对应currPlayerId 的 Bag,存入卡牌
                 
-                // modal.toast({
-                //   'message': this.currPlayerId+"-"+this.leftPlayer[this.currPlayerId-1].playerId,
-                //   'duration': 2
-                // });
                 
-                this.getPlayerById(this.currPlayerId).bag.push(this.currCardNum);
+                var cardNode;
+                
+                cardNode = {
+                  num : this.currCardNum,
+                  name: parseInt(this.currCardNum/4)+1
+                }
+                
+                this.getPlayerById(this.currPlayerId).bag.push(cardNode);
 
                 // 收尾操作
                 this.isShow.cardModal = false;
                 this.currPlayerId++;
+            },
+
+            //接受惩罚函数
+            drink : function(drinkPlayerId) {
+              //根据drinkPlaerId找其bag，看是否有2牌
+              //  是：显示玩家drinkPlaerId有免酒卡，是否使用
+              //    是： 删除其bag中的2牌，回到主界面
+              //    否： 继续
+              //  否：遍历所有玩家，查找是否有flag_9=true，存其Id playerId_9，
+              //    是否需要其陪酒
+              //    是：drinkPlaerId->drinkNum++;
+              //        playerId_9->drinkNum++;
+              //    否：drinkPlaerId->drinkNum++;
+              //回主界面
+              //
+              
+              var drinkBag = this.getPlayerById(drinkPlayerId).bag;
+
+              for( var i in drinkBag) {
+                if(drinkBag[i].name==2) {
+                  modal.confirm({
+                    'message': '玩家'+drinkPlayerId+'有免酒卡，是否使用？',
+                    'okTitle': '使用',
+                    'cancelTitle': '不使用'
+                  }, function (e) {
+                    if(String(e)=="使用") {
+                      drinkBag.splice(i,1);
+                      return;
+                    }
+
+                  });
+                }
+              }
+
+              
+              for (var j;j<this.playerNum;j++) {
+                if(this.getPlayerById(j).flag_9==true) {
+                  modal.confirm({
+                    'message': '玩家'+drinkPlayerId+'有陪酒卡，是否让其陪酒？',
+                    'okTitle': '是',
+                    'cancelTitle': '否'
+                  }, function (e) {
+                    if(String(e)=="是") {
+                      this.setDrinkNum(j);
+                    }
+                  });
+                }
+              }
+              this.setDrinkNum(drinkPlayerId);
+
             }
         }
     }

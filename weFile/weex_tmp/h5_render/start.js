@@ -653,16 +653,16 @@
 	                "title"
 	              ],
 	              "attr": {
-	                "value": "玩家X的包裹"
+	                "value": function () {return '玩家' + (this.playerId) + '的包裹'}
 	              }
 	            },
 	            {
 	              "type": "text",
 	              "classList": [
-	                "title"
+	                "subTitle"
 	              ],
 	              "attr": {
-	                "value": "已喝X杯"
+	                "value": function () {return '已喝' + (this.drinkNum) + '杯'}
 	              }
 	            },
 	            {
@@ -788,6 +788,10 @@
 	    "textAlign": "center",
 	    "fontSize": 60
 	  },
+	  "subTitle": {
+	    "textAlign": "center",
+	    "fontSize": 30
+	  },
 	  "cardContainer": {
 	    "height": 180,
 	    "flexDirection": "row",
@@ -818,9 +822,24 @@
 	__webpack_require__(18);
 	module.exports = {
 	  data: function () {return {
-	    cardRow1: [{ name: "A" }, { name: "2" }, { name: "3" }],
-	    cardRow2: [{ name: "4" }, { name: "5" }, { name: "6" }]
+	    cardRow1: [],
+	    cardRow2: [],
+	    playerId: 0,
+	    drinkNum: 0,
+
+	    bag: []
 	  }},
+	  created: function created() {
+
+	    for (var i in this.bag) {
+
+	      if (i < 3) {
+	        this.cardRow1.push(this.bag[i]);
+	      } else {
+	        this.cardRow2.push(this.bag[i]);
+	      }
+	    }
+	  },
 	  methods: {
 	    closeBagModal: function closeBagModal() {
 	      this._parent.$emit("closeBagModal");
@@ -2828,7 +2847,7 @@
 	              },
 	              "attr": {
 	                "playerId": function () {return this.player.playerId},
-	                "drinkNum": function () {return this.player.drinkNum},
+	                "drinkNum": function () {return this.player.drinkArray.length},
 	                "cardNum": function () {return this.player.bag.length}
 	              },
 	              "events": {
@@ -2851,7 +2870,7 @@
 	              },
 	              "attr": {
 	                "playerId": function () {return this.player.playerId},
-	                "drinkNum": function () {return this.player.drinkNum},
+	                "drinkNum": function () {return this.player.drinkArray.length},
 	                "cardNum": function () {return this.player.bag.length}
 	              }
 	            }
@@ -2927,8 +2946,8 @@
 	      "type": "bagmodal",
 	      "shown": function () {return this.isShow.bagModal},
 	      "attr": {
-	        "playerid": function () {return this.showBag.playerId},
-	        "drinknum": function () {return this.showBag.drinkNum},
+	        "playerId": function () {return this.showBag.playerId},
+	        "drinkNum": function () {return this.showBag.drinkArray.length},
 	        "bag": function () {return this.showBag.bag}
 	      }
 	    },
@@ -2978,6 +2997,7 @@
 	                      "classList": [
 	                        "cardUseDiv"
 	                      ],
+	                      "shown": function () {return this.isShow.btnUse},
 	                      "children": [
 	                        {
 	                          "type": "text",
@@ -2985,10 +3005,10 @@
 	                            "cardUseText"
 	                          ],
 	                          "events": {
-	                            "click": "closeCardDialog"
+	                            "click": "useCard"
 	                          },
 	                          "attr": {
-	                            "value": "立即使用"
+	                            "value": function () {return this.btnText.use}
 	                          }
 	                        }
 	                      ]
@@ -2998,6 +3018,7 @@
 	                      "classList": [
 	                        "cardStoreDiv"
 	                      ],
+	                      "shown": function () {return this.isShow.btnStore},
 	                      "children": [
 	                        {
 	                          "type": "text",
@@ -3008,7 +3029,7 @@
 	                            "click": "storeToBag"
 	                          },
 	                          "attr": {
-	                            "value": "存入包裹"
+	                            "value": function () {return this.btnText.store}
 	                          }
 	                        }
 	                      ]
@@ -3172,109 +3193,203 @@
 	var modal = __weex_require__('@weex-module/modal');
 
 	module.exports = {
-	    data: function () {return {
+	  data: function () {return {
 
-	        bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
-	        paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
+	    bgImgSrc: "https://13111211.github.io/weexCompetition/imgs/background/bg3.jpg",
+	    paiduiImg: "https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",
 
-	        currPlayerId: 1,
-	        playerNum: 10,
-	        leftPlayerNum: 0,
-	        rightPlayerNum: 0,
-	        leftPlayer: [],
-	        rightPlayer: [],
-	        currCardOrder: [],
+	    currPlayerId: 1,
+	    playerNum: 10,
+	    leftPlayerNum: 0,
+	    rightPlayerNum: 0,
+	    leftPlayer: [],
+	    rightPlayer: [],
+	    currCardOrder: [],
 
-	        isShow: {
-	            bagModal: false,
-	            cardModal: false
-	        },
-
-	        showBag: {
-	            playerId: 1,
-	            drinkNum: 0,
-	            bag: []
-	        },
-	        currCardImgUrl: null,
-	        currCardNum: null }},
-	    created: function created() {
-	        this.$on("closeBagModal", function (event) {
-	            this.isShow.bagModal = false;
-	        });
+	    isShow: {
+	      bagModal: false,
+	      cardModal: false,
+	      btnUse: true,
+	      btnStore: true
+	    },
+	    btnText: {
+	      use: '立即使用',
+	      store: '存入包裹'
 	    },
 
-	    ready: function ready() {
-	        while (this.currCardOrder.length < 54) {
-	            var t = Math.floor(Math.random() * 54);
-	            if (this.currCardOrder.indexOf(t) == -1) {
-	                this.currCardOrder.push(t);
-	            }
-	        }
-
-	        var num = parseInt(this.playerNum / 2);
-
-	        if (this.playerNum % 2 == 0) {
-	            this.leftPlayerNum = num;
-	            this.rightPlayerNum = num;
-	            for (var i = 1; i <= num; i++) {
-	                var obj = { playerId: i, bag: [], drinkNum: 0, flag_9: false };
-	                this.leftPlayer.push(obj);
-	            }
-	            for (var j = num + 1; j <= this.playerNum; j++) {
-	                var obj = { playerId: j, bag: [], drinkNum: 0, flag_9: false };
-	                this.rightPlayer.push(obj);
-	            }
-	        } else {
-	            this.leftPlayerNum = num + 1;
-	            this.rightPlayerNum = num;
-	            for (var i = 1; i <= num + 1; i++) {
-	                var obj = { playerId: i, bag: [], drinkNum: 0, flag_9: false };
-	                this.leftPlayer.push(obj);
-	            }
-	            for (var j = num + 2; j <= this.playerNum; j++) {
-	                var obj = { playerId: j, bag: [], drinkNum: 0, flag_9: false };
-	                this.rightPlayer.push(obj);
-	            }
-	        }
+	    showBag: {
+	      playerId: 1,
+	      drinkNum: 0,
+	      bag: []
 	    },
-	    methods: {
-	        getPlayerById: function getPlayerById(id) {
-	            if (id <= this.leftPlayerNum) {
-	                return this.leftPlayer[id - 1];
-	            } else if (id <= this.playerNum) {
-	                    return this.rightPlayer[id - 1 - this.leftPlayerNum];
-	                }
-	        },
+	    currCardImgUrl: null,
+	    currCardNum: null }},
+	  created: function created() {
+	    this.$on("closeBagModal", function (event) {
+	      this.isShow.bagModal = false;
+	    });
+	  },
 
-	        selectCard: function selectCard() {
-	            var cardId = this.currCardOrder[0];
-	            this.currCardNum = parseInt(cardId / 4) + 1;
-	            this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card" + cardId + ".png";
-	            this.isShow.cardModal = true;
-	            this.currCardOrder.shift();
-	        },
-
-	        closeCardDialog: function closeCardDialog() {
-	            this.isShow.cardModal = false;
-	            this.currPlayerId++;
-	        },
-
-	        showBag: function showBag(e) {
-	            this.showBag.playerId = e.target._vm.playerId;
-	            this.showBag.drinkNum = e.target._vm.drinkNum;
-	            this.showBag.bag = this.getPlayerById(this.showBag.playerId);
-
-	            this.isShow.bagModal = true;
-	        },
-
-	        storeToBag: function storeToBag() {
-
-	            this.getPlayerById(this.currPlayerId).bag.push(this.currCardNum);
-
-	            this.isShow.cardModal = false;
-	            this.currPlayerId++;
-	        }
+	  ready: function ready() {
+	    while (this.currCardOrder.length < 54) {
+	      var t = Math.floor(Math.random() * 54);
+	      if (this.currCardOrder.indexOf(t) == -1) {
+	        this.currCardOrder.push(t);
+	      }
 	    }
+
+	    var num = parseInt(this.playerNum / 2);
+
+	    if (this.playerNum % 2 == 0) {
+	      this.leftPlayerNum = num;
+	      this.rightPlayerNum = num;
+	      for (var i = 1; i <= num; i++) {
+	        var obj = { playerId: i, bag: [], drinkNum: 0, drinkArray: [], flag_9: false };
+	        this.leftPlayer.push(obj);
+	      }
+	      for (var j = num + 1; j <= this.playerNum; j++) {
+	        var obj = { playerId: j, bag: [], drinkNum: 0, drinkArray: [], flag_9: false };
+	        this.rightPlayer.push(obj);
+	      }
+	    } else {
+	      this.leftPlayerNum = num + 1;
+	      this.rightPlayerNum = num;
+	      for (var i = 1; i <= num + 1; i++) {
+	        var obj = { playerId: i, bag: [], drinkNum: 0, drinkArray: [], flag_9: false };
+	        this.leftPlayer.push(obj);
+	      }
+	      for (var j = num + 2; j <= this.playerNum; j++) {
+	        var obj = { playerId: j, bag: [], drinkNum: 0, drinkArray: [], flag_9: false };
+	        this.rightPlayer.push(obj);
+	      }
+	    }
+	  },
+	  methods: {
+
+	    setDrinkNum: function setDrinkNum(id) {
+	      this.getPlayerById(id).drinkArray.push(1);
+	    },
+
+	    getPlayerById: function getPlayerById(id) {
+	      if (id <= this.leftPlayerNum) {
+	        return this.leftPlayer[id - 1];
+	      } else if (id <= this.playerNum) {
+	          return this.rightPlayer[id - 1 - this.leftPlayerNum];
+	        }
+	    },
+
+	    selectCard: function selectCard() {
+	      var cardId = this.currCardOrder[0];
+	      this.currCardNum = parseInt(cardId / 4) + 1;
+	      this.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/card/card" + cardId + ".png";
+
+	      switch (this.currCardNum) {
+	        case 1:
+	        case 6:
+	          this.btnText.use = "立即使用";
+	          this.isShow.btnUse = true;
+	          this.isShow.btnStore = false;
+	          break;
+	        case 2:
+	        case 3:
+	        case 4:
+	        case 5:
+	        case 8:
+	          this.isShow.store = "存入包裹";
+	          this.isShow.btnUse = false;
+	          this.isShow.btnStore = true;
+	          break;
+	        case 7:
+	        case 9:
+	          this.isShow.store = "立即使用";
+	          this.isShow.btnUse = false;
+	          this.isShow.btnStore = true;
+	          break;
+	        case 10:
+	          this.btnText.use = "跳过";
+	          this.isShow.btnUse = true;
+	          this.isShow.btnStore = false;
+	          break;
+	        case 11:
+	        case 12:
+	        case 13:
+	        case 14:
+	          this.btnText.use = "接收惩罚";
+	          this.isShow.btnUse = true;
+	          this.isShow.btnStore = false;
+	          break;
+	      }
+	      this.isShow.cardModal = true;
+	      this.currCardOrder.shift();
+	    },
+
+	    useCard: function useCard() {
+
+	      this.drink(this.currPlayerId);
+
+	      this.isShow.cardModal = false;
+	      this.currPlayerId++;
+	    },
+
+	    showBag: function showBag(e) {
+	      this.showBag.playerId = e.target._vm.playerId;
+	      this.showBag.drinkNum = e.target._vm.drinkNum;
+
+	      this.showBag.bag = this.getPlayerById(this.showBag.playerId).bag;
+
+	      this.isShow.bagModal = true;
+	    },
+
+	    storeToBag: function storeToBag() {
+
+	      var cardNode;
+
+	      cardNode = {
+	        num: this.currCardNum,
+	        name: parseInt(this.currCardNum / 4) + 1
+	      };
+
+	      this.getPlayerById(this.currPlayerId).bag.push(cardNode);
+
+	      this.isShow.cardModal = false;
+	      this.currPlayerId++;
+	    },
+
+	    drink: function drink(drinkPlayerId) {
+
+	      var drinkBag = this.getPlayerById(drinkPlayerId).bag;
+
+	      for (var i in drinkBag) {
+	        if (drinkBag[i].name == 2) {
+	          modal.confirm({
+	            'message': '玩家' + drinkPlayerId + '有免酒卡，是否使用？',
+	            'okTitle': '使用',
+	            'cancelTitle': '不使用'
+	          }, function (e) {
+	            if (String(e) == "使用") {
+	              drinkBag.splice(i, 1);
+	              return;
+	            }
+	          });
+	        }
+	      }
+
+	      for (var j; j < this.playerNum; j++) {
+	        if (this.getPlayerById(j).flag_9 == true) {
+	          modal.confirm({
+	            'message': '玩家' + drinkPlayerId + '有陪酒卡，是否让其陪酒？',
+	            'okTitle': '是',
+	            'cancelTitle': '否'
+	          }, function (e) {
+	            if (String(e) == "是") {
+	              this.setDrinkNum(j);
+	            }
+	          });
+	        }
+	      }
+	      this.setDrinkNum(drinkPlayerId);
+	    }
+	  }
 	};}
 	/* generated by weex-loader */
 

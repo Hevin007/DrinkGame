@@ -3,8 +3,8 @@
         <div class="dialog-backdrop"></div>
         <div class="dialog-content">
             <div class="dialog-body">
-                <text class="title">玩家X的包裹</text>>
-                <text class="title">已喝X杯</text>>
+                <text class="title">玩家{{playerId}}的包裹</text>>
+                <text class="subTitle">已喝{{drinkNum}}杯</text>>
                 <div class="cardContainer">
                   <div repeat="card in cardRow1" class="smallCard">
                       <text class="cardText">{{card.name}}</text>
@@ -27,16 +27,24 @@
     require('weex-components');
     module.exports = {
         data: {
-            cardRow1: [
-              { name: "A" },
-              { name: "2" },
-              { name: "3" }
-            ],
-            cardRow2: [
-              { name: "4" },
-              { name: "5" },
-              { name: "6" }
-            ]
+            cardRow1: [],
+            cardRow2: [],
+            playerId: 0,
+            drinkNum: 0,
+            // bag:[num:0, name:A]
+            bag: []
+        },
+        created: function() {
+          
+          for ( var i in this.bag) {
+            
+            if( i<3) {
+              this.cardRow1.push(this.bag[i]);
+            }
+            else {
+              this.cardRow2.push(this.bag[i]);
+            }
+          }
         },
         methods: {
           closeBagModal: function() {
@@ -77,6 +85,10 @@
     .title {
       text-align: center;
       font-size: 60;
+    }
+    .subTitle {
+      text-align: center;
+      font-size: 30;
     }
     .cardContainer {
       height: 180;
