@@ -18,7 +18,7 @@
 <script>
     module.exports = {
         data:{
-            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png"
+            bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/greetingBg.png"
         },
         methods: {
             toSelectNum: function() {
