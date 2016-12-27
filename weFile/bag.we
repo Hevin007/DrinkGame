@@ -12,7 +12,7 @@
                 </div>
                 <div class="playerBagDiv" repeat="{{cardInfo in bagArr}}">
                     <!--<text style="text-align: center">牌数:{{cardNum}}</text>-->
-                    <text style="font-size: 20px">{{cardInfo.name}}</text>
+                    <text style="font-size: 25px;text-align: center;">{{cardInfo.name}}</text>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
         border-style: solid;
         border-color: black;
         background-color: white;
-        opacity: 0.9;
+        opacity: 0.8;
     }
     .leftDiv{
         width:30px;

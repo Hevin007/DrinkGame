@@ -110,7 +110,7 @@
     }
     .cardText {
       color: #eeeeee;
-      font-size: 60;
+      font-size: 30px;
     }
 
 </style>
