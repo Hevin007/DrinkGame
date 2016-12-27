@@ -119,7 +119,7 @@
                 this.btn = "确定";
             },
             startPunish: function() {
-                this._parent.$emit("startPunish");
+                this._parent.$emit("startPunish",{selectedPlayer:this.select_player});
             }
         }
     }

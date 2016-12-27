@@ -10,9 +10,9 @@
                 <div class="drinkNumDiv">
                     <text style="text-align: center">已喝{{drinkNum}}</text>
                 </div>
-                <div class="playerBagDiv" repeat="{{cardName in bagArr}}">
+                <div class="playerBagDiv" repeat="{{cardInfo in bagArr}}">
                     <!--<text style="text-align: center">牌数:{{cardNum}}</text>-->
-                    <text style="font-size: 20px">{{cardName}}</text>
+                    <text style="font-size: 20px">{{cardInfo.name}}</text>
                 </div>
             </div>
         </div>
