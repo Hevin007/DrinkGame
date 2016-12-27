@@ -32,9 +32,9 @@
             //存放54张牌的信息，其中id为牌的唯一标识，number为牌值(其中小王用14表示，大王用15表示)，url为对应的图片路径
             //后来又想了一下，card表可以不用存了，实在太大了，用另一种办法代替，即图片命名时直接是从1-2-k-小王-大王排好，命名从0-53
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
-            bgImgSrc: "/bg.png",
+            bgImgSrc: "/imgs/background/bg.png",
             //bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png",//背景图片的url
-            paiduiImg:"https://13111211.github.io/weexCompetition/imgs/paidui/paidui7.png",//牌堆图片的url
+            paiduiImg:"/imgs/paidui/paidui7.png",//牌堆图片的url
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
             playerNum:10,//该值应当从选择人数界面传过来
             leftPlayerNum:0,//左边玩家个数
@@ -225,7 +225,7 @@
                     this.showCard.currCardNum = 15;
                 }
 
-                this.showCard.currCardImgUrl = "https://13111211.github.io/weexCompetition/imgs/newCardImg/"+cardId+".png";//牌的图片url
+                this.showCard.currCardImgUrl = "/imgs/newCardImg/"+cardId+".png";//牌的图片url
                 this.showCard.currCardTips = this.cardTipsArr[this.showCard.currCardNum];
                 //如果牌值为2,3,4,5,8，则为存入包裹，其余为立即使用
                 switch (this.showCard.currCardNum) {
@@ -295,8 +295,11 @@
               
               var drinkBag = this.getPlayerById(drinkPlayerId).bag;
 
+              
+
               for( var i in drinkBag) {
                 if(drinkBag[i].name==2) {
+
                   modal.confirm({
                     'message': '玩家'+drinkPlayerId+'有免酒卡，是否使用？',
                     'okTitle': '使用',
@@ -305,17 +308,28 @@
                     if(String(e)=="使用") {
                       drinkBag.splice(i,1);
                       return;
+                    }else{
+
+                      this.check9(drinkPlayerId);
+                      
                     }
 
                   });
+
+                  return;
                 }
               }
 
+              this.check9(drinkPlayerId);
               
+            },
+            //是否陪酒函数  自带modal的异步回调无法解决
+            check9(drinkPlayerId) {
               for (var j;j<this.playerNum;j++) {
                 if(this.getPlayerById(j).flag_9==true) {
+
                   modal.confirm({
-                    'message': '玩家'+drinkPlayerId+'有陪酒卡，是否让其陪酒？',
+                    'message': '玩家'+j+'有陪酒卡，是否让其陪酒？',
                     'okTitle': '是',
                     'cancelTitle': '否'
                   }, function (e) {
@@ -326,7 +340,6 @@
                 }
               }
               this.setDrinkNum(drinkPlayerId);
-
             }
         }
     }

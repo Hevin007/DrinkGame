@@ -32,3 +32,6 @@
 
 12.27 hevin
 1, 分支条件过多，使用switch case 代替if else 加强代码可读性
+2, 新版支持本地图片，更新weex-toolkit后可用
+3，新增 是否陪酒函数（check9）  自带modal的异步回调无法解决  
+4，3的另一种实现方法，不使用自带的modal（还没做）
