@@ -3,10 +3,10 @@
         <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
         <div class="mainCont">
             <div class="leftPlayer">
-                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{currPlayerBag}}" onclick="showBag"></bag>
+                <bag repeat="{{ player in leftPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{player.bag}}" onclick="showBag"></bag>
             </div>
             <div class="rightPlayer">
-                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" onclick="showBag"></bag>
+                <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{player.bag}}" onclick="showBag"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
             <div class="helpBtn"><text class="helpText">？</text></div>
@@ -107,37 +107,38 @@
                 }
                 //如果抽到7,9；点击立即使用，存入包裹
                 else if(this.showCard.currCardNum == 7 || this.showCard.currCardNum == 9){
-                    var cardInfo = this.cardTipForBag[this.showCard.currCardNum];
-                    this.currPlayerBag.push(cardInfo);
+                    this.storeToBag();
                 }
                 //如果抽到11,12,13,14,15，进行惩罚
                 else if(this.showCard.currCardNum == 11){
                     //调用罚酒的方法，上家喝一杯
+                    this.drink(this.currPlayerId-1);
                 }
                 else if(this.showCard.currCardNum == 12){
                     //调用罚酒的方法，上下家喝一杯
+                    this.drink(this.currPlayerId+1);
                 }
                 else if(this.showCard.currCardNum == 13){
                     //调用罚酒的方法，自己喝一杯
+                    this.drink(this.currPlayerId);
                 }
                 else if(this.showCard.currCardNum == 14){
                     //调用罚酒的方法，自己喝两杯
+                    this.drink(this.currPlayerId);
                 }
                 else if(this.showCard.currCardNum == 15){
                     //调用罚酒的方法，自己喝三杯
+                    this.drink(this.currPlayerId);
                 }
                 this.currPlayerId++;//玩家id加1，变为下一位玩家
             });
 
-            //父组件监听卡牌模态框中的存入包裹事件
+            //父组件监听，卡牌模态框中的存入包裹事件
             this.$on("saveToBag" , function(event){
-                var cardInfo = this.cardTipForBag[this.showCard.currCardNum];
-                this.currPlayerBag.push(cardInfo);
-                this.isShow.cardModalSave = false;
-                this.currPlayerId++;
+                this.storeToBag();
             });
 
-            //父组件监听决斗模态框的开始决斗事件
+            //父组件监听，决斗模态框的开始决斗事件
             this.$on("startJuedou" , function(event){
                 modal.alert({
                     'message':'落败的玩家是：玩家X OR 玩家Y',
@@ -145,10 +146,11 @@
                 });
             });
 
-            //父组件监听点击确定后的惩罚操作
+            //父组件监听，随机选人点击确定后的惩罚操作
             this.$on("startPunish" , function(event){
+                this.isShow.randomFailModal = false;
                 //调用罚酒的方法
-
+                this.drink(event.target._vm.selectedPlayer);
             })
 
             
@@ -250,19 +252,20 @@
             // 存入包裹函数
             storeToBag: function() {
                 //操作对应currPlayerId 的 Bag,存入卡牌
-                
-                
                 var cardNode;
                 
                 cardNode = {
-                  num : this.currCardNum,
-                  name: parseInt(this.currCardNum/4)+1
+                    id : this.currCardId,//卡牌id
+                    num: this.showCard.currCardNum,//卡牌数值
+                    name:this.cardTipForBag[this.showCard.currCardNum]//卡牌技能信息
+
                 }
                 
                 this.getPlayerById(this.currPlayerId).bag.push(cardNode);
 
                 // 收尾操作
-                this.isShow.cardModal = false;
+                this.isShow.cardModalSave = false;
+                this.isShow.cardModalUse = false;
                 this.currPlayerId++;
             },
 
