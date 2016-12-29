@@ -342,7 +342,7 @@
               
             },
             //是否陪酒函数  自带modal的异步回调无法解决
-            check9(drinkPlayerId) {
+            check9:function(drinkPlayerId) {
               for (var j;j<this.playerNum;j++) {
                 if(this.getPlayerById(j).flag_9==true) {
 
