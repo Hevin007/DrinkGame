@@ -115,11 +115,21 @@
                     //如果抽到11,12,13,14,15，进行惩罚
                     case 11:
                         //调用罚酒的方法，上家喝一杯
-                        this.drink(this.currPlayerId-1);
+                        if(this.currPlayerId == 1) {
+                            this.drink(this.playerNum);
+                        }else {
+
+                            this.drink(this.currPlayerId-1);
+                        }
                         break;
                     case 12:
                         //调用罚酒的方法，下家喝一杯
-                        this.drink(this.currPlayerId+1);
+                        if( this.currPlayerId == this.playerNum ) {
+                            this.drink(1);
+                        }else {
+
+                            this.drink(this.currPlayerId+1);
+                        }
                         break;
                     case 13:
                         //调用罚酒的方法，自己喝一杯
@@ -134,7 +144,7 @@
                         this.drink(this.currPlayerId);
                         break;
                 }
-                this.currPlayerId++;//玩家id加1，变为下一位玩家
+                this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家id加1，变为下一位玩家
             });
 
             //父组件监听，卡牌模态框中的存入包裹事件
@@ -217,6 +227,11 @@
 
             //摸牌时的方法
             showCard:function(){
+                //判断牌是否摸完
+                if(this.currCardOrder.length == 0) {
+                    this._parent.$emit('toScore');
+                    return;
+                }
                 var cardId = this.currCardOrder[0];//获取当前牌的id
                 this.currCardId = cardId;
                 if(cardId != 53){
@@ -276,7 +291,10 @@
                 // 收尾操作
                 this.isShow.cardModalSave = false;
                 this.isShow.cardModalUse = false;
-                this.currPlayerId++;
+
+                this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家Id循环
+               
+
             },
 
             //接受惩罚函数

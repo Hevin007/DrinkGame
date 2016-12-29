@@ -3,6 +3,7 @@
     <greeting if="{{isShow.greeting}}"></greeting>
     <selectNum if="{{isShow.selectNum}}"></selectNum>
     <main if="{{isShow.main}}"></main>
+    <score if="{{isShow.score}}"></score>
   </div>
 </template>
 
@@ -12,7 +13,8 @@
       isShow: {
         greeting: true,
         selectNum: false,
-        main: false
+        main: false,
+        score: false
       }
     },
     created: function() {
@@ -25,6 +27,10 @@
       this.$on("toMain", function(event) {
         this.isShow.main = true;
         this.isShow.selectNum = false;
+      });
+      this.$on("toScore", function(event) {
+        this.isShow.score = true;
+        this.isShow.main = false;
       });
     }
   }
