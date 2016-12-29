@@ -21,6 +21,7 @@
         <cardModalSave if="{{isShow.cardModalSave}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalSave>
         <juedouModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}"></juedouModal>
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}"></randomFailModal>
+        <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
     </div>
 </template>
 
@@ -48,7 +49,8 @@
                 cardModalUse:false,
                 cardModalSave:false,
                 juedouModal:false,
-                randomFailModal:false
+                randomFailModal:false,
+                failRadioModal:false
             },
             //当前玩家的包裹中存的牌信息
             currPlayerBag:[],
@@ -83,7 +85,8 @@
                 "抽到本张牌的玩家自罚两杯。",
                 "抽到本张牌的玩家自罚三杯。"],
             //存放卡牌在包裹中时显示的tip，只有2、3、4、5、7、8、9有，其余为空
-            cardTipForBag:["","","免酒牌","照相机牌","录音机牌","摸鼻子牌","","神经病牌","如厕牌","陪酒牌"]
+            cardTipForBag:["","","免酒牌","照相机牌","录音机牌","摸鼻子牌","","神经病牌","如厕牌","陪酒牌"],
+            radioSelectPlayer:""//决斗时选择的玩家
         },
 
 
@@ -101,11 +104,11 @@
                 
                 switch (this.showCard.currCardNum) {
                     case 1:
-                        //this.isShow.juedouModal = true;
+                        this.isShow.juedouModal = true;
                         break;
                     case 6:
                         //如果抽到6牌，玩游戏牌
-                        //this.isShow.randomFailModal = true;
+                        this.isShow.randomFailModal = true;
                         break;
                     case 7:
                     case 9:
@@ -154,15 +157,15 @@
 
             //父组件监听，决斗模态框的开始决斗事件
             this.$on("startJuedou" , function(event){
-                modal.alert({
-                    'message':'落败的玩家是：玩家X OR 玩家Y',
-                    'okTitle':'确定'
-                });
+                this.isShow.juedouModal = false;
+                this.isShow.failRadioModal = true;
+                this.radioSelectPlayer = event.target._vm.randomPlayerId;
             });
 
             //父组件监听，随机选人点击确定后的惩罚操作
             this.$on("startPunish" , function(event){
                 this.isShow.randomFailModal = false;
+                this.isShow.failRadioModal = false;
                 //调用罚酒的方法
                 this.drink(event.target._vm.selectedPlayer);
             })
@@ -206,6 +209,10 @@
                     this.rightPlayer.push(obj);
                 }
             }
+
+            this.$on('convertPlayerNum',function(e){
+                this.playerNum =e.detail;
+            })
         },
         methods:{
 

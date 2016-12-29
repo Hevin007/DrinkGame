@@ -2,16 +2,7 @@
     <container>
         <image class="bgImg" src="{{bgImgSrc}}"></image>
        <!-- <text class="gameName">行酒令</text>-->
-        <div class="startPlay">
-            <a class="startPlayA" onclick="toSelectNum">
-                <text class="startPlayText">开始游戏</text>
-            </a>
-        </div>
-        <div class="quitPlay">
-            <a class="quitPlayA">
-                <text class="quitPlayText">退出游戏</text>
-            </a>
-        </div>
+        <text class="startPlayText" onclick="toSelectNum">点击开始游戏</text>
     </container>
 </template>
 
@@ -35,40 +26,12 @@
         width: 750px;
         height:1175px;
     }
-    .gameName{
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        color: yellow;
-        font-size: 110;
-        font-weight: bold;
-    }
-    .startPlay{
-        width:250px;
-        height:80px;
-        position: absolute;
-        background-color: blue;
-        top:590px;
-        left:50px;
-
-    }
     .startPlayText{
-        color: white;
-        font-size: 60;
-        text-align: center;
-        font-weight: bold;
-    }
-    .quitPlay{
-        width:250px;
-        height:80px;
         position: absolute;
-        background-color: blue;
-        top:740px;
-        left:50px;
-    }
-    .quitPlayText{
-        color: white;
-        font-size: 60;
+        bottom:240px;
+        width:750px;
+        color: lightgray;
+        font-size: 55;
         text-align: center;
         font-weight: bold;
     }

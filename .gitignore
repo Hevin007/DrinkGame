@@ -2,4 +2,10 @@
 weex_tmp
 .idea
 node_modules
+<<<<<<< HEAD
 imgs
+=======
+.idea
+imgs
+weFile/weex_tmp
+>>>>>>> rnn
