@@ -1,73 +1,133 @@
 <template>
-    <container>
-        <image class="bgImg" src="{{bgImgSrc}}"></image>
-        <text class="selectNumText">请选择游戏人数</text>
-        <div class="startPlay">
-            <a class="startPlayA" onclick="toMain">
-                <text class="startPlayText">立即开始</text>
-            </a>
+    <div>
+        <image class="bgimg" style="width:750;height:1200" src="{{Imgurl}}"></image>
+        <div class="select_title">
+            <text class="title">{{PlayerNumber}}</text>
         </div>
-        <div class="quitPlay">
-            <a class="quitPlayA">
-                <text class="quitPlayText">返回</text>
-            </a>
+        <scroller class="scroller_list" show-scrollbar="true" scroll-direction="horizontal">
+            <div class="select_list" repeat="v in arr">
+                <text id="select_id" class="list_item" onclick="selected($event)">{{v.id}}</text>
+            </div>
+        </scroller>
+        <div class="btn" onclick="toMain">
+            <!-- 开始游戏按钮 -->
+            <text class="button" if={{intervalifshow}}>开始游戏</text>
         </div>
-    </container>
+    </div>
 </template>
 
 <script>
+    var timer1;
     module.exports = {
         data:{
-            bgImgSrc:"/imgs/background/bg.png"
+            arr:[
+                {id: 4},
+                {id: 5},
+                {id: 6},
+                {id: 7},
+                {id: 8},
+                {id: 9},
+                {id: 10},
+                {id: 11},
+                {id: 12},
+                {id: 13},
+                {id: 14}
+            ],
+            Imgurl: '/imgs/background/bg.png',
+            PlayerNumber: "请选择游戏人数",
+            intervalifshow: true,
+            TotalNum: ""
         },
-        methods: {
+        methods:{
+            ready: function(){
+                timer1 = setInterval(this.show.bind(this),500);
+            },
+            show: function() {
+                if(this.intervalifshow)
+                {
+                    this.intervalifshow = false;
+                }
+                else{
+                    this.intervalifshow = true;
+                }
+            },
+            selected: function(e){
+                this.TotalNum = e.target.attr['value'];
+                var modal = require('@weex-module/modal');
+                var self = this;
+                modal.alert({
+                    'message': this.TotalNum,
+                    'okTitle': 'YES'
+                }, function (result) {
+                    self.params = String(result)
+                });
+            },
             toMain: function() {
-                this._parent.$emit("toMain");
+                this._parent.$emit("toMain",{playerNum:this.TotalNum});
             }
         }
     }
 </script>
 
 <style>
-    .bgImg{
-        width: 750px;
-        height:1175px;
+    .bgimg{
+        position:absolute;
+        left:0;
+        top:0;
+        bottom:0;
+        right:0;
     }
-    .selectNumText{
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        color: yellow;
-        font-size: 50;
-        font-weight: bold;
+    .select_title{
+        position:relative;
+        top:220;
+        /* border:2px solid black;  */
+        /* text-align:center; */
+        justify-content:center;
+        align-items:center;
     }
-    .startPlay{
-        width:250px;
-        height:80px;
-        position: absolute;
-        background-color: blue;
-        top:590px;
-        left:50px;
-
+    .title{
+        font-size:40;
+        font-style:italic;
+        font-weight:bold;
     }
-    .startPlayText{
-        color: white;
-        font-size: 60;
-        text-align: center;
-        font-weight: bold;
+    .scroller_list{
+        height:70;
+        width:260;
+        position:relative;
+        top:230;
+        left:270;
+        border:2px solid white;
+        border-radius:15;
+        /* background-color:pink;  */
+        background: radial-gradient(rgba(255,255,255,0.3),rgba(255,255,255,1));
+        /* justify-content:center; */
+        align-items:center;
+        /* opacity:0.7; */
     }
-    .quitPlay{
-        width:250px;
-        height:80px;
-        position: absolute;
-        background-color: blue;
-        top:740px;
-        left:50px;
+    .select_list{
+        height:55;
+        margin-left:30;
+        margin-right:10;
+        /*	border:1px solid black;*/
     }
-    .quitPlayText{
-        color: white;
-        font-size: 60;
-        text-align: center;
-        font-weight: bold;
+    .list_item{
+        font-size:45;
+        text-align:center;
+        line-height:70;
+        color:black;
+        font-weight:bold;
+        font-style:italic;
+    }
+    .btn{
+        position:relative;
+        top:550;
+        /* border:1px solid black; */
+        height:80;
+        width:300;
+        margin-left:215;
+    }
+    .button{
+        font-size:60;
+        text-align:center;
     }
 </style>

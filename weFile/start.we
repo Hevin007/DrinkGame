@@ -2,7 +2,7 @@
   <div>
     <greeting if="{{isShow.greeting}}"></greeting>
     <selectNum if="{{isShow.selectNum}}"></selectNum>
-    <main if="{{isShow.main}}"></main>
+    <main id="mainPage" if="{{isShow.main}}"></main>
   </div>
 </template>
 
@@ -13,7 +13,8 @@
         greeting: true,
         selectNum: false,
         main: false
-      }
+      },
+      totalPlayerNum:null
     },
     created: function() {
         //父组件通过this.$on(type,handler)监听特定类型的自定义事件
@@ -25,7 +26,16 @@
       this.$on("toMain", function(event) {
         this.isShow.main = true;
         this.isShow.selectNum = false;
+        console.log(event);
+        this.totalPlayerNum = event.detail.playerNum;
+        console.log("totalPlayerNum:"+this.totalPlayerNum);
+       // this.getPlayerNum();通信过不去，有问题？
       });
-    }
+    },
+      methods:{
+        getPlayerNum:function(e){
+            this.$vm('mainPage').$emit('convertPlayerNum', this.totalPlayerNum)
+        }
+      }
   }
-</script>>
+</script>

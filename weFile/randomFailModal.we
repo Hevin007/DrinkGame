@@ -4,38 +4,20 @@
             <div class="dialog-backdrop"></div>
             <div class="dialog-content">
                 <div class="dialog-header">
-                    <text class="dialog-title">{{dialogTitle}}</text>
+                    <text class="dialog-title">落败的玩家是：</text>
+                    <text style="color: orange;font-weight: bold;font-size: 40px">{{select_player}}</text>
                 </div>
                 <div class="dialog-body">
-                    <div style="flex-direction:row;">
-                        <text class="select_player">{{select_player}}</text>
-                        <text class="select_btn" onclick="selectDepend">{{btn}}</text>
-                    </div>
-                    <div style="align-items: center;margin-top: 20px;">
-                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="dialog2" class="dialog" id="dialog2" if={{selectifshow}}>
-            <div class="dialog-backdrop"></div>
-            <div class="dialog-content">
-                <div class="dialog-header">
-                    <text class="dialog-title">{{select_dialog}}</text>
-                    <text class="close" onclick="closeselectdialog">×</text>
-                </div>
-                <div class="dialog-body">
-                    <!--<div class="selectnum" repeat="v in arr">
-                      <text id="player_id" class="select_player1" onclick="selectfunc($event)">{{v.id}}</text>
-                    </div>-->
                     <list class="select_list">
-                        <cell repeat="item in arr">
-                            <div>
-                                <text class="list_item" onclick="doselect">玩家{{arr[$index].id}}</text>
+                        <cell repeat="{{item in arr}}">
+                            <div class="listdiv">
+                                <text class="list_item" onclick="doSelect">玩家{{arr[$index].id}}</text>
                             </div>
                         </cell>
                     </list>
-
+                    <div style="align-items: center;margin-top: 30px;">
+                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,75 +30,24 @@
     module.exports = {
         data: {
             arr: [
-                {id: 1},
-                {id: 2},
-                {id: 3},
-                {id: 4},
-                {id: 5},
-                {id: 6},
-                {id: 7},
-                {id: 8},
-                {id: 9},
-                {id: 10},
-                {id: 11},
-                {id: 12},
-                {id: 13},
-                {id: 14}
+                {id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7},
+                {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}, {id: 13}, {id: 14}
             ],
             currentPlayer:null,
-            select_dialog:'请选择：',
-            selectifshow: false,
             select_player:"",
-            dialogTitle: '落败的玩家是:',
-            btn:"选择"
         },
         created:function (){
-
             this.arr.splice(this.currentPlayer - 1,1);
-            /*var modal = require('@weex-module/modal');
-             var self = this;
-             modal.alert({
-             'message': this.arr,
-             'okTitle': 'YES'
-             }, function (result) {
-             self.params = String(result)
-             });*/
         },
         methods: {
-            closedialog: function(){
-                this.ifshow=false;
-            },
-            opendialog2: function(){
-                this.selectifshow = true;
-            },
-            selectDepend: function(){
-                if(this.btn == "选择")
-                {
-                    this.selectifshow=true;
-                    this.ifshow = false;
-                }
-                else
-                {
-                    this.ifshow = false;
-                }
-            },
-            closeselectdialog: function(){
-                this.selectifshow = false;
-                this.ifshow=true;
-            },
-            doselect: function(e){
-                /*var modal = require('@weex-module/modal');
-                 var self = this;
-                 modal.alert({
-                 'message': e.target,
-                 'okTitle': 'YES'
-                 }, function (result) {
-                 self.params = String(result)
-                 });*/
-                this.ifshow = true;
-                this.selectifshow = false;
+            /*showSelect:function(){
+                this.if.textShow = false;
+                this.if.selectifshow = true;
+            },*/
+            doSelect: function(e){
                 this.select_player = e.target.attr.value;
-                this.btn = "确定";
+               /* this.if.textShow = true;
+                this.if.selectifshow = false;*/
             },
             startPunish: function() {
                 this._parent.$emit("startPunish",{selectedPlayer:this.select_player});
@@ -152,50 +83,26 @@
         position: relative;
     }
     .dialog-header {
-        padding: 20;
+        padding:20px;
         position: relative;
+        flex-direction:row;
     }
     .dialog-title{
         font-size:35;
         color:black;
     }
-
-    .select_player{
-        flex:3;
-        border:1px solid pink;
-        font-size:45;
-        text-align:left;
-        color:black;
-    }
-    .select_player1{
-        font-size:20;
-        color:black;
-    }
-    .selectnum{
-        width:30;
-    }
-    .select_btn{
-        flex:1;
-        color:black;
-        font-size:50;
-    }
-    .dialog-body {
-        border:1px solid red;
+    .dialog-body{
         justify-content:center;
+        align-items: center;
         padding: 20;
+        height:400;
     }
-    .close {
-        font-size: 20;
-        color:black;
-        position: absolute;
-        right: 10;
-        top: 10;
-    }
-
     .select_list{
-        height:300;
+        height:200;
     }
     .list_item{
         font-size:32;
     }
+
+
 </style>

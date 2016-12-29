@@ -9,8 +9,6 @@
                 <div class="dialog-body">
                     <text class="random_player">玩家{{randomPlayerId}}</text>
                     <div style="align-items: center;margin-top: 20px;">
-                        <!--以wxc-开头的组件为weex官方扩展组件，这些组件不属于内建组件的一部分，需要安装weex-components依赖
-                        还需要在<script>中引入依赖-->
                         <wxc-button type="primary" size="middle" value="开始决斗" onclick="startJuedou"></wxc-button>
                     </div>
                 </div>
@@ -40,7 +38,7 @@
         },
         methods: {
             startJuedou: function() {
-                this._parent.$emit("startJuedou");
+                this._parent.$emit("startJuedou",{randomPlayerId : this.randomPlayerId});
             }
         }
     }
