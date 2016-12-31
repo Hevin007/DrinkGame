@@ -109,7 +109,7 @@
                         break;
                     case 6:
                         //如果抽到6牌，玩游戏牌
-                        //this.isShow.randomFailModal = true;
+                        this.isShow.randomFailModal = true;
                         break;
                     case 7:
                     case 9:
@@ -292,8 +292,8 @@
                 cardNode = {
                     id : this.currCardId,//卡牌id
                     num: this.showCard.currCardNum,//卡牌数值
-                    name:this.cardTipForBag[this.showCard.currCardNum]//卡牌技能信息
-
+                    name:this.cardTipForBag[this.showCard.currCardNum],//卡牌技能信息
+                    imgUrl: "/imgs/bagCardImg/"+this.currCardId+".png"//牌的图片url
                 }
                 
                 if (cardNode.num == 9) {

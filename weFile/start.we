@@ -27,8 +27,8 @@
           });
           this.$on("toMain", function(event) {
             
-            //this.totalPlayerNum = event.detail.playerNum;
-            this.totalPlayerNum = 6;
+            this.totalPlayerNum = event.detail.playerNum;
+            //this.totalPlayerNum = 6;
             this.isShow.main = true;
             this.isShow.selectNum = false;
           });

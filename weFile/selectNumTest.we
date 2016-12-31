@@ -1,0 +1,85 @@
+<template>
+    <div>
+        <image class="bgimg" style="width:750;height:1200" src="{{imgurl}}"></image>
+        <div class="select_title">
+            <text class="title">游戏人数：</text>
+            <text>{{totalNum}}</text>
+        </div>
+
+        <div class="selectDiv">
+            <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}" style="background-color: {{selectOption.bgColor}}" onclick="selectNum()"></div>
+        </div>
+        <div class="selectFlag"></div>
+    </div>
+</template>
+
+<script>
+    module.exports = {
+        data:{
+            imgurl: '/imgs/background/bg.png',
+            totalNum: 4,
+            selectArr:[
+                {bgColor:"white",num:5},
+                {bgColor:"white",num:6},
+                {bgColor:"white",num:7},
+                {bgColor:"white",num:8},
+                {bgColor:"white",num:9},
+                {bgColor:"white",num:10},
+                {bgColor:"white",num:11},
+                {bgColor:"white",num:12},
+                {bgColor:"white",num:13},
+                {bgColor:"white",num:14}
+            ],
+        },
+        methods:{
+            selectNum:function(event){
+                //console.log("divNum:"+index);
+                var index = event.target.attr.currIndex;
+              console.log(index);
+               for(var i=0;i<=index;i++){
+                  this.selectArr[i].bgColor = "black";
+               }
+               for(var i=index+1;i<10;i++){
+                   this.selectArr[i].bgColor = "white";
+               }
+                this.totalNum =  this.selectArr[index].num;
+            }
+        }
+    }
+</script>
+
+<style>
+    .bgimg{
+        position:absolute;
+        left:0;
+        top:0;
+        bottom:0;
+        right:0;
+    }
+    .select_title{
+        flex-direction: row;
+    }
+    .selectDiv{
+        margin-top: 20px;
+        margin-left:20px;
+        width:510px;
+        height:50px;
+        border-color: black;
+        background-color: white;
+        border-width: 5px;
+        flex-direction: row;
+    }
+    .selectOption{
+        width:50px;
+        height:42px;
+        backgroundColor:"black";
+    }
+    .selectFlag{
+        position:absolute;
+        height:70px;
+        width: 10px;
+        background-color: black;
+        top:45px;
+        left: 20px;
+    }
+</style>
