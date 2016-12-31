@@ -6,16 +6,15 @@
                 <text class="title">玩家{{playerId}}的包裹</text>>
                 <text class="subTitle">已喝{{drinkNum}}杯</text>>
                 <div class="cardContainer">
-                  <div repeat="card in cardRow1" class="smallCard" num="{{card.num}}" onclick="operateCard">
+                  <div repeat="card in cardRow1" class="smallCard" card-id="{{card.id}}" num="{{card.num}}" onclick="operateCard">
                      <!-- <text class="cardText">{{card.name}}</text>-->
                       <image class="cardImg" src="{{card.imgUrl}}"></image>
                   </div>
                 </div>
                 <div class="cardContainer">
-                  <div repeat="card in cardRow2" class="smallCard" num="{{card.num}}" onclick="operateCard">
+                  <div repeat="card in cardRow2" class="smallCard" card-id="{{card.id}}" num="{{card.num}}" onclick="operateCard">
                       <!--<text class="cardText">{{card.name}}</text>-->
                       <image class="cardImg" src="{{card.imgUrl}}"></image>
-                  </div>
                 </div>
                 <div style="align-items: center;">
                     <!--以wxc-开头的组件为weex官方扩展组件，这些组件不属于内建组件的一部分，需要安装weex-components依赖
@@ -56,9 +55,11 @@
           },
           operateCard: function(event) {
             var cardNum = event.target.attr.num;
+            var cardId = event.target.attr.cardId;
             this._parent.$emit("operateCard",{
               cardNum: cardNum,
-              playerId: playerId
+              cardId : cardId,
+              playerId: this.playerId
             });
           }
         }

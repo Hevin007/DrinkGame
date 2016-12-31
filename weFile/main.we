@@ -17,8 +17,11 @@
         </div>
 
         <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
+
         <cardModalUse if="{{isShow.cardModalUse}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalUse>
         <cardModalSave if="{{isShow.cardModalSave}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalSave>
+        <cardModalDelete if="{{isShow.cardModalDelete}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalDelete>
+
         <juedouModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}"></juedouModal>
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
@@ -48,6 +51,7 @@
                 bagModal: false,
                 cardModalUse:false,
                 cardModalSave:false,
+                cardModalDelete: false,
                 juedouModal:false,
                 randomFailModal:false,
                 failRadioModal:false
@@ -62,6 +66,7 @@
             },
             //卡牌模态框的显示信息
             showCard:{
+                cardPlayerId: null,
                 currCardImgUrl:null,
                 currCardTips:null,
                 currCardId:null,//当前玩家抽到的牌的id
@@ -120,32 +125,32 @@
                     case 11:
                         //调用罚酒的方法，上家喝一杯
                         if(this.currPlayerId == 1) {
-                            this.drink(this.playerNum);
+                            this.drink(this.playerNum, 1);
                         }else {
 
-                            this.drink(this.currPlayerId-1);
+                            this.drink(this.currPlayerId-1, 1);
                         }
                         break;
                     case 12:
                         //调用罚酒的方法，下家喝一杯
                         if( this.currPlayerId == this.playerNum ) {
-                            this.drink(1);
+                            this.drink(1, 1);
                         }else {
 
-                            this.drink(this.currPlayerId+1);
+                            this.drink(this.currPlayerId+1, 1);
                         }
                         break;
                     case 13:
                         //调用罚酒的方法，自己喝一杯
-                        this.drink(this.currPlayerId);
+                        this.drink(this.currPlayerId, 1);
                         break;
                     case 14:
                         //调用罚酒的方法，自己喝两杯
-                        this.drink(this.currPlayerId);
+                        this.drink(this.currPlayerId, 2);
                         break;
                     case 15:
                         //调用罚酒的方法，自己喝三杯
-                        this.drink(this.currPlayerId);
+                        this.drink(this.currPlayerId, 3);
                         break;
                 }
 
@@ -171,10 +176,36 @@
                 //调用罚酒的方法
                 this.drink(event.target._vm.selectedPlayer);
             });
-
+            //父组件监听，bagModal中点击卡牌后出发操作卡牌事件
             this.$on("operateCard", function(event) {
                 var cardNum = event.detail.cardNum;
                 var playerId = event.detail.playerId;
+                var cardId = event.detail.cardId; 
+
+                this.showCard.playerId = playerId;
+                this.showCard.currCardId = cardId;
+                this.showCard.currCardNum = cardNum;
+
+
+                this.showCard.currCardImgUrl = "/imgs/newCardImg/"+cardId+".png";//牌的图片url
+                this.showCard.currCardTips = this.cardTipsArr[this.showCard.currCardNum];
+               
+                this.isShow.cardModalDelete = true;
+                this.isShow.bagModal = false;
+
+            });
+
+            this.$on("deleteCard", function(event) {
+                var playerId = this.showCard.playerId;
+                var cardId = this.showCard.currCardId;
+                var bag = this.getPlayerById(playerId).bag;
+                for( var i in bag ) {
+                    if(bag[i].id == cardId) {
+
+                        bag.splice(i,1);
+                    }
+                }
+                this.isShow.cardModalDelete = false;
             });
             
         },
@@ -218,9 +249,11 @@
                     }
                 }
             },
-            setDrinkNum: function(id) {
+            setDrinkNum: function(id,amount) {
+              for (var i = 0;i<amount;i++) {
 
-              this.getPlayerById.call(this,id).drinkArray.push(1);
+                this.getPlayerById.call(this,id).drinkArray.push(1);
+              }
             },
 
             //玩家分leftPlayer和rightPlayer存储，访问不方便，下为统一访问函数
@@ -298,7 +331,17 @@
                 
                 if (cardNode.num == 9) {
                     for (var i = 1;i<= this.playerNum;i++) {
-                        this.getPlayerById(i).flag_9 = false;
+                        if(this.getPlayerById(i).flag_9 == true) {
+                            var bag = this.getPlayerById(i).bag;
+                            for( var j in bag ) {
+                                if(bag[j].num == 9) {
+
+                                    bag.splice(j,1);
+                                }
+                            }
+                            this.getPlayerById(i).flag_9 = false;
+                            break;
+                        }
                     }
                     this.getPlayerById(this.currPlayerId).flag_9 = true;
 
@@ -316,7 +359,7 @@
             },
 
             //接受惩罚函数
-            drink : function(drinkPlayerId) {
+            drink : function(drinkPlayerId, amount) {
               //根据drinkPlaerId找其bag，看是否有2牌
               //  是：显示玩家drinkPlaerId有免酒卡，是否使用
               //    是： 删除其bag中的2牌，回到主界面
@@ -346,7 +389,7 @@
                       return;
                     }else{
 
-                      self.check9.call(self,drinkPlayerId);
+                      self.check9.call(self,drinkPlayerId,amount);
                       
                     }
 
@@ -356,11 +399,11 @@
                 }
               }
 
-              self.check9.call(self,drinkPlayerId);
+              self.check9.call(self,drinkPlayerId,amount);
               
             },
             //是否陪酒函数  自带modal的异步回调无法解决
-            check9:function(drinkPlayerId) {
+            check9:function(drinkPlayerId,amount) {
               var self = this;
                 for (var j=1;j<=this.playerNum;j++) {
                 
@@ -371,13 +414,13 @@
                     'cancelTitle': '否'
                   }, function (e) {
                     if(String(e)=="是") {
-                      self.setDrinkNum.call(self,j);
+                      self.setDrinkNum.call(self, j, amount);
                     }
                   });
                   break;
                 }
               }
-              self.setDrinkNum.call(self,drinkPlayerId);
+              self.setDrinkNum.call(self, drinkPlayerId, amount);
             }
         }
     }

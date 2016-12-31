@@ -12,7 +12,7 @@
                     <text class="cardTipText">{{cardTips}}</text>
                 </div>
                 <div style="align-items: center;">
-                    <wxc-button  type="primary" size="middle" value="立即使用" onclick="useCard"></wxc-button>
+                    <wxc-button  type="primary" size="middle" value="{{btnText}}" onclick="useCard"></wxc-button>
                 </div>
             </div>
         </div>
@@ -25,7 +25,8 @@
         data: {
             //dialogBgImg:"https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
             cardImgUrl:null,
-            cardTips:null
+            cardTips:null,
+            btnText: "立即使用"
         },
         methods: {
             useCard: function() {
