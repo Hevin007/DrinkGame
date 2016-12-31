@@ -1,21 +1,24 @@
 <template>
     <div>
-        <div id="dialog" class="dialog" id="dialog1">
+        <div id="dialog1" class="dialog" id="dialog1">
             <div class="dialog-backdrop"></div>
             <div class="dialog-content">
-                <scroller class="radio_list">
-                    <div title="picker module">
-                        <div class="titlediv">
-                            <text class="Title">落败的玩家是：</text>
-                            <text class="failedplayer">{{failedPlayer}}</text>
-                        </div>
-                        <!-- 应该也可以加button组件吧？这块可以后面再加 -->
-                        <text class="radiobtn" type="default" size="middle" value={{Selectbtn}} onclick="pick"></text>
-                        <div style="align-items: center;margin-top: 20px;">
-                            <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
-                        </div>
+                <div class="dialog-header">
+                    <text class="dialog-title">落败的玩家是：</text>
+                    <text style="color: orange;font-weight: bold;font-size: 40px">{{failedPlayer}}</text>
+                </div>
+                <div class="dialog-body">
+                    <list class="select_list">
+                        <cell repeat="{{item in arr}}">
+                            <div class="listdiv">
+                                <text class="list_item" onclick="doSelect">玩家{{arr[$index].id}}</text>
+                            </div>
+                        </cell>
+                    </list>
+                    <div style="align-items: center;margin-top: 30px;">
+                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
                     </div>
-                </scroller>
+                </div>
             </div>
         </div>
     </div>
@@ -25,29 +28,18 @@
     var dom = require('@weex-module/dom')
     module.exports = {
         data: {
-            index: 0,
-            Selectbtn: "请选择",
             currentPlayer:null,
             selectPlayer:null,
             failedPlayer:"",
-            btn:"选择",
+            arr: [],
+        },
+        created:function (){
+            this.arr.push({id:this.currentPlayer});
+            this.arr.push({id:this.selectPlayer});
         },
         methods: {
-            pick: function() {
-                var picker = require('@weex-module/picker');
-                var items = new Array('玩家'+this.current_player,'玩家'+this.select_player);
-                var self = this;
-                picker.pick({
-                    'items':items,
-                    'index':self.index
-                },function (ret) {
-                    var result = ret.result;
-                    if(result == 'success')
-                    {
-                        self.failedPlayer = items[ret.data];
-                        self.index = ret.data;
-                    }
-                });
+            doSelect: function(e){
+                this.failedPlayer = e.target.attr.value;
             },
             startPunish: function() {
                 this._parent.$emit("startPunish",{selectedPlayer:this.failedPlayer});
@@ -56,15 +48,6 @@
     }
 </script>
 <style>
-    .dialog-backdrop {
-        opacity: .5;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: #000000;
-    }
     .dialog {
         position: fixed;
         top: 0;
@@ -75,44 +58,32 @@
         align-items: center;
     }
     .dialog-content {
-        width: 450;
-        /*  height:200; */
+        width: 550;
         background-color: #FFFFFF;
-        /* border:2px solid black; */
+        /*border:2px solid black;*/
         border-radius:10px;
         position: relative;
     }
-    .titlediv{
+    .dialog-header {
+        padding:20px;
+        position: relative;
         flex-direction:row;
     }
-    .Title{
-        margin-top:20;
-        margin-left:30;
-        /* margin-bottom: 20px; */
-        font-size:30;
-        border-bottom:1px solid #CCCCCC;
+    .dialog-title{
+        font-size:35;
+        color:black;
     }
-
-    .radiobtn{
-        /* width: 180px;
-        height: 50px;
-        border-color: #26a4f4; */
-        font-color: #26a4f4;
-        /* border-width: 2px */
-        margin-top:20;
-        margin-left:30;
-        margin-bottom: 30px;
-        font-size:30;
+    .dialog-body{
+        justify-content:center;
+        align-items: center;
+        padding: 20;
+        height:400;
     }
-    .failedplayer{
-        font-size:30;
-        margin-top:20;
-        font-style:italic;
+    .select_list{
+        height:200;
     }
-
-
-    .radio_list{
-        margin:50px auto;
+    .list_item{
+        font-size:32;
     }
 
 </style>

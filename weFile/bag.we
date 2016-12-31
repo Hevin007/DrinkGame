@@ -1,5 +1,6 @@
 <template>
     <div onclick="showBag">
+        <!--<image src="{{bagBagImg}}" style="width:150px;height:120px;"></image>-->
         <div class="bagDiv">
             <div class="leftDiv">
                 <text>玩</text>
@@ -24,6 +25,7 @@
     
     module.exports ={
         data:{
+            bagBagImg:"/imgs/background/bagBg1.png",
             playerId:1,
             drinkNum:0,
             cardNum: 0,
