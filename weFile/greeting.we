@@ -9,7 +9,7 @@
 <script>
     module.exports = {
         data:{
-            bgImgSrc:"/imgs/background/greeting.png"
+            bgImgSrc:"/imgs/background/greetingBg.png"
         },
         methods: {
             toSelectNum: function() {
