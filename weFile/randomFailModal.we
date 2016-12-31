@@ -30,24 +30,25 @@
     module.exports = {
         data: {
             arr: [
-                {id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7},
-                {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}, {id: 13}, {id: 14}
+                /*{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7},
+                {id: 8}, {id: 9}, {id: 10}, {id: 11}, {id: 12}, {id: 13}, {id: 14}*/
             ],
             currentPlayer:null,
             select_player:"",
+            playerNum:null
         },
         created:function (){
+            for(var i=1;i<=this.playerNum;i++){
+                var obj = {
+                    id:i
+                };
+                this.arr.push(obj);
+            }
             this.arr.splice(this.currentPlayer - 1,1);
         },
         methods: {
-            /*showSelect:function(){
-                this.if.textShow = false;
-                this.if.selectifshow = true;
-            },*/
             doSelect: function(e){
                 this.select_player = e.target.attr.value;
-               /* this.if.textShow = true;
-                this.if.selectifshow = false;*/
             },
             startPunish: function() {
                 this._parent.$emit("startPunish",{selectedPlayer:this.select_player});

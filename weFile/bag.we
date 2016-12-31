@@ -1,18 +1,19 @@
 <template>
     <div onclick="showBag">
+        <image src="{{bagBagImg}}" style="width:160px;height:130px;"></image>
         <div class="bagDiv">
             <div class="leftDiv">
-                <text>玩</text>
-                <text>家</text>
-                <text id="{{playerId}}">{{playerId}}</text>
+                <text class="textClass">玩</text>
+                <text class="textClass">家</text>
+                <text id="{{playerId}}" class="textClass">{{playerId}}</text>
             </div>
             <div class="rightDiv">
                 <div class="drinkNumDiv">
-                    <text style="text-align: center">已喝{{drinkNum}}</text>
+                    <text style="text-align: center" class="textClass">已喝{{drinkNum}}</text>
                 </div>
                 <div class="playerBagDiv">
                     <!--<text style="text-align: center">牌数:{{cardNum}}</text>-->
-                    <text style="font-size: 25px;text-align: center;" repeat="{{cardInfo in bagArr}}">{{cardInfo.name}}</text>
+                    <text style="font-size: 25px;text-align: center;color:white" repeat="{{cardInfo in bagArr}}">{{cardInfo.name}}</text>
 
                 </div>
             </div>
@@ -24,6 +25,7 @@
     
     module.exports ={
         data:{
+            bagBagImg:"/imgs/background/bagBg4.png",
             playerId:1,
             drinkNum:0,
             cardNum: 0,
@@ -37,27 +39,26 @@
 
 <style>
     .bagDiv{
+        position:absolute;
         flex-direction:row;
-        width:150px;
-        height:120px;
-        border-width: 1;
-        border-style: solid;
-        border-color: black;
-        background-color: white;
+        width:160px;
+        height:130px;
+        padding: 10px;
         opacity: 0.8;
+        border-radius: 10px;
     }
     .leftDiv{
         width:30px;
         height:120px;
         border-right-width: 1;
         border-right-style: solid;
-        border-right-color: black;
+        border-right-color: white;
         justify-content:center;
         align-items:center;
     }
     .rightDiv{
         flex-direction:column;
-        width:120px;
+        width:118px;
         height:120px;
     }
     .drinkNumDiv{
@@ -65,10 +66,13 @@
         height:35px;
         border-bottom-width: 1;
         border-bottom-style: solid;
-        border-bottom-color: black;
+        border-bottom-color: white;
     }
     .playerBagDiv{
         width:120px;
         height:85px;
+    }
+    .textClass{
+        color: white;
     }
 </style>

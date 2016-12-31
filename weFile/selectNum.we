@@ -1,134 +1,135 @@
 <template>
     <div>
-        <image class="bgimg" style="width:750;height:1200" src="{{Imgurl}}"></image>
+        <image class="bgimg" style="width:750;height:1200" src="{{imgurl}}"></image>
         <div class="select_title">
-            <text class="title">{{PlayerNumber}}</text>
+            <text class="title">请选择游戏人数：</text>
+            <text class="titleNum">{{totalNum}}</text>
+            <text class="title">人</text>
         </div>
-        <scroller class="scroller_list" show-scrollbar="true" scroll-direction="horizontal">
-            <div class="select_list" repeat="v in arr">
-                <text id="select_id" class="list_item" onclick="selected($event)">{{v.id}}</text>
-            </div>
-        </scroller>
-        <div class="btn" onclick="toMain">
-            <!-- 开始游戏按钮 -->
-            <text class="button">开始游戏</text>
+
+        <div class="selectDiv">
+            <div style="background-color: black;width:60;height:42;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="default()"></div>
+            <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}"
+                 style="background-color: {{selectOption.bgColor}};border-bottom-left-radius: {{selectOption.leftBot}};
+                 border-bottom-right-radius: {{selectOption.rightBot}};border-top-left-radius: {{selectOption.leftTop}};border-top-right-radius: {{selectOption.rightTop}}"
+                 onclick="selectNum()"></div>
         </div>
+        <div class="selectFlag" style="left:{{flagLeft}}"></div>
+        <text class="button" onclick="toMain">开始游戏</text>
+        <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+        <image class="settingBtn" src="/imgs/settingBtn.png"></image>
     </div>
 </template>
 
 <script>
-    var timer1;
     module.exports = {
         data:{
-            arr:[
-                {id: 4},
-                {id: 5},
-                {id: 6},
-                {id: 7},
-                {id: 8},
-                {id: 9},
-                {id: 10},
-                {id: 11},
-                {id: 12},
-                {id: 13},
-                {id: 14}
+            imgurl: '/imgs/background/bg.png',
+            totalNum: 4,
+            selectArr:[
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:5},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:6},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:7},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:8},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:9},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:10},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:11},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:12},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:13},
+                {bgColor:"white",leftTop:0,leftBot:0,rightTop:15,rightBot:15,num:14}
             ],
-            Imgurl: '/imgs/background/bg.png',
-            PlayerNumber: "请选择游戏人数",
-            intervalifshow: true,
-            TotalNum: ""
-        },
-        created: function() {
-            timer1 = setInterval(this.show.bind(this),500);
+            flagLeft:95
         },
         methods:{
-
-            show: function() {
-                if(this.intervalifshow)
-                {
-                    this.intervalifshow = false;
-                }
-                else{
-                    this.intervalifshow = true;
-                }
+            selectNum:function(event){
+                //console.log("divNum:"+index);
+                var index = event.target.attr.currIndex;
+              console.log(index);
+               for(var i=0;i<=index;i++){
+                  this.selectArr[i].bgColor = "black";
+               }
+               for(var i=index+1;i<10;i++){
+                   this.selectArr[i].bgColor = "white";
+               }
+                this.totalNum =  this.selectArr[index].num;
+                this.flagLeft = 95+index*60+61;
             },
-            selected: function(e){
-                this.TotalNum = e.target.attr['value'];
-                var modal = require('@weex-module/modal');
-                var self = this;
-                modal.alert({
-                    'message': this.TotalNum,
-                    'okTitle': 'YES'
-                }, function (result) {
-                    self.params = String(result)
-                });
+            default:function(){
+                this.totalNum =  4;
+                this.flagLeft = 95;
+                for(var i=0;i<10;i++){
+                    this.selectArr[i].bgColor = "white";
+                }
             },
             toMain: function() {
-                this._parent.$emit("toMain",{playerNum:this.TotalNum});
+                this._parent.$emit("toMain",{playerNum:this.totalNum});
             }
         }
     }
 </script>
 
 <style>
-    .bgimg{
-        position:absolute;
-        left:0;
-        top:0;
-        bottom:0;
-        right:0;
-    }
     .select_title{
-        position:relative;
-        top:220;
-        /* border:2px solid black;  */
-        /* text-align:center; */
+        flex-direction: row;
+        position:absolute;
+        top:200;
+        width: 750px;
         justify-content:center;
-        align-items:center;
     }
     .title{
-        font-size:40;
-        font-style:italic;
+        font-size: 50px;
         font-weight:bold;
     }
-    .scroller_list{
-        height:70;
-        width:260;
-        position:relative;
-        top:230;
-        left:270;
-        border:2px solid white;
-        border-radius:15;
-        /* background-color:pink;  */
-        background: radial-gradient(rgba(255,255,255,0.3),rgba(255,255,255,1));
-        /* justify-content:center; */
-        align-items:center;
-        /* opacity:0.7; */
-    }
-    .select_list{
-        height:55;
-        margin-left:30;
-        margin-right:10;
-        /*	border:1px solid black;*/
-    }
-    .list_item{
-        font-size:45;
-        text-align:center;
-        line-height:70;
-        color:black;
+    .titleNum{
+        font-size: 50px;
         font-weight:bold;
-        font-style:italic;
+        color: darkred;
+        margin-right: 10px;
     }
-    .btn{
-        position:relative;
-        top:750;
-        /* border:1px solid black; */
-        height:80;
-        width:300;
-        margin-left:215;
+    .selectDiv{
+        position:absolute;
+        top: 350px;
+        left:40px;
+        width:667px;
+        height:50px;
+        border-color: black;
+        background-color: white;
+        border-width: 5px;
+        flex-direction: row;
+        justify-content:center;
+        border-radius: 20px;
+    }
+    .selectOption{
+        width:60px;
+        height:42px;
+        backgroundColor:"black";
+    }
+    .selectFlag{
+        position:absolute;
+        height:70px;
+        width: 10px;
+        background-color: black;
+        top:340px;
     }
     .button{
-        font-size:60;
+        position:absolute;
+        bottom: 250px;
+        font-size:70;
+        width: 750px;
         text-align:center;
+    }
+    .returnBtn{
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
+    }
+    .settingBtn{
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
     }
 </style>

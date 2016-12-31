@@ -9,11 +9,15 @@
                 <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{player.bag}}" onclick="showBag"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
-            <div class="helpBtn"><text class="helpText">？</text></div>
-            <div class="endGameBtn" onclick="toScore"><text class="endGameText">结束游戏</text></div>
+
+            <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+            <image class="settingBtn" src="/imgs/settingBtn.png"></image>
+            <text class="endGameText" onclick="toScore">结束游戏</text>
+            <!--<div class="helpBtn"><text class="helpText">？</text></div>
+            <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>-->
         </div>
         <div class="paiduiDiv">
-            <image resize="cover" class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
+            <image class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
         </div>
 
         <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
@@ -22,8 +26,8 @@
         <cardModalSave if="{{isShow.cardModalSave}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalSave>
         <cardModalDelete if="{{isShow.cardModalDelete}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalDelete>
 
-        <juedouModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}"></juedouModal>
-        <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}"></randomFailModal>
+        <juedouModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></juedouModal>
+        <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
     </div>
 </template>
@@ -38,9 +42,9 @@
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
             bgImgSrc: "/imgs/background/bg.png",
             //bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png",//背景图片的url
-            paiduiImg:"/imgs/paidui/paidui7.png",//牌堆图片的url
+            paiduiImg:"/imgs/paidui/newPaidui2.png",//牌堆图片的url
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
-            playerNum:10,//该值应当从选择人数界面传过来
+            playerNum:null,//该值应当从选择人数界面传过来
             leftPlayerNum:0,//左边玩家个数
             rightPlayerNum:0,//右边玩家个数
             leftPlayer:[],//左边玩家信息，包括id、bag、drinkNum、flag_9(是否拿有9牌)，该值在ready函数中进行初始化
@@ -111,7 +115,7 @@
                 
                 switch (this.showCard.currCardNum) {
                     case 1:
-                        //this.isShow.juedouModal = true;
+                        this.isShow.juedouModal = true;
                         break;
                     case 6:
                         //如果抽到6牌，玩游戏牌
@@ -167,7 +171,8 @@
             this.$on("startJuedou" , function(event){
                 this.isShow.juedouModal = false;
                 this.isShow.failRadioModal = true;
-                this.radioSelectPlayer = event.target._vm.randomPlayerId;
+                console.log(event);
+                this.radioSelectPlayer = event.detail.randomPlayerId;
             });
 
             //父组件监听，随机选人点击确定后的惩罚操作
@@ -175,7 +180,8 @@
                 this.isShow.randomFailModal = false;
                 this.isShow.failRadioModal = false;
                 //调用罚酒的方法
-                this.drink(event.target._vm.selectedPlayer);
+                console.log("罚酒玩家id:"+event.detail.selectedPlayer);
+                this.drink(event.detail.selectedPlayer , 1);
             });
             //父组件监听，bagModal中点击卡牌后出发操作卡牌事件
             this.$on("operateCard", function(event) {
@@ -466,15 +472,15 @@
         justify-content:center;
         position:absolute;
         top: 0px;
-        right:0px;
+        right:6px;
     }
     .currPlayerTip{
         width:750px;
         height:100px;
         position:absolute;
-        top: 40px;
-        color: yellow;
-        font-size: 80;
+        top: 70px;
+        color: black;
+        font-size: 70;
         font-weight: bold;
         text-align: center;
     }
@@ -500,7 +506,10 @@
         bottom: 0;
     }
     .endGameText{
-        color: white;
+        position: absolute;
+        width:750px;
+        bottom: 50px;
+        color: darkgray;
         font-size: 50;
         text-align: center;
         font-weight: bold;
@@ -513,7 +522,21 @@
         justify-content:center;
     }
     .paidui{
-        width:350px;
-        height:500px;
+        width:330px;
+        height:400px;
+    }
+    .returnBtn{
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
+    }
+    .settingBtn{
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
     }
 </style>
