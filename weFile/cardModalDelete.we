@@ -1,0 +1,121 @@
+<template>
+    <div id="cardDialog" class="dialog">
+        <div class="dialog-backdrop"></div>
+        <div class="dialog-content">
+           <!-- <image class="dialogBgClass" src="{{dialogBgImg}}"></image>-->
+           <!-- <div class="dialog-header">
+                <text class="dialog-title">提示</text>
+            </div>-->
+            <div class="dialog-body">
+                <div class="cardTipDiv">
+                    <image src="{{cardImgUrl}}" class="cardClass"></image>
+                    <text class="cardTipText">{{cardTips}}</text>
+                </div>
+                <div style="align-items: center;">
+                    <wxc-button  type="primary" size="middle" value="{{btnText}}" onclick="deleteCard"></wxc-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    require('weex-components');
+    module.exports = {
+        data: {
+            //dialogBgImg:"https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
+            cardImgUrl:null,
+            cardTips:null,
+            btnText: "使用后移除",
+            
+        },
+        methods: {
+            deleteCard: function() {
+                this._parent.$emit("deleteCard");
+            }
+        }
+    }
+</script>
+
+<style>
+    .dialog-backdrop {
+        opacity: .5;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000000;
+    }
+    .dialog {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+    }
+    .dialog-content {
+        width: 550px;
+        height:450px;
+        background-color: #ffffff;
+        position: relative;
+        border-radius:10px;
+    }
+    .dialog-header {
+        padding: 20;
+        border-bottom:1px solid #CCCCCC;
+        position: relative;
+    }
+    .dialog-title{
+        font-size:40;
+        text-align:center;
+        color:black;
+    }
+    .dialog-body {
+        position: absolute;
+        top: 0px;
+        height:450px;
+        width: 550px;
+        /*justify-content: center;
+        align-items:center;*/
+    }
+    .cardTipDiv{
+        padding-top: 50px;
+        padding-left: 40px;
+        padding-right: 20px;
+        padding-bottom: 30px;
+        flex-direction: row;
+        justify-content:space-between;
+    }
+    .cardTipText{
+        width: 280px;
+        background-color:white;
+        border-color: white;
+        color: black;
+        align-items: center;
+    }
+    .cardClass{
+        width:200px;
+        height:250px;
+        border-width:1px;
+        border-color: #9BADA7;
+    }
+    .cardUseDiv{
+        width:200px;
+        height:80px;
+        justify-content:center;
+        border-color: #E2C3A0;
+        border-width:1px;
+        border-radius: 10px;
+        margin-top: 45px;
+        margin-left: 175px;
+    }
+    .cardUseText{
+        color: #C52E38;
+        font-size: 40;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
