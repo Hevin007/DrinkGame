@@ -9,11 +9,14 @@
                 <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{player.bag}}" onclick="showBag"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
+            <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+            <image class="settingBtn" src="/imgs/settingBtn.png"></image>
+            <text class="endGameText">结束游戏</text>
             <!--<div class="helpBtn"><text class="helpText">？</text></div>
             <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>-->
         </div>
         <div class="paiduiDiv">
-            <image resize="cover" class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
+            <image class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
         </div>
 
         <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
@@ -38,7 +41,7 @@
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
             bgImgSrc: "/imgs/background/bg.png",
             //bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png",//背景图片的url
-            paiduiImg:"/imgs/paidui/paidui7.png",//牌堆图片的url
+            paiduiImg:"/imgs/paidui/newPaidui2.png",//牌堆图片的url
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
             playerNum:null,//该值应当从选择人数界面传过来
             leftPlayerNum:0,//左边玩家个数
@@ -450,15 +453,15 @@
         justify-content:center;
         position:absolute;
         top: 0px;
-        right:0px;
+        right:6px;
     }
     .currPlayerTip{
         width:750px;
         height:100px;
         position:absolute;
-        top: 40px;
+        top: 70px;
         color: black;
-        font-size: 80;
+        font-size: 70;
         font-weight: bold;
         text-align: center;
     }
@@ -485,7 +488,10 @@
         bottom: 0;
     }
     .endGameText{
-        color: white;
+        position: absolute;
+        width:750px;
+        bottom: 50px;
+        color: darkgray;
         font-size: 50;
         text-align: center;
         font-weight: bold;
@@ -498,7 +504,21 @@
         justify-content:center;
     }
     .paidui{
-        width:350px;
-        height:500px;
+        width:330px;
+        height:400px;
+    }
+    .returnBtn{
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
+    }
+    .settingBtn{
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
     }
 </style>

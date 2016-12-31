@@ -16,6 +16,8 @@
         </div>
         <div class="selectFlag" style="left:{{flagLeft}}"></div>
         <text class="button" onclick="toMain">开始游戏</text>
+        <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+        <image class="settingBtn" src="/imgs/settingBtn.png"></image>
     </div>
 </template>
 
@@ -115,5 +117,19 @@
         font-size:70;
         width: 750px;
         text-align:center;
+    }
+    .returnBtn{
+        position: absolute;
+        left: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
+    }
+    .settingBtn{
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        width:50px;
+        height:50px;
     }
 </style>
