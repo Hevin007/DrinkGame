@@ -2,8 +2,8 @@
   <div>
     <greeting if="{{isShow.greeting}}"></greeting>
     <selectNum if="{{isShow.selectNum}}"></selectNum>
+    <main if="{{isShow.main}}" player-num="{{totalPlayerNum}}"></main>
     <score if="{{isShow.score}}"></score>
-    <main id="mainPage" if="{{isShow.main}}"></main>
   </div>
 </template>
 
@@ -26,12 +26,11 @@
             this.isShow.greeting = false;
           });
           this.$on("toMain", function(event) {
+            
+            //this.totalPlayerNum = event.detail.playerNum;
+            this.totalPlayerNum = 6;
             this.isShow.main = true;
             this.isShow.selectNum = false;
-            console.log(event);
-            this.totalPlayerNum = event.detail.playerNum;
-            console.log("totalPlayerNum:"+this.totalPlayerNum);
-           // this.getPlayerNum();通信过不去，不知道怎么搞？
           });
           this.$on("toScore", function(event) {
             this.isShow.score = true;
@@ -39,9 +38,7 @@
           });
     },
      methods:{
-        getPlayerNum:function(e){
-            this.$vm('mainPage').$emit('convertPlayerNum', this.totalPlayerNum)
-        }
+        
      }
   }
 </script>

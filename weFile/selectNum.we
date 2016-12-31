@@ -11,7 +11,7 @@
         </scroller>
         <div class="btn" onclick="toMain">
             <!-- 开始游戏按钮 -->
-            <text class="button" if={{intervalifshow}}>开始游戏</text>
+            <text class="button">开始游戏</text>
         </div>
     </div>
 </template>
@@ -38,10 +38,11 @@
             intervalifshow: true,
             TotalNum: ""
         },
+        created: function() {
+            timer1 = setInterval(this.show.bind(this),500);
+        },
         methods:{
-            ready: function(){
-                timer1 = setInterval(this.show.bind(this),500);
-            },
+
             show: function() {
                 if(this.intervalifshow)
                 {

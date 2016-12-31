@@ -91,6 +91,7 @@
 
 
         created: function() {
+            this.readyFunction();
             //父组件监听包裹模态框的关闭事件
             this.$on("closeBagModal", function(event) {
                 this.isShow.bagModal = false;
@@ -104,17 +105,17 @@
                 
                 switch (this.showCard.currCardNum) {
                     case 1:
-                        this.isShow.juedouModal = true;
+                        //this.isShow.juedouModal = true;
                         break;
                     case 6:
                         //如果抽到6牌，玩游戏牌
-                        this.isShow.randomFailModal = true;
+                        //this.isShow.randomFailModal = true;
                         break;
                     case 7:
                     case 9:
                         //如果抽到7,9；点击立即使用，存入包裹
                         this.storeToBag();
-                        break;
+                        return;
                     //如果抽到11,12,13,14,15，进行惩罚
                     case 11:
                         //调用罚酒的方法，上家喝一杯
@@ -147,6 +148,7 @@
                         this.drink(this.currPlayerId);
                         break;
                 }
+
                 this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家id加1，变为下一位玩家
             });
 
@@ -168,56 +170,57 @@
                 this.isShow.failRadioModal = false;
                 //调用罚酒的方法
                 this.drink(event.target._vm.selectedPlayer);
-            })
+            });
 
+            this.$on("operateCard", function(event) {
+                var cardNum = event.detail.cardNum;
+                var playerId = event.detail.playerId;
+            });
             
         },
-        //界面一载入执行的函数
-        ready:function(){
-            //生成一组随机牌
-            while(this.currCardOrder.length<54){
-                var t=Math.floor(Math.random()*54);//生成随机数
-                if(this.currCardOrder.indexOf(t)==-1){
-                    //如果t在集合arr中存在，indexOf会返回t在集合arr中的位置。如果不存在，indexOf会返回-1
-                    this.currCardOrder.push(t);    //把生成的数字放进这个数组里
-                }
-            }
-
-            //根据玩家人数初始化玩家信息
-            var num = parseInt(this.playerNum/2);
-            //this.playerArray
-            if(this.playerNum%2 == 0){
-                this.leftPlayerNum = num;
-                this.rightPlayerNum = num;
-                for(var i=1;i<=num;i++){
-                    var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
-                    this.leftPlayer.push(obj);
-                }
-                for(var j=num+1;j<=this.playerNum;j++){
-                    var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
-                    this.rightPlayer.push(obj);
-                }
-            }else{
-                this.leftPlayerNum = num+1;
-                this.rightPlayerNum = num;
-                for(var i=1;i<=(num+1);i++){
-                    var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
-                    this.leftPlayer.push(obj);
-                }
-                for(var j=num+2;j<=this.playerNum;j++){
-                    var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
-                    this.rightPlayer.push(obj);
-                }
-            }
-
-            this.$on('convertPlayerNum',function(e){
-                this.playerNum =e.detail;
-            })
-        },
+        
         methods:{
+            //界面一载入执行的函数
+            readyFunction:function(){
+                //生成一组随机牌
+                while(this.currCardOrder.length<54){
+                    var t=Math.floor(Math.random()*54);//生成随机数
+                    if(this.currCardOrder.indexOf(t)==-1){
+                        //如果t在集合arr中存在，indexOf会返回t在集合arr中的位置。如果不存在，indexOf会返回-1
+                        this.currCardOrder.push(t);    //把生成的数字放进这个数组里
+                    }
+                }
 
+                //根据玩家人数初始化玩家信息
+                var num = parseInt(this.playerNum/2);
+                //this.playerArray
+                if(this.playerNum%2 == 0){
+                    this.leftPlayerNum = num;
+                    this.rightPlayerNum = num;
+                    for(var i=1;i<=num;i++){
+                        var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
+                        this.leftPlayer.push(obj);
+                    }
+                    for(var j=num+1;j<=this.playerNum;j++){
+                        var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
+                        this.rightPlayer.push(obj);
+                    }
+                }else{
+                    this.leftPlayerNum = num+1;
+                    this.rightPlayerNum = num;
+                    for(var i=1;i<=(num+1);i++){
+                        var obj = {playerId:i,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
+                        this.leftPlayer.push(obj);
+                    }
+                    for(var j=num+2;j<=this.playerNum;j++){
+                        var obj = {playerId:j,bag:[],drinkNum:0, drinkArray: [], flag_9:false}
+                        this.rightPlayer.push(obj);
+                    }
+                }
+            },
             setDrinkNum: function(id) {
-              this.getPlayerById(id).drinkArray.push(1);
+
+              this.getPlayerById.call(this,id).drinkArray.push(1);
             },
 
             //玩家分leftPlayer和rightPlayer存储，访问不方便，下为统一访问函数
@@ -293,13 +296,21 @@
 
                 }
                 
-                this.getPlayerById(this.currPlayerId).bag.push(cardNode);
+                if (cardNode.num == 9) {
+                    for (var i = 1;i<= this.playerNum;i++) {
+                        this.getPlayerById(i).flag_9 = false;
+                    }
+                    this.getPlayerById(this.currPlayerId).flag_9 = true;
 
+                }
+                this.getPlayerById(this.currPlayerId).bag.push(cardNode);
                 // 收尾操作
                 this.isShow.cardModalSave = false;
                 this.isShow.cardModalUse = false;
 
-                this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家Id循环
+
+                this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家id加1，变为下一位玩家
+            
                
 
             },
@@ -320,10 +331,10 @@
               
               var drinkBag = this.getPlayerById(drinkPlayerId).bag;
 
-              
+              var self = this;
 
               for( var i in drinkBag) {
-                if(drinkBag[i].name==2) {
+                if(drinkBag[i].num==2) {
 
                   modal.confirm({
                     'message': '玩家'+drinkPlayerId+'有免酒卡，是否使用？',
@@ -335,7 +346,7 @@
                       return;
                     }else{
 
-                      this.check9(drinkPlayerId);
+                      self.check9.call(self,drinkPlayerId);
                       
                     }
 
@@ -345,26 +356,28 @@
                 }
               }
 
-              this.check9(drinkPlayerId);
+              self.check9.call(self,drinkPlayerId);
               
             },
             //是否陪酒函数  自带modal的异步回调无法解决
             check9:function(drinkPlayerId) {
-              for (var j;j<this.playerNum;j++) {
+              var self = this;
+                for (var j=1;j<=this.playerNum;j++) {
+                
                 if(this.getPlayerById(j).flag_9==true) {
-
                   modal.confirm({
                     'message': '玩家'+j+'有陪酒卡，是否让其陪酒？',
                     'okTitle': '是',
                     'cancelTitle': '否'
                   }, function (e) {
                     if(String(e)=="是") {
-                      this.setDrinkNum(j);
+                      self.setDrinkNum.call(self,j);
                     }
                   });
+                  break;
                 }
               }
-              this.setDrinkNum(drinkPlayerId);
+              self.setDrinkNum.call(self,drinkPlayerId);
             }
         }
     }

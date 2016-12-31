@@ -1,0 +1,40 @@
+<template></template>
+
+<script>
+  var modal = require('@weex-module/modal');
+  var b = function() {
+        return this;
+      };
+  module.exports = {
+    data: {
+      c: "haha"
+    },
+    created: function() {
+      var self = this;
+
+      modal.confirm({
+            'message': '玩家有免酒卡，是否使用？',
+            'okTitle': '使用',
+            'cancelTitle': '不使用'
+          }, function (e) {
+            if(String(e)=="使用") {
+              self.test.call(self,13);
+              return;
+            }else{
+              self.test.call(self,12);
+            }
+
+          });
+    },
+   methods:{
+      test: function(id) {
+        console.log("i am test "+id);
+        this.a();
+        
+      },
+      a : function() {
+        console.log("i am a "+this.c);
+      }
+   }
+  }
+</script>
