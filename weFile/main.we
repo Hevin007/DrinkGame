@@ -12,10 +12,9 @@
 
             <image class="returnBtn" src="/imgs/returnBtn.png"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
-            <text class="endGameText" onclick="toScore">结束游戏</text>
-            <!--<div class="helpBtn"><text class="helpText">？</text></div>
-            <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>-->
+            
         </div>
+        
         <div class="paiduiDiv">
             <image class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
         </div>
@@ -29,6 +28,7 @@
         <duelModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></duelModal>
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
+        <div style="align-items: center; width: 750;"><text class="endGameText" onclick="toScore">结束游戏</text></div>
     </div>
 </template>
 
@@ -507,12 +507,13 @@
     }
     .endGameText{
         position: absolute;
-        width:750px;
+        width: 280px;
         bottom: 50px;
         color: darkgray;
         font-size: 50;
         text-align: center;
         font-weight: bold;
+        
     }
     .paiduiDiv{
         position: absolute;
@@ -531,6 +532,7 @@
         bottom: 15px;
         width:50px;
         height:50px;
+        
     }
     .settingBtn{
         position: absolute;
@@ -538,5 +540,6 @@
         bottom: 15px;
         width:50px;
         height:50px;
+       
     }
 </style>
