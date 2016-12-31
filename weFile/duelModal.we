@@ -22,14 +22,16 @@
     require('weex-components');
     module.exports = {
         data: {
-            currentPlayer:null
+            currentPlayer:null,
+            playerNum:null
+
         },
         computed:{
             randomPlayerId: function(){
-                var x = parseInt(Math.random()*14);
-                while(x == this.current_player)
+                var x = parseInt(Math.random()*this.playerNum);
+                while(x == this.current_player || x==0)
                 {
-                    x = parseInt(Math.random()*14)
+                    x = parseInt(Math.random()*this.playerNum)
                 }
                 return x;
             },
