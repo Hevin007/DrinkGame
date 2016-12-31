@@ -9,9 +9,10 @@
                 <bag repeat="{{ player in rightPlayer}}" player-id="{{player.playerId}}" drink-num="{{player.drinkArray.length}}" card-num="{{player.bag.length}}" bag-arr="{{player.bag}}" onclick="showBag"></bag>
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
+
             <image class="returnBtn" src="/imgs/returnBtn.png"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
-            <text class="endGameText">结束游戏</text>
+            <text class="endGameText" onclick="toScore">结束游戏</text>
             <!--<div class="helpBtn"><text class="helpText">？</text></div>
             <div class="endGameBtn"><text class="endGameText">结束游戏</text></div>-->
         </div>
@@ -25,7 +26,7 @@
         <cardModalSave if="{{isShow.cardModalSave}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalSave>
         <cardModalDelete if="{{isShow.cardModalDelete}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalDelete>
 
-        <juedouModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></juedouModal>
+        <duelModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></duelModal>
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
     </div>
@@ -75,6 +76,7 @@
                 currCardId:null,//当前玩家抽到的牌的id
                 currCardNum:null//当前玩家抽到的牌值
             },
+            
             //存放不同卡牌弹出框中，不同卡牌值对应的提示信息
             cardTipsArr:["",
                 "决斗牌：随机选择一位玩家进行决斗，输的玩家喝酒一杯，立刻发动。",
@@ -426,6 +428,23 @@
                 }
               }
               self.setDrinkNum.call(self, drinkPlayerId, amount);
+            },
+
+            toScore : function() {
+                var rankArray = [];
+                for (var i=1;i<=this.playerNum;i++) {
+                    var rank = {
+                        playerId: this.getPlayerById(i).playerId,
+                        drinkNum: this.getPlayerById(i).drinkArray.length
+                        
+                    }
+                    rankArray.push(rank);
+                }
+                rankArray.sort(function(a,b) {
+                    return b.drinkNum-a.drinkNum;
+                });
+                rankArray = rankArray.slice(0,6);
+                this._parent.$emit("toScore", {rankArray: rankArray});
             }
         }
     }
@@ -468,7 +487,6 @@
     .helpBtn{
         width:80px;
         height:80px;
-        background-color: blue;
         position: absolute;
         left: 0;
         bottom: 0;
@@ -482,7 +500,7 @@
     .endGameBtn{
         width:230px;
         height:80px;
-        background-color: blue;
+        
         position: absolute;
         right: 0;
         bottom: 0;

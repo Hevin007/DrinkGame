@@ -3,7 +3,7 @@
     <greeting if="{{isShow.greeting}}"></greeting>
     <selectNum if="{{isShow.selectNum}}"></selectNum>
     <main if="{{isShow.main}}" player-num="{{totalPlayerNum}}"></main>
-    <score if="{{isShow.score}}"></score>
+    <score if="{{isShow.score}}" rank-array="{{rankArray}}"></score>
   </div>
 </template>
 
@@ -16,7 +16,8 @@
         main: false,
         score: false
       },
-      totalPlayerNum:null
+      totalPlayerNum:null,
+      rankArray: []
     },
     created: function() {
         //父组件通过this.$on(type,handler)监听特定类型的自定义事件
@@ -33,6 +34,7 @@
             this.isShow.selectNum = false;
           });
           this.$on("toScore", function(event) {
+            this.rankArray = event.detail.rankArray;
             this.isShow.score = true;
             this.isShow.main = false;
           });
