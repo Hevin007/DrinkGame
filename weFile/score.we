@@ -46,8 +46,8 @@
     .rankImg {
         margin-left: 20;
         margin-right: 40;
-        width: 70px;
-        height: 90px;
+        width: 60px;
+        height: 75px;
     }
 
     .bgImg{
