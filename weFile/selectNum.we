@@ -16,7 +16,7 @@
         </div>
         <div class="selectFlag" style="left:{{flagLeft}}"></div>
         <text class="button" onclick="toMain">开始游戏</text>
-        <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+        <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnGreeting"></image>
         <image class="settingBtn" src="/imgs/settingBtn.png"></image>
     </div>
 </template>
@@ -63,6 +63,9 @@
             },
             toMain: function() {
                 this._parent.$emit("toMain",{playerNum:this.totalNum});
+            },
+            returnGreeting : function () {
+                this._parent.$emit("returnGreeting");
             }
         }
     }
@@ -115,7 +118,7 @@
     }
     .button{
         position:absolute;
-        bottom: 250px;
+        bottom: 220;
         font-size:60;
         width: 750px;
         text-align:center;

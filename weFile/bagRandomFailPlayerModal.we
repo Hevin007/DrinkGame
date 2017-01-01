@@ -49,11 +49,19 @@
         },
         methods: {
             doSelect: function(e){
-                this.select_playerName = e.target.attr.value;
-                this.select_player = e.target.attr.value.split("家")[1];
+                var value = e.target.attr.value;
+                if (value !='') {
+                    this.select_playerName = value;
+                    this.select_player = value.split("家")[1];
+                    
+                } 
             },
             startPunish: function() {
-                this._parent.$emit("bagStartPunish",{selectedPlayer:this.select_player});
+                if(this.select_player) {
+                    //console.log(this.select_player);
+
+                    this._parent.$emit("bagStartPunish",{selectedPlayer:this.select_player});
+                }
             }
         }
     }
@@ -102,6 +110,12 @@
     }
     .select_list{
         height:200;
+    }
+    .listdiv {
+        border-bottom-width: 1;
+        align-items: center;
+        width: 200;
+        border-color: grey;
     }
     .list_item{
         font-size:32;

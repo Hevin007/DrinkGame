@@ -40,11 +40,18 @@
         },
         methods: {
             doSelect: function(e){
-                this.select_playerName = e.target.attr.value;
-                this.failedPlayer = e.target.attr.value.split("家")[1];
+                var value = e.target.attr.value;
+                if (value !='') {
+                    this.select_playerName = value;
+                    this.failedPlayer = value.split("家")[1];
+                    
+                } 
             },
             startPunish: function() {
-                this._parent.$emit("startPunish",{selectedPlayer:this.failedPlayer});
+                if (this.failedPlayer) {
+
+                    this._parent.$emit("startPunish",{selectedPlayer:this.failedPlayer});
+                }
             }
         }
     }
@@ -83,6 +90,12 @@
     }
     .select_list{
         height:100;
+    }
+    .listdiv {
+        border-bottom-width: 1;
+        align-items: center;
+        border-color: grey;
+        width: 200;
     }
     .list_item{
         font-size:32;

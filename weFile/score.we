@@ -15,6 +15,7 @@
 
         </div>
     </div>
+    <text class="button" onclick="restartGame">重新开始</text>
   </div>
 </template>
 
@@ -37,7 +38,9 @@
             }
         },
         methods: {
-           
+           restartGame :  function() {
+                this._parent.$emit("restartGame");
+           }
         }
     }
 </script>
@@ -96,6 +99,14 @@
        
         position: relative;
         border-radius:10px;
+    }
+    .button{
+        position:absolute;
+        bottom: 220;
+        font-size:60;
+        width: 750px;
+        text-align:center;
+        color: white;
     }
 
 </style>

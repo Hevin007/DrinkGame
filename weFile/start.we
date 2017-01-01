@@ -38,6 +38,18 @@
             this.isShow.score = true;
             this.isShow.main = false;
           });
+          this.$on("returnGreeting", function(event) {
+            this.isShow.greeting = true;
+            this.isShow.selectNum = false;
+          });
+          this.$on("returnSelectNum", function(event) {
+            this.isShow.selectNum = true;
+            this.isShow.main = false;
+          });
+          this.$on("restartGame", function(event) {
+            this.isShow.greeting = true;
+            this.isShow.score = false;
+          });
     },
      methods:{
         

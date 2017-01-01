@@ -10,7 +10,7 @@
             </div>
             <text class="currPlayerTip">玩家{{currPlayerId}}摸牌</text>
 
-            <image class="returnBtn" src="/imgs/returnBtn.png"></image>
+            <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnSelectNum"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
             
         </div>
@@ -173,7 +173,7 @@
             this.$on("startJuedou" , function(event){
                 this.isShow.juedouModal = false;
                 this.isShow.failRadioModal = true;
-                console.log(event);
+                //console.log(event);
                 this.radioSelectPlayer = event.detail.randomPlayerId;
             });
 
@@ -182,7 +182,7 @@
                 this.isShow.randomFailModal = false;
                 this.isShow.failRadioModal = false;
                 //调用罚酒的方法
-                console.log("罚酒玩家id:"+event.detail.selectedPlayer);
+                //console.log("罚酒玩家id:"+event.detail.selectedPlayer);
                 this.drink(event.detail.selectedPlayer , 1);
                 this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家id加1，变为下一位玩家
             });
@@ -475,6 +475,10 @@
                 });
                 rankArray = rankArray.slice(0,6);
                 this._parent.$emit("toScore", {rankArray: rankArray});
+            },
+
+            returnSelectNum : function () {
+                this._parent.$emit("returnSelectNum");
             }
         }
     }

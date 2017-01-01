@@ -5,7 +5,7 @@
             <div class="dialog-content">
                 <div class="dialog-header">
                     <text class="dialog-title">落败的玩家是：</text>
-                    <text style="color: orange;font-weight: bold;font-size: 40px">{{select_playerName}}</text>
+                    <text style="color: orange;font-weight: bold;font-size: 40px; ">{{select_playerName}}</text>
                 </div>
                 <div class="dialog-body">
                     <list class="select_list">
@@ -35,7 +35,7 @@
             ],
             currentPlayer:null,
             select_playerName:"",
-            select_playerId:"",
+            select_player:"",
             playerNum:null
         },
         created:function (){
@@ -49,11 +49,18 @@
         },
         methods: {
             doSelect: function(e){
-                this.select_playerName = e.target.attr.value;
-                this.select_player = e.target.attr.value.split("家")[1];
+                var value = e.target.attr.value;
+                if (value !='') {
+                    this.select_playerName = value;
+                    this.select_player = value.split("家")[1];
+                    
+                } 
             },
             startPunish: function() {
-                this._parent.$emit("startPunish",{selectedPlayer:this.select_player});
+                if (this.select_player) {
+
+                    this._parent.$emit("startPunish",{selectedPlayer:this.select_player});
+                }
             }
         }
     }
@@ -103,8 +110,15 @@
     .select_list{
         height:200;
     }
+    .listdiv {
+        border-bottom-width: 1;
+        align-items: center;
+        width: 200;
+        border-color: grey;
+    }
     .list_item{
         font-size:32;
+
     }
 
 
