@@ -28,6 +28,7 @@
         <duelModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></duelModal>
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
+        <bagRandomFailPlayerModal if="{{isShow.bagRandomPlayer}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></bagRandomFailPlayerModal>
         <div style="align-items: center; width: 750;"><text class="endGameText" onclick="toScore">结束游戏</text></div>
     </div>
 </template>
@@ -58,7 +59,8 @@
                 cardModalDelete: false,
                 juedouModal:false,
                 randomFailModal:false,
-                failRadioModal:false
+                failRadioModal:false,
+                bagRandomPlayer:false
             },
             //当前玩家的包裹中存的牌信息
             currPlayerBag:[],
@@ -116,11 +118,11 @@
                 switch (this.showCard.currCardNum) {
                     case 1:
                         this.isShow.juedouModal = true;
-                        break;
+                        return;
                     case 6:
                         //如果抽到6牌，玩游戏牌
                         this.isShow.randomFailModal = true;
-                        break;
+                        return;
                     case 7:
                     case 9:
                         //如果抽到7,9；点击立即使用，存入包裹
@@ -182,6 +184,7 @@
                 //调用罚酒的方法
                 console.log("罚酒玩家id:"+event.detail.selectedPlayer);
                 this.drink(event.detail.selectedPlayer , 1);
+                this.currPlayerId = this.currPlayerId % this.playerNum + 1;//玩家id加1，变为下一位玩家
             });
             //父组件监听，bagModal中点击卡牌后出发操作卡牌事件
             this.$on("operateCard", function(event) {
@@ -205,6 +208,32 @@
             this.$on("deleteCard", function(event) {
                 var playerId = this.showCard.playerId;
                 var cardId = this.showCard.currCardId;
+                var cardName = this.showCard.currCardNum;
+                var bag = this.getPlayerById(playerId).bag;
+                switch (cardName){
+                    case 8:
+                        for( var i in bag ) {
+                            if(bag[i].id == cardId) {
+
+                                bag.splice(i,1);
+                            }
+                        }
+                        break;
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 7:
+                        this.isShow.bagRandomPlayer = true;
+                        break;
+
+                }
+                this.isShow.cardModalDelete = false;
+            });
+
+            this.$on("bagStartPunish" , function(e){
+                var playerId = this.showCard.playerId;
+                var cardId = this.showCard.currCardId;
+                var selectPunishPlayer = e.detail.selectedPlayer;
                 var bag = this.getPlayerById(playerId).bag;
                 for( var i in bag ) {
                     if(bag[i].id == cardId) {
@@ -212,8 +241,9 @@
                         bag.splice(i,1);
                     }
                 }
-                this.isShow.cardModalDelete = false;
-            });
+                this.drink(selectPunishPlayer, 1);
+                this.isShow.bagRandomPlayer = false;
+            })
             
         },
         

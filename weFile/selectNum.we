@@ -8,7 +8,7 @@
         </div>
 
         <div class="selectDiv">
-            <div style="background-color: black;width:60;height:42;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="default()"></div>
+            <div style="background-color: #F2D54A;opacity: 0.8;width:60;height:42;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="default()"></div>
             <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}"
                  style="background-color: {{selectOption.bgColor}};border-bottom-left-radius: {{selectOption.leftBot}};
                  border-bottom-right-radius: {{selectOption.rightBot}};border-top-left-radius: {{selectOption.leftTop}};border-top-right-radius: {{selectOption.rightTop}}"
@@ -38,7 +38,7 @@
                 {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:13},
                 {bgColor:"white",leftTop:0,leftBot:0,rightTop:15,rightBot:15,num:14}
             ],
-            flagLeft:95
+            flagLeft:195
         },
         methods:{
             selectNum:function(event){
@@ -46,17 +46,17 @@
                 var index = event.target.attr.currIndex;
               console.log(index);
                for(var i=0;i<=index;i++){
-                  this.selectArr[i].bgColor = "black";
+                  this.selectArr[i].bgColor = "#F2D54A";
                }
                for(var i=index+1;i<10;i++){
                    this.selectArr[i].bgColor = "white";
                }
                 this.totalNum =  this.selectArr[index].num;
-                this.flagLeft = 95+index*60+61;
+                this.flagLeft = 195+index*40+41;
             },
             default:function(){
                 this.totalNum =  4;
-                this.flagLeft = 95;
+                this.flagLeft = 195;
                 for(var i=0;i<10;i++){
                     this.selectArr[i].bgColor = "white";
                 }
@@ -83,16 +83,17 @@
     .titleNum{
         font-size: 50px;
         font-weight:bold;
-        color: darkred;
+        color: #F2D54A;
         margin-right: 10px;
     }
     .selectDiv{
         position:absolute;
         top: 350px;
-        left:40px;
-        width:667px;
+        left:140px;
+        width:467px;
         height:50px;
-        border-color: black;
+        border-color: #F2D54A;
+        opacity: 0.8;
         background-color: white;
         border-width: 5px;
         flex-direction: row;
@@ -100,15 +101,16 @@
         border-radius: 20px;
     }
     .selectOption{
-        width:60px;
+        width:40px;
         height:42px;
-        backgroundColor:"black";
+        background-color:#F2D54A;
+        opacity: 0.8;
     }
     .selectFlag{
         position:absolute;
         height:70px;
         width: 10px;
-        background-color: black;
+        background-color: #F2D54A;
         top:340px;
     }
     .button{
