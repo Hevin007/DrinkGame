@@ -1,20 +1,22 @@
 <template>
   <div>
-    <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
-    <div  class="dialog">
+  
+        <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
+        <div  class="dialog">
 
-        <div class="dialog-content">
-          <list class="list">
-            <cell class="row" repeat="item in rankArray" index="{{$index}}">
-              <img src="{{rankImgHead}}{{$index+1}}{{rankImgTail}}" class="rankImg"></img>
-              <text class="item">玩家{{item.playerId}}</text>
-              <text class="title">{{item.title}}</text>
+            <div class="dialog-content">
+              <list class="list">
+                <cell class="row" repeat="item in rankArray" index="{{$index}}">
+                  <img src="{{rankImgHead}}{{$index+1}}{{rankImgTail}}" class="rankImg"></img>
+                  <text class="item">玩家{{item.playerId}}</text>
+                  <text class="title">{{item.title}}</text>
 
-            </cell>
-          </list>
+                </cell>
+              </list>
 
+            </div>
         </div>
-    </div>
+    
     <text class="button" onclick="restartGame">重新开始</text>
   </div>
 </template>
@@ -63,7 +65,7 @@
     }
 
     .row {
-        position: relative;
+        /*position: relative;*/
 
         
         align-items: center;
@@ -85,19 +87,20 @@
         color: red;
     }
     .dialog {
-        position: fixed;
-        top: 0;
+        position: absolute;
+        top: 200;
         right: 0;
         bottom: 0;
         left: 0;
         justify-content: center;
         align-items: center;
+
     }
     .dialog-content {
         width: 550px;
         height:800px;
        
-        position: relative;
+        /*position: relative;*/
         border-radius:10px;
     }
     .button{
@@ -107,6 +110,7 @@
         width: 750px;
         text-align:center;
         color: white;
+        
     }
 
 </style>

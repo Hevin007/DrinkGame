@@ -71,11 +71,11 @@
         background-color: #FFFFFF;
         /*border:2px solid black;*/
         border-radius:10px;
-        position: relative;
+        /*position: relative;*/
     }
     .dialog-header {
         padding:20px;
-        position: relative;
+        /*position: relative;*/
         flex-direction:row;
     }
     .dialog-title{

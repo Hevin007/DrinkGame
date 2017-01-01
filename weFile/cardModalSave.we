@@ -57,13 +57,13 @@
         width: 550px;
         height:450px;
         background-color: #ffffff;
-        position: relative;
+        /*position: relative;*/
         border-radius:10px;
     }
     .dialog-header {
         padding: 20;
         border-bottom:1px solid #CCCCCC;
-        position: relative;
+        /*position: relative;*/
     }
     .dialog-title{
         font-size:40;

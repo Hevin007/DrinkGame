@@ -40,16 +40,18 @@
 <style>
     .bagDiv{
         position:absolute;
+        top: 0;
+        left: 0;
         flex-direction:row;
-        width:160px;
-        height:130px;
-        padding: 10px;
+        width:160;
+        height:130;
+        padding: 10;
         opacity: 0.8;
-        border-radius: 10px;
+        border-radius: 10;
     }
     .leftDiv{
-        width:30px;
-        height:120px;
+        width:30;
+        height:120;
         border-right-width: 1;
         border-right-style: solid;
         border-right-color: white;
@@ -58,19 +60,19 @@
     }
     .rightDiv{
         flex-direction:column;
-        width:118px;
-        height:120px;
+        width:118;
+        height:120;
     }
     .drinkNumDiv{
-        width:120px;
-        height:35px;
+        width:120;
+        height:35;
         border-bottom-width: 1;
         border-bottom-style: solid;
         border-bottom-color: white;
     }
     .playerBagDiv{
-        width:120px;
-        height:85px;
+        width:120;
+        height:85;
     }
     .textClass{
         color: white;

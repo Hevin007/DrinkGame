@@ -29,7 +29,7 @@
         computed:{
             randomPlayerId: function(){
                 var x = parseInt(Math.random()*this.playerNum);
-                while(x == this.current_player || x==0)
+                while(x == this.currentPlayer || x==0)
                 {
                     x = parseInt(Math.random()*this.playerNum)
                 }
@@ -71,12 +71,12 @@
         background-color:#FFFFFF;
         border:2px solid white;
         border-radius:10px;
-        position: relative;
+        /*position: relative;*/
     }
     .dialog-header {
         padding: 20;
         border-bottom:1px solid #CCCCCC;
-        position: relative;
+        /*position: relative;*/
     }
     .dialog-title{
         font-size:40;
