@@ -25,7 +25,8 @@
     
     module.exports ={
         data:{
-            bagBagImg:"/imgs/background/bagBg4.png",
+            bagBagImg:"",
+            /*bagBagImg:"/imgs/background/bagBg4.png",*/
             playerId:1,
             drinkNum:0,
             cardNum: 0,
@@ -46,8 +47,10 @@
         width:160;
         height:130;
         padding: 10;
-        opacity: 0.8;
+        /*opacity: 0.8;*/
         border-radius: 10;
+        border-color: white;
+        border-width: 1px;
     }
     .leftDiv{
         width:30;
@@ -76,5 +79,6 @@
     }
     .textClass{
         color: white;
+        font-weight: bold;
     }
 </style>

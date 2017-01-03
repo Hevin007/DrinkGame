@@ -29,7 +29,8 @@
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
         <bagRandomFailPlayerModal if="{{isShow.bagRandomPlayer}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></bagRandomFailPlayerModal>
-        <div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>
+        <!--<div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>-->
+        <image class="endPlayText" onclick="toScore" src="{{endBtn}}"></image>
     </div>
 </template>
 
@@ -41,9 +42,10 @@
             //存放54张牌的信息，其中id为牌的唯一标识，number为牌值(其中小王用14表示，大王用15表示)，url为对应的图片路径
             //后来又想了一下，card表可以不用存了，实在太大了，用另一种办法代替，即图片命名时直接是从1-2-k-小王-大王排好，命名从0-53
             //所以假设当前牌的id为x，如果x<53，则牌值为 int(x/4)+1 ，图片名为cardx.png , 如果x=53，则为小王 ， x=54则为大王
-            bgImgSrc: "/imgs/background/bg.png",
+            bgImgSrc: "/imgs/background/bg.jpg",
             //bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png",//背景图片的url
             paiduiImg:"/imgs/paidui/newPaidui2.png",//牌堆图片的url
+            endBtn:"/imgs/endGame.png",
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
             playerNum:null,//该值应当从选择人数界面传过来
             leftPlayerNum:0,//左边玩家个数
@@ -488,6 +490,7 @@
     .bgImg{
         width: 750px;
         height:1175px;
+       /* opacity: 0.7;*/
     }
     .mainCont{
         position:absolute;
@@ -512,11 +515,12 @@
         width:750px;
         height:100px;
         position:absolute;
-        top: 70px;
+        top: 90px;
         color: black;
         font-size: 70;
         font-weight: bold;
         text-align: center;
+        font-family: '华文楷体';
     }
     .helpBtn{
         width:80px;
@@ -575,5 +579,12 @@
         width:50px;
         height:50px;
        
+    }
+    .endPlayText{
+        position: absolute;
+        bottom:70px;
+        left:240px;
+        width:280px;
+        height:100px;
     }
 </style>

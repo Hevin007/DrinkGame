@@ -109,7 +109,7 @@
     }
     .select_list{
         height:200;
-        background-color: red;
+        /*background-color: red;*/
     }
     .listdiv {
         border-bottom-width: 1;

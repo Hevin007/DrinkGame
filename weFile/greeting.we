@@ -13,8 +13,8 @@
     var number =0;
     module.exports = {
         data:{
-            bgImgSrc:"/imgs/background/greetingBg2.png",
-            startBtn:"/imgs/startClick.png",
+            bgImgSrc:"/imgs/background/newGreeting.png",
+            startBtn:"/imgs/startGameBtn.png",
             arr: [0.8,0.6,0.4,0.2,0.4,0.6,0.8,1],
             opacity:1,
             number:0
@@ -45,7 +45,7 @@
     }
     .startPlayText{
         position: absolute;
-        bottom:200px;
+        bottom:100px;
         left:190px;
         width:350px;
         height:70px;

@@ -1,7 +1,7 @@
 <template>
   <div>
   
-        <image resize="cover" class="bgImg" src="{{bgImgSrc}}"></image>
+        <image class="bgImg" src="{{bgImgSrc}}"></image>
         <div  class="dialog">
 
             <div class="dialog-content">
@@ -24,7 +24,7 @@
 <script>
     module.exports = {
         data: {
-            bgImgSrc: "/imgs/background/scoreBg.png",
+            bgImgSrc: "/imgs/background/scoreBg2.png",
             rankImgHead: "/imgs/background/rank",
             rankImgTail: ".png",
             rankArray: [],
