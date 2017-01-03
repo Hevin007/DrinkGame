@@ -54,9 +54,9 @@
           closeBagModal: function() {
             this._parent.$emit("closeBagModal");
           },
-          operateCard: function(event) {
-            var cardNum = event.target.attr.num;
-            var cardId = event.target.attr.cardId;
+          operateCard: function(e) {
+            var cardNum = e.target.attr.num;
+            var cardId = e.target.attr.cardId;
             this._parent.$emit("operateCard",{
               cardNum: cardNum,
               cardId : cardId,

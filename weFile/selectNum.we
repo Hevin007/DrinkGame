@@ -8,7 +8,7 @@
         </div>
 
         <div class="selectDiv">
-            <div style="background-color: #F2D54A;opacity: 0.8;width:60;height:42;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="default()"></div>
+            <div style="background-color: #F2D54A;opacity: 0.8;width:60;height:42;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="init()"></div>
             <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}"
                  style="background-color: {{selectOption.bgColor}};border-bottom-left-radius: {{selectOption.leftBot}};
                  border-bottom-right-radius: {{selectOption.rightBot}};border-top-left-radius: {{selectOption.leftTop}};border-top-right-radius: {{selectOption.rightTop}}"
@@ -54,7 +54,7 @@
                 this.totalNum =  this.selectArr[index].num;
                 this.flagLeft = 195+index*40+41;
             },
-            default:function(){
+            init:function(){
                 this.totalNum =  4;
                 this.flagLeft = 195;
                 for(var i=0;i<10;i++){

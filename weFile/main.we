@@ -13,6 +13,7 @@
             <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnSelectNum"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
             
+            <div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>
         </div>
         
         <div class="paiduiDiv">
@@ -29,7 +30,7 @@
         <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
         <bagRandomFailPlayerModal if="{{isShow.bagRandomPlayer}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></bagRandomFailPlayerModal>
-        <div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>
+        
     </div>
 </template>
 
@@ -243,7 +244,12 @@
                 }
                 this.drink(selectPunishPlayer, 1);
                 this.isShow.bagRandomPlayer = false;
-            })
+            });
+
+            this.$on("returnToBagModal", function() {
+                this.isShow.bagModal = true;
+                this.isShow.cardModalDelete = false;
+            });
             
         },
         
