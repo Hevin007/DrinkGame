@@ -2,17 +2,15 @@
     <div id="cardDialog" class="dialog">
         <div class="dialog-backdrop"></div>
         <div class="dialog-content">
-           <!-- <image class="dialogBgClass" src="{{dialogBgImg}}"></image>-->
-           <!-- <div class="dialog-header">
-                <text class="dialog-title">提示</text>
-            </div>-->
+
             <div class="dialog-body">
                 <div class="cardTipDiv">
                     <image src="{{cardImgUrl}}" class="cardClass"></image>
                     <text class="cardTipText">{{cardTips}}</text>
                 </div>
-                <div style="align-items: center;">
-                    <wxc-button  type="primary" size="middle" value="{{btnText}}" onclick="deleteCard"></wxc-button>
+                <div style="justify-content: center; flex-direction: row;">
+                    <wxc-button  type="primary" size="middle" value="{{btnDelText}}" style="margin-right: 10;" onclick="deleteCard"></wxc-button>
+                    <wxc-button  type="primary" size="middle" value="{{btnReturnText}}" onclick="returnToBagModal"></wxc-button>
                 </div>
             </div>
         </div>
@@ -26,12 +24,17 @@
             //dialogBgImg:"https://13111211.github.io/weexCompetition/imgs/background/modalBg.png",
             cardImgUrl:null,
             cardTips:null,
-            btnText: "使用后移除",
+            btnDelText: "使用后移除",
+            btnReturnText: "返回"
+
             
         },
         methods: {
             deleteCard: function() {
                 this._parent.$emit("deleteCard");
+            },
+            returnToBagModal: function () {
+                this._parent.$emit("returnToBagModal");
             }
         }
     }

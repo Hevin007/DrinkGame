@@ -13,6 +13,7 @@
             <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnSelectNum"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
             
+            <!--<div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>-->
         </div>
         
         <div class="paiduiDiv">
@@ -245,7 +246,12 @@
                 }
                 this.drink(selectPunishPlayer, 1);
                 this.isShow.bagRandomPlayer = false;
-            })
+            });
+
+            this.$on("returnToBagModal", function() {
+                this.isShow.bagModal = true;
+                this.isShow.cardModalDelete = false;
+            });
             
         },
         
@@ -587,4 +593,5 @@
         width:280px;
         height:100px;
     }
+    /**/
 </style>

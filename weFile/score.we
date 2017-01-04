@@ -17,15 +17,17 @@
             </div>
         </div>
     
-    <text class="button" onclick="restartGame">重新开始</text>
+    <!--<text class="button" onclick="restartGame">重新开始</text>-->
+      <image class="restartPlayText" onclick="restartGame" src="{{restartBtn}}"></image>
   </div>
 </template>
 
 <script>
     module.exports = {
         data: {
-            bgImgSrc: "/imgs/background/scoreBg2.png",
+            bgImgSrc: "/imgs/background/scoreBg3.png",
             rankImgHead: "/imgs/background/rank",
+            restartBtn:"/imgs/restartGame.png",
             rankImgTail: ".png",
             rankArray: [],
             title : [
@@ -102,6 +104,7 @@
        
         /*position: relative;*/
         border-radius:10px;
+        background-color: rgba(223, 223, 223, 0.41);
     }
     .button{
         position:absolute;
@@ -112,5 +115,11 @@
         color: white;
         
     }
-
+    .restartPlayText{
+        position: absolute;
+        bottom:70px;
+        left:240px;
+        width:280px;
+        height:100px;
+    }
 </style>

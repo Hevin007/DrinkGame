@@ -3,8 +3,8 @@
         <image src="{{bagBagImg}}" style="width:160px;height:130px;"></image>
         <div class="bagDiv">
             <div class="leftDiv">
-                <text class="textClass">玩</text>
-                <text class="textClass">家</text>
+                <!-- <text class="textClass">玩</text>
+                <text class="textClass">家</text> -->
                 <text id="{{playerId}}" class="textClass">{{playerId}}</text>
             </div>
             <div class="rightDiv">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="playerBagDiv">
                     <!--<text style="text-align: center">牌数:{{cardNum}}</text>-->
-                    <text style="font-size: 25px;text-align: center;color:white" repeat="{{cardInfo in bagArr}}">{{cardInfo.name}}</text>
+                    <text style="font-size: 22;text-align: center;color:white" repeat="{{cardInfo in bagArr}}">{{cardInfo.name}}</text>
 
                 </div>
             </div>
@@ -25,12 +25,14 @@
     
     module.exports ={
         data:{
-            bagBagImg:"",
-            /*bagBagImg:"/imgs/background/bagBg4.png",*/
+            bagBagImg:"/imgs/background/bagBg4.png",
             playerId:1,
             drinkNum:0,
             cardNum: 0,
             bagArr:[]
+        },
+        created: function() {
+            this.bagArr = this.bagArr.slice(0,3);
         },
         methods: {
 
@@ -49,8 +51,8 @@
         padding: 10;
         /*opacity: 0.8;*/
         border-radius: 10;
-        border-color: white;
-        border-width: 1px;
+        /*border-color: white;*/
+        /*border-width: 1px;*/
     }
     .leftDiv{
         width:30;
