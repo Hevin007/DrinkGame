@@ -2,8 +2,8 @@
     <container>
         <image class="bgImg" src="{{bgImgSrc}}"></image>
        <!-- <text class="gameName">行酒令</text>-->
-        <!--<image class="startPlayText" onclick="toSelectNum" src="{{startBtn}}" style="opacity:{{opacity}}"></image>-->
-        <image id="startPlayBtn" class="startPlayText" onclick="toSelectNum" src="{{startBtn}}"></image>
+        <image class="startPlayText" onclick="toSelectNum" src="{{startBtn}}" style="opacity:{{opacity}}"></image>
+        <!--<image id="startPlayBtn" class="startPlayText" onclick="toSelectNum" src="{{startBtn}}"></image>-->
         <image class="helpBtn" src="/imgs/helpBtn.png"></image>
         <image class="settingBtn" src="/imgs/settingBtn.png"></image>
     </container>
@@ -12,7 +12,7 @@
 <script>
     var timer1;
     var number =0;
-    var animation = require('@weex-module/animation');
+    //var animation = require('@weex-module/animation');
     module.exports = {
         data:{
             bgImgSrc:"/imgs/background/newGreeting.png",
@@ -22,8 +22,8 @@
             number:0
         },
         created: function(){
-            //timer1 = setInterval(this.show.bind(this),200);
-            var self = this;
+            timer1 = setInterval(this.show.bind(this),200);
+            /*var self = this;
             var target = this.$el('startPlayBtn');
             self.opacity = self.opacity === 1 ? 0.5 : 1;
             var options = {
@@ -32,11 +32,11 @@
                 },
                 duration: 500
             };
-            animation.transition(target,options);
+            animation.transition(target,options);*/
         },
         methods: {
             toSelectNum: function() {
-                //clearInterval(timer1);
+                clearInterval(timer1);
                 //子组件通过this._parent 找到父组件，然后再调用 this._parent.$emit(type, detail) 方法，即可实现从子组件到父组件的通信
                 //其中type为事件名称，detail为参数，采用对象的形式
                 this._parent.$emit('toSelectNum');

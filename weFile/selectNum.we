@@ -8,14 +8,15 @@
         </div>
 
         <div class="selectDiv">
-            <div style="background-color: rgb(242, 111, 6);width:40;height:32;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="init()"></div>
+            <div style="background-color: rgb(234, 128, 16);width:40;height:32;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="init()"></div>
             <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}"
                  style="background-color: {{selectOption.bgColor}};border-bottom-left-radius: {{selectOption.leftBot}};
                  border-bottom-right-radius: {{selectOption.rightBot}};border-top-left-radius: {{selectOption.leftTop}};border-top-right-radius: {{selectOption.rightTop}}"
                  onclick="selectNum()">
             </div>
         </div>
-        <div class="selectFlag" style="left:{{flagLeft}}"></div>
+        <!--<div class="selectFlag" style="left:{{flagLeft}}"></div>-->
+        <image class="flagImg" src="{{flagImgSrc}}" style="left:{{flagLeft}}"></image>
         <image class="startPlayText" onclick="toMain" src="{{startBtn}}"></image>
         <!--<text class="button" onclick="toMain">开始游戏</text>-->
         <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnGreeting"></image>
@@ -27,7 +28,8 @@
     module.exports = {
         data:{
             imgurl: '/imgs/background/selectNumBg.jpg',
-            startBtn:"/imgs/selectNumStart.png",
+            startBtn:"/imgs/selectNumStart2.png",
+            flagImgSrc:"/imgs/flag.png",
             totalNum: 4,
             selectArr:[
                 {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:5},
@@ -41,25 +43,25 @@
                 {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:13},
                 {bgColor:"white",leftTop:0,leftBot:0,rightTop:15,rightBot:15,num:14}
             ],
-            flagLeft:175
+            flagLeft:168
         },
         methods:{
             selectNum:function(event){
                 //console.log("divNum:"+index);
                 var index = event.target.attr.currIndex;
-              console.log(index);
+              //console.log(index);
                for(var i=0;i<=index;i++){
-                  this.selectArr[i].bgColor = "rgb(242, 111, 6)";
+                  this.selectArr[i].bgColor = "rgb(234, 128, 16)";
                }
                for(var i=index+1;i<10;i++){
                    this.selectArr[i].bgColor = "white";
                }
                 this.totalNum =  this.selectArr[index].num;
-                this.flagLeft = 175+index*40+41;
+                this.flagLeft = 168+index*40+41;
             },
             init:function(){
                 this.totalNum =  4;
-                this.flagLeft = 175;
+                this.flagLeft = 168;
                 for(var i=0;i<10;i++){
                     this.selectArr[i].bgColor = "white";
                 }
@@ -78,22 +80,22 @@
     .select_title{
         flex-direction: row;
         position:absolute;
-        top:200;
+        top:180;
         width: 750px;
         justify-content:center;
     }
     .title{
         font-size: 50px;
         font-weight:bold;
-        /*font-family: '华文隶书';*/
+        font-family: '华文楷体';
         /*font-family: cursive;*/
     }
     .titleNum{
         font-size: 50px;
         font-weight:bold;
-        color: rgb(242, 111, 6);
+        color: rgb(234, 128, 16);
         margin-right: 10px;
-        /*font-family: '华文隶书';*/
+        font-family: '华文楷体';
         /*font-family: cursive;*/
     }
     .selectDiv{
@@ -113,22 +115,28 @@
     .selectOption{
         width:40px;
         height:32px;
-        background-color:rgb(242, 111, 6);
+        background-color:rgb(234, 128, 16);
        /* opacity: 0.8;*/
+    }
+    .flagImg{
+        position:absolute;
+        width:22px;
+        height:64px;
+        top:283px;
     }
     .selectFlag{
         position:absolute;
         height:60px;
         width: 10px;
-        background-color: rgb(242, 111, 6);
+        background-color: rgb(234, 128, 16);
         top:290px;
     }
     .startPlayText{
         position: absolute;
-        bottom:70px;
-        left:190px;
-        width:350px;
+        width:280px;
         height:100px;
+        bottom:70px;
+        left:220px;
     }
     .button{
         position:absolute;
@@ -150,5 +158,15 @@
         bottom: 15px;
         width:50px;
         height:50px;
+    }
+    .startPlayDiv{
+        position: absolute;
+        width:350px;
+        height:100px;
+        bottom:70px;
+        left:190px;
+        border-color: white;
+        border-radius: 50px;
+        border-width: 1px;
     }
 </style>

@@ -26,9 +26,9 @@
     module.exports = {
         data: {
             bgImgSrc: "/imgs/background/bg.jpg",
-            rankImgSrc:"/imgs/rankList.png",
+            rankImgSrc:"/imgs/rankList2.png",
             rankImgHead: "/imgs/background/rank",
-            restartBtn:"/imgs/restartGame.png",
+            restartBtn:"/imgs/restartGame2.png",
             rankImgTail: ".png",
             rankArray: [],
             title : [
@@ -107,12 +107,12 @@
         position:absolute;
         width: 550px;
         height:700px;
-        top:210px;
+        top:220px;
         left:100px;
        
         /*position: relative;*/
         border-radius:10px;
-        background-color: rgba(223, 223, 223, 0.41);
+        background-color: rgba(223, 223, 223, 0.51);
     }
     .button{
         position:absolute;
@@ -124,10 +124,15 @@
         
     }
     .restartPlayText{
-        position: absolute;
+        /*position: absolute;
         bottom:70px;
         left:240px;
         width:280px;
+        height:100px;*/
+        position: absolute;
+        width:280px;
         height:100px;
+        bottom:70px;
+        left:220px;
     }
 </style>

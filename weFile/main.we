@@ -46,7 +46,7 @@
             bgImgSrc: "/imgs/background/bg.jpg",
             //bgImgSrc:"https://13111211.github.io/weexCompetition/imgs/background/bg.png",//背景图片的url
             paiduiImg:"/imgs/paidui/newPaidui2.png",//牌堆图片的url
-            endBtn:"/imgs/endGame.png",
+            endBtn:"/imgs/endGame2.png",
             currPlayerId:1,//当前摸牌玩家的id，初始值为1
             playerNum:null,//该值应当从选择人数界面传过来
             leftPlayerNum:0,//左边玩家个数
@@ -182,15 +182,17 @@
 
             //父组件监听，随机选人点击确定后的惩罚操作
             this.$on("startPunish" , function(event){
+                this.isShow.failRadioModal = false;
+                this.isShow.randomfailModal = false;
                 //console.log("type:"+event.detail.type);
-                switch(event.detail.type){
+                /*switch(event.detail.type){
                     case 'duel':
                         this.isShow.failRadioModal = false;
                         break;
                     case 'playGame':
                         this.isShow.randomfailModal = false;
                         break;
-                }
+                }*/
                 //调用罚酒的方法
                 //console.log("罚酒玩家id:"+event.detail.selectedPlayer);
                 this.drink(event.detail.selectedPlayer , 1);
@@ -594,11 +596,16 @@
        
     }
     .endPlayText{
-        position: absolute;
+        /*position: absolute;
         bottom:70px;
         left:240px;
         width:280px;
+        height:100px;*/
+        position: absolute;
+        width:280px;
         height:100px;
+        bottom:70px;
+        left:220px;
     }
     /**/
 </style>
