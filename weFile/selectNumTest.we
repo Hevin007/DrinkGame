@@ -8,16 +8,12 @@
         </div>
 
         <div class="selectDiv">
-            <div style="background-color: rgb(242, 111, 6);width:40;height:32;border-top-left-radius:15px;border-bottom-left-radius:15px" onclick="init()"></div>
-            <div class="selectOption" repeat="{{selectOption in selectArr}}" curr-index="{{$index}}"
-                 style="background-color: {{selectOption.bgColor}};border-bottom-left-radius: {{selectOption.leftBot}};
-                 border-bottom-right-radius: {{selectOption.rightBot}};border-top-left-radius: {{selectOption.leftTop}};border-top-right-radius: {{selectOption.rightTop}}"
-                 onclick="selectNum()">
-            </div>
+            <div class="leftDiv" style="width:{{leftWid}}"></div>
+            <div class="rightDiv" style="width:{{rightWid}}"></div>
         </div>
-        <div class="selectFlag" style="left:{{flagLeft}}"></div>
+        <image class="flagImg" src="{{flagImgSrc}}" style="left:{{flagLeft}}" onpanend="selectNum" onpanmove="move"></image>
+
         <image class="startPlayText" onclick="toMain" src="{{startBtn}}"></image>
-        <!--<text class="button" onclick="toMain">开始游戏</text>-->
         <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnGreeting"></image>
         <image class="settingBtn" src="/imgs/settingBtn.png"></image>
     </div>
@@ -28,41 +24,32 @@
         data:{
             imgurl: '/imgs/background/selectNumBg.jpg',
             startBtn:"/imgs/selectNumStart.png",
+            flagImgSrc:"/imgs/glass.png",
             totalNum: 4,
-            selectArr:[
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:5},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:6},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:7},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:8},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:9},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:10},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:11},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:12},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:0,rightBot:0,num:13},
-                {bgColor:"white",leftTop:0,leftBot:0,rightTop:15,rightBot:15,num:14}
-            ],
-            flagLeft:175
+            leftWid:40,
+            rightWid:400,
+            flagLeft:148
         },
         methods:{
-            selectNum:function(event){
-                //console.log("divNum:"+index);
-                var index = event.target.attr.currIndex;
-              console.log(index);
-               for(var i=0;i<=index;i++){
-                  this.selectArr[i].bgColor = "rgb(242, 111, 6)";
-               }
-               for(var i=index+1;i<10;i++){
-                   this.selectArr[i].bgColor = "white";
-               }
-                this.totalNum =  this.selectArr[index].num;
-                this.flagLeft = 175+index*40+41;
+            move:function(eventProperties){
+                var pageX = eventProperties.changedTouches[0].pageX;
+                this.leftWid = pageX - 140;
+                this.rightWid = 580 - pageX;
+                this.flagLeft = pageX;
             },
-            init:function(){
-                this.totalNum =  4;
-                this.flagLeft = 175;
-                for(var i=0;i<10;i++){
-                    this.selectArr[i].bgColor = "white";
+            selectNum:function(eventProperties){
+                var pageX = eventProperties.changedTouches[0].pageX;
+                var num = parseInt((pageX-148)/40);//有几个40
+                var remainder = (pageX-148) % 40;//除以40剩余的数
+                if(remainder >= 20){
+                    num++;
                 }
+                console.log("pageX:"+pageX);
+                console.log("num:"+num);
+                this.leftWid = 40 + 40 * num;
+                this.rightWid = 40 * (10 - num);
+                this.flagLeft = 148 + 40 * num;
+                this.totalNum = 4+num;
             },
             toMain: function() {
                 this._parent.$emit("toMain",{playerNum:this.totalNum});
@@ -75,6 +62,26 @@
 </script>
 
 <style>
+    .leftDiv{
+        height:32px;
+        border-top-left-radius:15px;
+        border-bottom-left-radius:15px;
+        border-right-color: white;
+        border-right-width: 1px;
+        background-color: rgb(234, 128, 16);
+    }
+    .rightDiv{
+        height:32px;
+        border-top-right-radius:15px;
+        border-bottom-right-radius:15px;
+        background-color:white;
+    }
+    .flagImg{
+        position:absolute;
+        width:64px;
+        height:82px;
+        top:260px;
+    }
     .select_title{
         flex-direction: row;
         position:absolute;
@@ -102,10 +109,6 @@
         left:140px;
         width:440px;
         height:32px;
-        /*border-color: rgb(242, 111, 6);*/
-        /*opacity: 0.8;*/
-        background-color: white;
-        /*border-width: 2px;*/
         flex-direction: row;
         justify-content:center;
         border-radius: 20px;
@@ -114,7 +117,7 @@
         width:40px;
         height:32px;
         background-color:rgb(242, 111, 6);
-       /* opacity: 0.8;*/
+        /* opacity: 0.8;*/
     }
     .selectFlag{
         position:absolute;

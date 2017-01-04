@@ -2,7 +2,8 @@
   <div>
   
         <image class="bgImg" src="{{bgImgSrc}}"></image>
-        <div  class="dialog">
+        <image class="rankListImg" src="{{rankImgSrc}}"></image>
+        <!--<div  class="dialog">-->
 
             <div class="dialog-content">
               <list class="list">
@@ -10,12 +11,11 @@
                   <img src="{{rankImgHead}}{{$index+1}}{{rankImgTail}}" class="rankImg"></img>
                   <text class="item">玩家{{item.playerId}}</text>
                   <text class="title">{{item.title}}</text>
-
                 </cell>
               </list>
 
             </div>
-        </div>
+        <!--</div>-->
     
     <!--<text class="button" onclick="restartGame">重新开始</text>-->
       <image class="restartPlayText" onclick="restartGame" src="{{restartBtn}}"></image>
@@ -25,7 +25,8 @@
 <script>
     module.exports = {
         data: {
-            bgImgSrc: "/imgs/background/scoreBg3.png",
+            bgImgSrc: "/imgs/background/bg.jpg",
+            rankImgSrc:"/imgs/rankList.png",
             rankImgHead: "/imgs/background/rank",
             restartBtn:"/imgs/restartGame.png",
             rankImgTail: ".png",
@@ -56,7 +57,13 @@
         width: 60px;
         height: 75px;
     }
-
+    .rankListImg{
+        position: absolute;
+        width: 500px;
+        height:150px;
+        top:50px;
+        left:130px;
+    }
     .bgImg{
         width: 750px;
         height:1175px;
@@ -68,24 +75,22 @@
 
     .row {
         /*position: relative;*/
-
-        
         align-items: center;
-        height: 100;
+        height: 90;
         flex-direction: row;
         
-        border-left-width: 1;
+        /*border-left-width: 1;
         border-top-width: 1;
-        border-color: #eeeeee;
+        border-color: #eeeeee;*/
         margin-top: 10;
         
     }
     .item {
-        font-size: 50;
+        font-size: 40;
         margin-right: 40;
     }
     .title {
-        font-size: 50;
+        font-size: 40;
         color: red;
     }
     .dialog {
@@ -99,8 +104,11 @@
 
     }
     .dialog-content {
+        position:absolute;
         width: 550px;
-        height:800px;
+        height:700px;
+        top:210px;
+        left:100px;
        
         /*position: relative;*/
         border-radius:10px;

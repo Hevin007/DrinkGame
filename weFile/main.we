@@ -27,7 +27,7 @@
         <cardModalDelete if="{{isShow.cardModalDelete}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalDelete>
 
         <duelModal if="{{isShow.juedouModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></duelModal>
-        <randomFailModal if="{{isShow.randomFailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
+        <randomFailModal if="{{isShow.randomfailModal}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></randomFailModal>
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
         <bagRandomFailPlayerModal if="{{isShow.bagRandomPlayer}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></bagRandomFailPlayerModal>
         <!--<div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>-->
@@ -57,13 +57,13 @@
             currCardOrder:[],//存储当前的牌序，在ready函数中初始化
             isShow: {
                 bagModal: false,
-                cardModalUse:false,
-                cardModalSave:false,
-                cardModalDelete: false,
-                juedouModal:false,
-                randomFailModal:false,
-                failRadioModal:false,
-                bagRandomPlayer:false
+                cardModalUse:false,//卡牌立即使用模态框
+                cardModalSave:false,//卡牌存入包裹模态框
+                cardModalDelete: false,//卡牌使用后移除模态框
+                juedouModal:false,//随机产生决斗对象模态框
+                randomfailModal:false,//玩游戏，从所有玩家中挑选输的玩家模态框
+                failRadioModal:false,//决斗时，从两个玩家中挑选输的玩家模态框
+                bagRandomPlayer:false//包裹中的牌点击选择输的玩家时的模态框
             },
             //当前玩家的包裹中存的牌信息
             currPlayerBag:[],
@@ -124,7 +124,7 @@
                         return;
                     case 6:
                         //如果抽到6牌，玩游戏牌
-                        this.isShow.randomFailModal = true;
+                        this.isShow.randomfailModal = true;
                         return;
                     case 7:
                     case 9:
@@ -182,8 +182,15 @@
 
             //父组件监听，随机选人点击确定后的惩罚操作
             this.$on("startPunish" , function(event){
-                this.isShow.randomFailModal = false;
-                this.isShow.failRadioModal = false;
+                //console.log("type:"+event.detail.type);
+                switch(event.detail.type){
+                    case 'duel':
+                        this.isShow.failRadioModal = false;
+                        break;
+                    case 'playGame':
+                        this.isShow.randomfailModal = false;
+                        break;
+                }
                 //调用罚酒的方法
                 //console.log("罚酒玩家id:"+event.detail.selectedPlayer);
                 this.drink(event.detail.selectedPlayer , 1);

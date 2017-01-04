@@ -53,13 +53,14 @@
                 if (value !='') {
                     this.select_playerName = value;
                     this.select_player = value.split("家")[1];
+                   // console.log("doSelect玩游戏输的玩家：玩家"+this.select_player);
                     
                 } 
             },
             startPunish: function() {
                 if (this.select_player) {
-
-                    this._parent.$emit("startPunish",{selectedPlayer:this.select_player});
+                    console.log("startPunish玩游戏输的玩家：玩家"+this.select_player);
+                    this._parent.$emit("startPunish",{selectedPlayer:this.select_player,type:'playGame'});
                 }
             }
         }
