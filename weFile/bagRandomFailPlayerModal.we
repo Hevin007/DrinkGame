@@ -16,7 +16,7 @@
                         </cell>
                     </list>
                     <div style="align-items: center;margin-top: 30px;">
-                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish('bagPunish')"></wxc-button>
+                        <wxc-button type="primary" size="middle" value="确定" onclick="startPunish"></wxc-button>
                     </div>
                 </div>
             </div>
