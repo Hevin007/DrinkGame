@@ -13,13 +13,13 @@
             <image class="returnBtn" src="/imgs/returnBtn.png" onclick="returnSelectNum"></image>
             <image class="settingBtn" src="/imgs/settingBtn.png"></image>
             
-            <!--<div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>-->
+            
         </div>
         
         <div class="paiduiDiv">
             <image class="paidui" src="{{paiduiImg}}" onclick="showCard"></image>
         </div>
-
+        <image class="endPlayText" onclick="toScore" src="{{endBtn}}"></image>
         <bagModal if="{{isShow.bagModal}}" player-id="{{showBag.playerId}}" drink-num="{{showBag.drinkNum}}" bag="{{showBag.bag}}"></bagModal>
 
         <cardModalUse if="{{isShow.cardModalUse}}" card-img-url="{{showCard.currCardImgUrl}}" card-tips="{{showCard.currCardTips}}"></cardModalUse>
@@ -31,7 +31,7 @@
         <failPlayerRadioModal if="{{isShow.failRadioModal}}" current-player="{{currPlayerId}}" select-player="{{radioSelectPlayer}}"></failPlayerRadioModal>
         <bagRandomFailPlayerModal if="{{isShow.bagRandomPlayer}}" current-player="{{currPlayerId}}" player-num="{{playerNum}}"></bagRandomFailPlayerModal>
         <!--<div style="align-items: center; width: 750;position: absolute; bottom: 100;"><text class="endGameText" onclick="toScore">结束游戏</text></div>-->
-        <image class="endPlayText" onclick="toScore" src="{{endBtn}}"></image>
+        
     </div>
 </template>
 

@@ -50,7 +50,7 @@
             },
             startPunish: function() {
                 if (this.failedPlayer) {
-                    console.log("决斗输的玩家：玩家"+this.failedPlayer);
+                    
                     this._parent.$emit("startPunish",{selectedPlayer:this.failedPlayer,type:'duel'});
                 }
             }
