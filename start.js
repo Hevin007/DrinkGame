@@ -123,7 +123,7 @@
 	        "helpBtn"
 	      ],
 	      "attr": {
-	        "src": "/imgs/helpBtn.png"
+	        "src": "./imgs/helpBtn.png"
 	      }
 	    },
 	    {
@@ -132,7 +132,7 @@
 	        "settingBtn"
 	      ],
 	      "attr": {
-	        "src": "/imgs/settingBtn.png"
+	        "src": "./imgs/settingBtn.png"
 	      }
 	    }
 	  ]
@@ -181,8 +181,8 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bgImgSrc: "/imgs/background/newGreeting.png",
-	        startBtn: "/imgs/startGameBtn.png",
+	        bgImgSrc: "./imgs/background/newGreeting.png",
+	        startBtn: "./imgs/startGameBtn.png",
 	        arr: [0.8, 0.6, 0.4, 0.2, 0.4, 0.6, 0.8, 1],
 	        opacity: 1,
 	        number: 0
@@ -356,7 +356,7 @@
 	        "returnBtn"
 	      ],
 	      "attr": {
-	        "src": "/imgs/returnBtn.png"
+	        "src": "./imgs/returnBtn.png"
 	      },
 	      "events": {
 	        "click": "returnGreeting"
@@ -368,7 +368,7 @@
 	        "settingBtn"
 	      ],
 	      "attr": {
-	        "src": "/imgs/settingBtn.png"
+	        "src": "./imgs/settingBtn.png"
 	      }
 	    }
 	  ]
@@ -475,9 +475,9 @@
 
 	module.exports = {
 	    data: function () {return {
-	        imgurl: '/imgs/background/selectNumBg.jpg',
-	        startBtn: "/imgs/selectNumStart2.png",
-	        flagImgSrc: "/imgs/flag.png",
+	        imgurl: './imgs/background/selectNumBg.jpg',
+	        startBtn: "./imgs/selectNumStart2.png",
+	        flagImgSrc: "./imgs/flag.png",
 	        totalNum: 4,
 	        selectArr: [{ bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 5 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 6 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 7 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 8 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 9 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 10 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 11 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 12 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 0, rightBot: 0, num: 13 }, { bgColor: "white", leftTop: 0, leftBot: 0, rightTop: 15, rightBot: 15, num: 14 }],
 	        flagLeft: 168
@@ -720,7 +720,7 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bagBagImg: "/imgs/background/bagBg4.png",
+	        bagBagImg: "./imgs/background/bagBg4.png",
 	        playerId: 1,
 	        drinkNum: 0,
 	        cardNum: 0,
@@ -4620,7 +4620,7 @@
 	            "returnBtn"
 	          ],
 	          "attr": {
-	            "src": "/imgs/returnBtn.png"
+	            "src": "./imgs/returnBtn.png"
 	          },
 	          "events": {
 	            "click": "returnSelectNum"
@@ -4632,7 +4632,7 @@
 	            "settingBtn"
 	          ],
 	          "attr": {
-	            "src": "/imgs/settingBtn.png"
+	            "src": "./imgs/settingBtn.png"
 	          }
 	        }
 	      ]
@@ -4847,10 +4847,10 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bgImgSrc: "/imgs/background/bg.jpg",
+	        bgImgSrc: "./imgs/background/bg.jpg",
 
-	        paiduiImg: "/imgs/paidui/newPaidui2.png",
-	        endBtn: "/imgs/endGame2.png",
+	        paiduiImg: "./imgs/paidui/newPaidui2.png",
+	        endBtn: "./imgs/endGame2.png",
 	        currPlayerId: 1,
 	        playerNum: null,
 	        leftPlayerNum: 0,
@@ -4970,7 +4970,7 @@
 	            this.showCard.currCardId = cardId;
 	            this.showCard.currCardNum = cardNum;
 
-	            this.showCard.currCardImgUrl = "/imgs/newCardImg/" + cardId + ".png";
+	            this.showCard.currCardImgUrl = "./imgs/newCardImg/" + cardId + ".png";
 	            this.showCard.currCardTips = this.cardTipsArr[this.showCard.currCardNum];
 
 	            this.isShow.cardModalDelete = true;
@@ -5086,7 +5086,7 @@
 	                this.showCard.currCardNum = 15;
 	            }
 
-	            this.showCard.currCardImgUrl = "/imgs/newCardImg/" + cardId + ".png";
+	            this.showCard.currCardImgUrl = "./imgs/newCardImg/" + cardId + ".png";
 	            this.showCard.currCardTips = this.cardTipsArr[this.showCard.currCardNum];
 
 	            switch (this.showCard.currCardNum) {
@@ -5119,7 +5119,7 @@
 	                id: this.currCardId,
 	                num: this.showCard.currCardNum,
 	                name: this.cardTipForBag[this.showCard.currCardNum],
-	                imgUrl: "/imgs/bagCardImg/" + this.currCardId + ".png" };
+	                imgUrl: "./imgs/bagCardImg/" + this.currCardId + ".png" };
 
 	            if (cardNode.num == 9) {
 	                for (var i = 1; i <= this.playerNum; i++) {
@@ -5420,10 +5420,10 @@
 
 	module.exports = {
 	    data: function () {return {
-	        bgImgSrc: "/imgs/background/bg.jpg",
-	        rankImgSrc: "/imgs/rankList2.png",
-	        rankImgHead: "/imgs/background/rank",
-	        restartBtn: "/imgs/restartGame2.png",
+	        bgImgSrc: "./imgs/background/bg.jpg",
+	        rankImgSrc: "./imgs/rankList2.png",
+	        rankImgHead: "./imgs/background/rank",
+	        restartBtn: "./imgs/restartGame2.png",
 	        rankImgTail: ".png",
 	        rankArray: [],
 	        title: ["千杯不醉", "陪酒公主", "酒桌之王"]
