@@ -10,23 +10,42 @@
   <meta name="apple-touch-fullscreen" content="yes" />
   <meta name="format-detection" content="telephone=no, email=no" />
   <script>
+
     if(!IsPC()) {
       window.location.href = "./mobile.html";
     }
     function IsPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone",
-                "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            flag = false;
-            break;
-        }
+      var userAgentInfo = navigator.userAgent;
+      var Agents = ["Android", "iPhone",
+                  "SymbianOS", "Windows Phone",
+                  "iPad", "iPod"];
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+          if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+          }
+      }
+      return flag;
     }
-    return flag;
-}
+
+    // test img cache
+    window.onload = function() {
+      var imgsJson = ["/paidui/newPaidui2.png","/background/selectNumBg.jpg","/background/bg.jpg","/newCardImg/"]
+      imgsJson.forEach(function(ele, index, array) {
+        var img = document.createElement("img");
+        if(ele=="/newCardImg/") {
+          for(var i=0;i<54;i++) {
+            img = document.createElement("img");
+            img.src = "./imgs"+ele+i+".png";
+          }
+        }else {
+
+          img.src = "./imgs"+ele;
+        }
+      });
+
+    }
   </script>
   <style type="text/css">
     
